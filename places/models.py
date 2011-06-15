@@ -15,7 +15,7 @@ CATEGORY_1 = 'eat'
 CATEGORY_2 = 'drink'
 CATEGORY_3 = 'do'
 CATEGORY_4 = 'see'
-CATEGORY_5 = 'shop'
+CATEGORY_5 = 'buy'
 # these are the values it will display
 CATEGORY_CHOICES = (
             (CATEGORY_1, u"Somewhere to eat"),
