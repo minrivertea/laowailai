@@ -1,11 +1,10 @@
 from django.conf import settings
-from fuzhounet.list.models import Laowai, Info, Subscriber
-from fuzhounet import settings
+from laowailai.list.models import Laowai, Info, Subscriber
 from django.shortcuts import get_object_or_404
-from fuzhounet.cities.models import City
+from laowailai.cities.models import City
 
 def common(request):
-    from fuzhounet import settings
+    from laowailai import settings
     ga_is_on = settings.GA_IS_ON
     return {'ga_is_on': ga_is_on}
 

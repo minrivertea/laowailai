@@ -1,4 +1,4 @@
-from fuzhounet.events.models import *
+from laowailai.events.models import *
 from django.contrib import admin
 
 

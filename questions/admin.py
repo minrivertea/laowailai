@@ -1,4 +1,4 @@
-from fuzhounet.questions.models import *
+from laowailai.questions.models import *
 from django.contrib import admin
 
 

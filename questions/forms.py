@@ -1,6 +1,6 @@
 from django import forms
 
-from fuzhounet.cities.models import City
+from laowailai.cities.models import City
  
 class AddQuestionForm(forms.Form):
     question = forms.CharField(max_length=200)

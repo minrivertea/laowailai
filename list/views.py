@@ -10,8 +10,8 @@ import smtplib
 # stuff from my app
 from models import Laowai, Info, Likes, Subscriber, Suggestion
 from forms import InfoAddForm, UnsubscribeForm, SubscriberAddForm, ProfilePhotoUploadForm, TellAFriendForm, AddBioForm, SuggestionForm
-from fuzhounet.cities.models import City
-from fuzhounet.list.context_processors import get_current_city
+from laowailai.cities.models import City
+from laowailai.list.context_processors import get_current_city
 
 # django stuff
 from django.http import Http404, HttpResponse, HttpResponseRedirect

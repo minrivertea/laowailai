@@ -8,8 +8,9 @@ import os, md5
 import smtplib
 
 # stuff from my app
-from fuzhounet.list.models import Laowai
-from fuzhounet.cities.models import City
+from laowailai.list.models import Laowai
+from laowailai.cities.models import City
+from laowailai.events.models import Event
 
 # django stuff
 from django.http import Http404, HttpResponse, HttpResponseRedirect
@@ -20,7 +21,7 @@ from django.template.loader import render_to_string
 from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 
-from fuzhounet.events.models import Event
+
 
 
 #render shortcut

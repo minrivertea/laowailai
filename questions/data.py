@@ -6,8 +6,8 @@ from django.db.models import Q
 from django.conf import settings
 
 # app
-from fuzhounet.questions.models import Question
-from fuzhounet.questions.split_search import split_search
+from laowailai.questions.models import Question
+from laowailai.questions.split_search import split_search
 
 STOPWORDS = (
       "a", "and", "are", "as", "at", "be", "but", "by",

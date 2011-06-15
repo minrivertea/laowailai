@@ -7,9 +7,9 @@ from django.contrib.comments.models import Comment
 from django.contrib.comments.signals import comment_was_posted
 from django.template.loader import render_to_string
 
-from fuzhounet.list.models import Laowai
-from fuzhounet.cities.models import City
-from fuzhounet.places.models import Place
+from laowailai.list.models import Laowai
+from laowailai.cities.models import City
+from laowailai.places.models import Place
 
 
 

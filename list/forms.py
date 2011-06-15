@@ -4,7 +4,7 @@ from django.forms.extras.widgets import SelectDateWidget
 
 
 
-from fuzhounet.list.models import Laowai, Info, Subscriber
+from laowailai.list.models import Laowai, Info, Subscriber
 
  
 class SubscriberAddForm(forms.Form):

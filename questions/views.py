@@ -9,13 +9,13 @@ import smtplib
 import re
 
 # stuff from my app
-from fuzhounet.list.models import Laowai
-from fuzhounet.questions.models import Question, Answer, Vote
-from fuzhounet.questions.forms import AddQuestionForm, AddAnswerForm, SearchForm
-from fuzhounet.questions.data import find_questions
-from fuzhounet.slugify import get_slugify
-from fuzhounet.cities.models import City
-from fuzhounet.list.context_processors import get_current_city
+from laowailai.list.models import Laowai
+from laowailai.questions.models import Question, Answer, Vote
+from laowailai.questions.forms import AddQuestionForm, AddAnswerForm, SearchForm
+from laowailai.questions.data import find_questions
+from laowailai.slugify import get_slugify
+from laowailai.cities.models import City
+from laowailai.list.context_processors import get_current_city
 
 # django stuff
 from django.http import Http404, HttpResponse, HttpResponseRedirect

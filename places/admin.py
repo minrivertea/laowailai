@@ -1,4 +1,4 @@
-from fuzhounet.places.models import *
+from laowailai.places.models import *
 from django.contrib import admin
 
 class PlaceAdmin(admin.ModelAdmin):

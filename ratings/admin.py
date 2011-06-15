@@ -1,4 +1,4 @@
-from fuzhounet.ratings.models import *
+from laowailai.ratings.models import *
 from django.contrib import admin
 
 

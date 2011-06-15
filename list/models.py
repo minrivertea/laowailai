@@ -8,8 +8,8 @@ from django.contrib.comments.signals import comment_was_posted
 from django.template.loader import render_to_string
 
     
-from fuzhounet.list.signals import new_laowai, new_subscriber #comment_notifier
-from fuzhounet.cities.models import City
+from laowailai.list.signals import new_laowai, new_subscriber #comment_notifier
+from laowailai.cities.models import City
 
 
 

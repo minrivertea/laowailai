@@ -74,7 +74,7 @@ MIDDLEWARE_CLASSES = (
     
 )
 
-ROOT_URLCONF = 'fuzhounet.urls'
+ROOT_URLCONF = 'laowailai.urls'
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -97,11 +97,11 @@ INSTALLED_APPS = (
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     'django.core.context_processors.auth',
-    'fuzhounet.list.context_processors.common',
-    'fuzhounet.list.context_processors.get_laowai',
-    'fuzhounet.list.context_processors.get_current_city',
-    'fuzhounet.list.context_processors.get_stats',
-    'fuzhounet.list.context_processors.get_latest_users',
+    'laowailai.list.context_processors.common',
+    'laowailai.list.context_processors.get_laowai',
+    'laowailai.list.context_processors.get_current_city',
+    'laowailai.list.context_processors.get_stats',
+    'laowailai.list.context_processors.get_latest_users',
 )
 
 

@@ -8,14 +8,14 @@ import os, md5
 import smtplib
 
 # stuff from my app
-from fuzhounet.list.models import Laowai
-from fuzhounet.places.models import Place
-from fuzhounet.places.forms import AddPlaceForm, SearchForm, EditLocationForm
-from fuzhounet.places.data import find_places
-from fuzhounet.slugify import get_slugify
-from fuzhounet.list.context_processors import get_current_city
-from fuzhounet.ratings.models import Rating
-from fuzhounet.cities.models import City
+from laowailai.list.models import Laowai
+from laowailai.places.models import Place
+from laowailai.places.forms import AddPlaceForm, SearchForm, EditLocationForm
+from laowailai.places.data import find_places
+from laowailai.slugify import get_slugify
+from laowailai.list.context_processors import get_current_city
+from laowailai.ratings.models import Rating
+from laowailai.cities.models import City
 
 # django stuff
 from django.http import Http404, HttpResponse, HttpResponseRedirect
@@ -79,7 +79,7 @@ def places(request, category=None, qs=None, parameters={}):
             return HttpResponse(json, mimetype='application/json')
     
             
-    from fuzhounet.places.models import CATEGORY_CHOICES
+    from laowailai.places.models import CATEGORY_CHOICES
     categories = CATEGORY_CHOICES
     
     # if there's filters, apply them to the queryset

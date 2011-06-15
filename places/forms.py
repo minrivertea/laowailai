@@ -3,11 +3,9 @@ from django.forms import ModelForm
 
 from django.forms.extras.widgets import SelectDateWidget
 
-from fuzhounet.list.models import Laowai, Info, Subscriber
-from fuzhounet.cities.models import City
-
-
-from fuzhounet.places.models import CATEGORY_CHOICES
+from laowailai.list.models import Laowai, Info, Subscriber
+from laowailai.cities.models import City
+from laowailai.places.models import CATEGORY_CHOICES
  
 class AddPlaceForm(forms.Form):
     name = forms.CharField(max_length=200)

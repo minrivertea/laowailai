@@ -17,7 +17,7 @@ import smtplib
 
 from registration.backends import get_backend
 from registration.forms import RegistrationFormNoUserName
-from fuzhounet.list.models import Laowai
+from laowailai.list.models import Laowai
 from django.contrib import auth
 
 

@@ -5,8 +5,8 @@ from django.forms.extras.widgets import SelectDateWidget
 
 
 
-from fuzhounet.list.models import Laowai, Info, Subscriber
-from fuzhounet.cities.models import City
+from laowailai.list.models import Laowai, Info, Subscriber
+from laowailai.cities.models import City
 
  
 class AddEventForm(forms.Form):

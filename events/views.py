@@ -8,10 +8,10 @@ import os, md5
 import smtplib
 
 # stuff from my app
-from fuzhounet.list.models import Laowai
-from fuzhounet.events.models import Event
-from fuzhounet.events.forms import AddEventForm
-from fuzhounet.list.context_processors import get_current_city
+from laowailai.list.models import Laowai
+from laowailai.events.models import Event
+from laowailai.events.forms import AddEventForm
+from laowailai.list.context_processors import get_current_city
 
 # django stuff
 from django.http import Http404, HttpResponse, HttpResponseRedirect
