@@ -167,7 +167,9 @@ div.add-answer-button a:active {
 
 		</div>
   <div class="left">
-  	<img src="{% thumbnail thing.answer.added_by.photo 60x60 crop %}"/>
+    {% thumbnail thing.answer.added_by.photo "60x60" crop="center" as im %}
+  	<img src="{{ im.url }}"/>
+  	{% endthumbnail %}
 	</div>
 	<div class="right">
 		

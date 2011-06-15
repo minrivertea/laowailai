@@ -27,7 +27,9 @@ div#people div.person {
 	<div class="person">
 		<a href="{% url laowai person.id %}">
 		{% if person.has_photo %}
-			<img src="{% thumbnail person.photo 80x80 crop %}" title="{{ person.name }}" alt="photo of laowai {{ person.name }}">
+		    {% thumbnail person.photo "80x80" crop="center" as im %}
+			<img src="{{ im.url }}" title="{{ person.name }}" alt="photo of laowai {{ person.name }}">
+			{% endthumbnail %}
 		{% else %}
 			<img class="avatar" title="{{ person.name }}" alt="" src="/images/avatar_small.png">
 		{% endif %}

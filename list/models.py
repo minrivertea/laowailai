@@ -70,17 +70,17 @@ class Laowai(models.Model):
             return False   
     
     def added_places(self):
-        from fuzhounet.places.models import Place
+        from laowailai.places.models import Place
         places = Place.objects.filter(added_by=self)
         return places
     
     def added_questions(self):
-        from fuzhounet.questions.models import Question
+        from laowailai.questions.models import Question
         questions = Question.objects.filter(added_by=self)
         return questions    
 
     def added_answers(self):
-        from fuzhounet.questions.models import Answer
+        from laowailai.questions.models import Answer
         answers = Answer.objects.filter(added_by=self)
         return answers 
 

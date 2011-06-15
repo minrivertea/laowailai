@@ -75,7 +75,9 @@ div#top div#photo p {
 <div id="top">
 	<div id="photo">
 	{% if this_laowai.photo %}
-		<img class="profile-photo-large" title="{{ this_laowai.name }}" alt="{{ this_laowai.name }}'s photo" src="{% thumbnail this_laowai.photo 100x100 crop %}">
+		{% thumbnail this_laowai.photo "80x80" crop="center" as im %}
+		<img class="profile-photo-large" title="{{ this_laowai.name }}" alt="{{ this_laowai.name }}'s photo" src="{{ im.url }}">
+		{% endthumbnail %}
 	{% else %}
 		<img class="profile-photo-large" title="{{ this_laowai.name }}" alt="" src="/images/avatar_small.png">
 	{% endif %}

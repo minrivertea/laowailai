@@ -30,7 +30,7 @@ except ImportError:
 
 
 def prowlpy_wrapper(event, description="",
-                    application="FuzhouNet",
+                    application="Laowailai",
                     priority=None):
     if not prowl_api:
         return
