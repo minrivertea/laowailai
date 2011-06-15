@@ -1,0 +1,14 @@
+{% load thumbnail %}
+
+<div class="a-comment{% if forloop.last %} last{% endif %}">
+	<div class="comment-name">
+	    {% if comment.user.get_profile.photo %}
+	        <img src="{% thumbnail comment.user.get_profile.photo 30x30 crop %}">
+	    {% else %}
+	    	<img src="/images/avatar.png">
+	    {% endif %}
+	</div>
+	<div class="comment-content">
+		<p><strong><a href="{% url laowai comment.user.get_profile.id %}">{{ comment.user_name }}</a> </strong>{{ comment.comment|urlize }}</p>
+	</div>
+</div>

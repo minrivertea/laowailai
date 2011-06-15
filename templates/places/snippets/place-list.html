@@ -1,0 +1,20 @@
+
+{% if places %}
+ {% for place in places %}
+	
+<div class="place{% cycle '' ' right' %}">
+	<h3><a href="{% url place place.id %}">{{ place.name }}</a></h3>
+	<div class="ratings">
+	<ul class="star-rating">
+		<li class="current-rating" style="width:{{ place.get_current_rating }}px;"> Currently 3.5/5 Stars.</li>
+	</ul>
+	<p>{{ place.rating_count }} ratings</p>
+	</div>
+	<p>{{ place.description|truncatewords:20 }}<p>
+
+</div>
+
+ {% endfor %}
+{% else %}
+<p><em>Sorry, we can't find any places that match your search or filters!</em></p> 
+{% endif %}

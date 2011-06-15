@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block metadescription %}Questions{% endblock %}
+{% block pagetitle %}Questions{% endblock %}
+
+{% block extracss %}
+<style type="text/css">
+div#questions {
+  float: left;
+  width: 100%;	
+}
+
+div#questions ul {
+  list-style-type: square;
+  margin: 0 0 0 20px;
+  padding: 0 0 0 10px;	
+}
+
+div#questions ul h3 {
+  font-size: 15px;	
+  margin: 0;
+}
+
+div#questions ul li {
+  margin-bottom: 10px;	
+}
+
+div#questions ul div.question p {
+  margin: 0;
+  font-size: 11px;	
+}
+
+p.description {
+  border-bottom: none;
+  margin-bottom: 0px;
+  padding-bottom: 10px;	
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div id="top">
+	{% if request.user.is_authenticated %}
+	<div class="add-question-button"><a href="{% url add_question %}"><span>Add a question</span></a></div>
+	{% endif %}
+<h1>How to: {{ current_city }}</h1>
+</div>
+
+<p class="description"><em>Laowai's (foreigners) that live in China are a great source of information about how to do/get/buy/achieve things in China. Why not ask them a question and get a response back quickly</em></p>
+
+{% include "snippets/search_bar.html" %}
+
+<div id="questions">
+
+{% if questions %}
+<ul>
+	{% for question in questions %}
+		<li>
+		<div class="question">
+			<h3><a href="{% url question question.slug %}">{{ question.question }}</a></h3>
+			<p><em>{{ question.answers_count }} {{ question.answers_count|pluralize:"answer, answers" }}</em> | added {{ question.date_added|timesince }} ago</p>
+		</div>
+		</li>
+	{% endfor %}
+</ul>
+{% else %}
+<p><em>There's no questions for {{ current_city }}!</em></p>
+{% endif %}
+</div>
+
+
+
+
+{% endblock %}

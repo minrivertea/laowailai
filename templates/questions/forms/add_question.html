@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block metadescription %}Add a question for Laowai to answer{% endblock %}
+{% block pagetitle %}Add a question{% endblock %}
+
+{% block extracss %}
+<style type="text/css">
+
+div#left input.submit-question-button {
+  background: url('/images/submit-question-button.png') no-repeat top left;
+  border: medium none;
+  height: 33px;
+  margin: 0px 0 10px 0px;
+  width: 142px;
+  float: right;
+}
+
+div#left input.submit-question-button:hover {
+  background: url('/images/submit-question-button.png') no-repeat center left;
+  cursor: pointer;
+}
+
+div#left input.submit-question-button:active {
+  background: url('/images/submit-question-button.png') no-repeat bottom left;
+  cursor: pointer;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div id="top">
+<h1>Add a question ({{ current_city }})</h1>
+</div>
+
+<p class="description"><em>You're adding a question for {{ current_city }} laowai - please try to be as descriptive as possible to get a good response. Remember any profanity, racist language or otherwise offensive questions will be removed.</em></p>
+
+
+
+<form action="." method="post">
+	<div style='display:none;'>{% csrf_token %}</div>
+	<p><label for="id_question">Question:</label> <input id="id_question" type="text" name="question" maxlength="200" /></p>
+	<p><label for="id_description">Description:</label> <textarea id="id_description" rows="10" cols="40" name="description"></textarea></p>
+	
+	<div style="display:none;">
+	<p><label for="id_city">City:</label> <select name="city" id="id_city">
+		<option selected="selected" value="{{ current_city.id }}">{{ current_city }}</option>
+	</select></p>
+	</div>
+
+	<input type="submit" value="" class="submit-question-button">
+	</form>
+
+
+
+
+{% endblock %}

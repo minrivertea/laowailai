@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block metadescription %}The best place to share news and events for foreigners in Fuzhou, China.{% endblock %}
+{% block pagetitle %}Home{% endblock %}
+
+{% block extracss %}
+<style type="text/css">
+div#introduction {
+  height: 300px;
+  float: left;	
+}
+
+div#top h1 {
+  color: #333;
+  font-size: 40px;	
+}
+
+ul.explanation {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;	
+}
+
+ul.explanation li {
+    border-color: #E1E1E1 #E9E9E9;
+    border-style: solid;
+    border-width: 0 1px 0 0;
+    float: left;
+    height: 100px;
+    padding: 0 20px;
+    width: 165px;
+}
+
+ul.explanation li.first {
+  padding-left: 0;
+}
+
+ul.explanation li.last {
+  border-right: none;	
+  padding-right: 0;
+}
+
+ul.explanation li h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+  text-shadow: 0 1px 2px #fff;
+
+}
+
+ul.explanation li p {
+  font-size: 12px;
+  margin: 5px 0 0 0;	
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div id="top">
+<h1>Welcome to laowailai.com</h1>
+</div>
+
+<p class="description"><em>This site is for foreigners living or working in China. It's a place to exchange knowledge about places to go, and life in China. <a href="">Find out more &raquo;</a></em></p>
+
+<ul class="explanation">
+<li class="first">
+	<h3>Choose a city</h3>
+	<p>Any city in China that you live in, or want to know more about<br/>
+	<a href="{% url cities %}">Choose your city &raquo;</a>
+	</p>
+</li>
+<li>
+	<h3>Browse</h3>
+	<p>Find places to eat, drink, visit or shop, or do something.<br/>
+	<a href="{% url places %}">Find places &raquo;</a>
+	</p>
+</li>
+<li class="last">
+	<h3>Contribute</h3>
+	<p>Add your own places, ratings, comments or news.<br/>
+	<a href="{% url registration_register %}">Signup to join in &raquo;</a></p>
+</li>
+</ul>
+
+	
+	
+	<div id="feed">
+		{% include "list/snippets/feed.html" %}
+	</div>
+
+
+
+
+
+{% endblock %}
+

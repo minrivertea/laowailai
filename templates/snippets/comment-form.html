@@ -1,0 +1,32 @@
+{% load comments %}
+
+<form action="{% comment_form_target %}" method="post">
+		{% csrf_token %}
+		{{ form.content_type }}
+		{{ form.object_pk }}
+		{{ form.timestamp }}
+		{{ form.security_hash }}
+										
+        <textarea id="id_comment" rows="3" cols="40" name="comment"></textarea>
+	
+		<p style="display:none;">
+			<input id="id_name" type="text" name="name" maxlength="50" value="{{ laowai.name }}" />
+		</p>
+										
+		<p style="display:none;">
+			<input type="text" name="email" id="id_email" value="{{ laowai.user.email }}" />
+		</p>
+	    								
+	   	<p style="display:none;">
+	   		<input type="text" name="url" id="id_url" value="{{ laowai.get_absolute_url }}" />
+	   		<label for="id_url">URL</label>
+		</p>
+	 
+	   	<p style="display:none;">
+	    	<label for="id_honeypot">If you enter anything in this field your comment will be treated as spam</label> 
+	    	<input type="text" name="honeypot" id="id_honeypot" />
+	   	</p>
+	    
+	   	<input type="submit" name="post" class="submit" value="" />		
+	
+</form>

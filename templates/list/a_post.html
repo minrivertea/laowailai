@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block metadescription %}The best place to share news and events for foreigners in Fuzhou, China.{% endblock %}
+{% block pagetitle %}Post by {{ post.added_by }}{% endblock %}
+
+{% block content %}
+	
+	
+	
+	<div id="feed">
+		<ul>
+		  <li class="first">
+	    {% include "snippets/feed_li.html" %}
+	      </li>
+	    </ul>
+	</div>
+
+
+
+
+
+{% endblock %}

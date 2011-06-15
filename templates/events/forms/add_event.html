@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block metadescription %}Add an event in Fuzhou{% endblock %}
+{% block pagetitle %}Add an event{% endblock %}
+
+{% block mapscripts %}
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="/css/ui-lightness/jquery-ui-1.8.13.custom.css"/>
+{% endblock %} 
+
+{% block extrajs %}
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $("#id_start_date").datepicker();
+});
+</script>
+
+{% endblock %}
+
+{% block extracss %}
+
+<style type="text/css">
+div#left input.submit-event-button {
+    background: url("/images/submit-event-button.png") no-repeat scroll left top transparent;
+    border: medium none;
+    float: right;
+    height: 33px;
+    margin: 10px 0 10px 0;
+    width: 142px;
+}
+
+div#left input.submit-event-button:hover {
+  background: url('/images/submit-event-button.png') no-repeat center left;	
+  cursor: pointer;
+}
+
+div#left input.submit-event-button:active {
+  background: url('/images/submit-event-button.png') no-repeat bottom left;
+  cursor: pointer;	
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+<div id="top">
+<h1>Add an event in {{ current_city }}</h1>
+</div>
+<p class="description"><em>Feel free to post an event for {{ current_city }} - parties, commercial events, anything is OK. Just remember that these will be public, so if you're posting a private event, make sure it's clear how people can apply to come</em></p>
+<form action="." method="post">
+<div style='display:none;'>{% csrf_token %}</div>
+<p><label for="id_title">Title:</label> <input id="id_title" type="text" name="title" maxlength="200" /></p>
+<p><label for="id_description">Description:</label> <textarea id="id_description" rows="10" cols="40" name="description"></textarea></p>
+
+<p><label for="id_start_date">Start date:</label> <input id="id_start_date" type="text" name="start_date" maxlength="200" /></p>
+
+
+
+<label for="id_location">Location</label> <input id="id_location" type="text" name="location" maxlength="200" />
+<div style="display: none;">
+	<input id="id_longitude" type="text" name="longitude" maxlength="200" value="" />
+	<input id="id_latitude" type="text" name="latitude" maxlength="200" value="" />
+</div>
+
+
+<div style="display:none;">
+<p><label for="id_city">City:</label> <select name="city" id="id_city">
+<option selected="selected" value="{{ current_city.id }}">{{ current_city }}</option>
+</select></p>
+</div>
+
+
+
+<input type="submit" class="submit-event-button" value="">
+
+</form>
+
+
+
+
+{% endblock %}

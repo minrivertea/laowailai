@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block extracss %}
+<style type="text/css">
+p.description {
+  border-bottom: none;
+  margin-bottom: 0;	
+}
+</style>
+{% endblock %}
+
+
+{% block content %}
+<div id="top">
+  <h1>Edit your bio</h1>
+</div>
+
+<p class="description"><em>Write something about yourself! Who you are, why you're in China, what you do...anything is OK. Remember this is public and so please be polite.</em></p>
+	<form action="" method="post">
+	{{ form.bio.errors }}
+		<textarea id="id_bio" rows="10" cols="60" name="bio">{{ laowai.bio }}</textarea>
+				<br/>
+		<input type="submit" value="" class="save-profile-button" />
+	</form>
+
+
+
+
+{% endblock %}

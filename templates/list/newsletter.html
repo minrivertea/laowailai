@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+{% load comments %}
+
+
+{% block metadescription %}Newsletter{% endblock %}
+{% block pagetitle %}Newsletter{% endblock %}
+
+{% block content %}
+	<h3>Subscribers</h3>
+	<ul>
+	{% for r in receivers %}
+	  {% if r.email %}
+	  {{ r.email }}, 
+	  {% else %}
+	  {{r.user.email }}, 
+	  {% endif %}
+	  
+	{% endfor %}
+	</ul>
+	
+	
+	<h3>Content</h3>
+	{% for i in infos %}
+	{% get_comment_count for i as comment_count %}
+	  <p><strong>{{ i.added_by.name }} wrote... </strong> {{ i|truncatewords:40 }}
+	  	<br/>{{ comment_count }} comment{{ comment_count|pluralize }}
+	  	<br/>{{ i.get_absolute_url }}</p>
+
+	{% endfor %}
+	
+	</ul>
+	
+	<a href="{% url newsletter_send %}">Send the newsletter!</a>
+{% endblock %}
+
+

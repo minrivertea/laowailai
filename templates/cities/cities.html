@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block metadescription %}Cities in China{% endblock %}
+{% block pagetitle %}{{ city.name }}{% endblock %}
+
+{% block extracss %}
+<style type="text/css">
+div#cities {
+  float: left;
+  width: 100%;	
+}
+
+div#cities ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;	
+}
+
+div#cities ul li {
+  float: left;
+  width:560px;	
+  margin-bottom: 20px;
+}
+
+div#cities ul li a.mark {
+  height: 15px;
+  width: 15px;
+  display: block;
+  background: url('/images/selected-city.png') no-repeat top left;
+  float: left;
+  margin-right: 5px;
+  position: relative;
+  top: 3px;	
+}
+
+div#cities ul li a.mark span {
+  display: none;	
+}
+
+div#cities ul li span.selected {
+  font-weight: bold;	
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div id="top">
+<h1>Cities in China</h1>
+</div>
+
+<p><strong>Current city: </strong><span class="selected">{{ current_city.name }} ({{ current_city.chinese_name }})</span></p>
+<p class="description"><em>Just click a city to select it, and start browsing that city. You can change your city at any time, it's not a permanent setting.</em></p>
+
+<div id="cities">
+<ul>
+{% for city in cities %}
+{% ifequal current_city city %}{% else %}
+  <li><a class="" href="{% url mark_city city.id %}">{{ city.name }} ({{ city.chinese_name }})</a></li>
+{% endifequal %}
+{% endfor %}
+</ul>
+</div>
+
+
+
+
+{% endblock %}

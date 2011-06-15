@@ -1,0 +1,421 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+{% load comments %}
+
+{% block metadescription %}Cities in China{% endblock %}
+{% block pagetitle %}{{ city.name }}{% endblock %}
+
+{% block canonical %}
+<link rel="canonical" href="{{ place.canonical_url }}" />
+{% endblock %}
+
+{% block mapscripts %}
+{% if place.has_map %}<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.1&services=true"></script>{% endif %}
+{% endblock %} 
+
+{% block extrajs %}
+{% if place.has_map %}
+<script type="text/javascript">
+
+var map = new BMap.Map("map_area");
+var point = new BMap.Point({{ place.longitude }}, {{ place.latitude }});  
+map.centerAndZoom(point, 15);  
+var marker = new BMap.Marker(point);  
+map.addOverlay(marker);
+
+
+$("#map_area").click(function openMap(){ 
+  $("#map_area").animate({
+    height: "300px",
+    opacity: 1,
+    fontSize: "3em",
+    borderWidth: "10px"
+  }, 500, function() {
+  $("#close_map").attr("style", "display:block;");
+  $('#map_area').unbind('click');
+  map.centerAndZoom(new BMap.Point(marker.point.lng, marker.point.lat), 15); 
+  map.addControl(new BMap.NavigationControl());	
+  });
+});
+
+
+
+$("#close_map").click(function(){
+  $("#map_area").animate({
+    height: "80px",
+    opacity: 1,
+    fontSize: "3em",
+    borderWidth: "10px"
+  }, 500, function() {
+  $("#close_map").attr("style", "display:none;");
+  map.centerAndZoom(new BMap.Point(marker.point.lng, marker.point.lat), 15);  
+  $("#map_area").click(function openMap(){ 
+  $("#map_area").animate({
+    height: "300px",
+    opacity: 1,
+    fontSize: "3em",
+    borderWidth: "10px"
+  }, 500, function() {
+  $("#close_map").attr("style", "display:block;");
+  $('#map_area').unbind('click');
+  map.centerAndZoom(new BMap.Point(marker.point.lng, marker.point.lat), 15); 
+  map.addControl(new BMap.NavigationControl());	
+  });
+});	
+  });
+});
+
+function bindPostCommentHandler() {    
+    $('#comment-form form').submit(function() {
+    	if ($('#comment-form form textarea').val() == '') {
+    		$('#comment-form form').prepend('<p class="warning" style="color:red; display:block;"><em>You must type something</em></p>');
+    	}
+    	else {
+        $.ajax({  
+            type: "POST",  
+            data: $('#comment-form form').serialize(),  
+            url: "{% comment_form_target %}",  
+            cache: false,  
+            dataType: "html",  
+            success: function(data, textStatus) {
+                $('.comments').append(data);
+                $('#comment-form textarea').val('');
+                $('#comment-form .warning').attr('style', 'display:none');
+            },  
+            error: function (XMLHttpRequest, textStatus, errorThrown) {  
+                $('#comment-form form').replaceWith('Your comment could not be posted.');  
+            }  
+        }); 
+    	}
+        return false;
+    });  
+}  
+      
+$(document).ready(function() { 
+   	     bindPostCommentHandler();  
+});  
+
+
+   
+ 
+</script> 
+{% endif %} 
+
+{% endblock %}
+
+
+
+
+{% block extracss %}
+<style type="text/css">
+div#infobar {
+  height: 50px;
+  float: left;
+  width: 560px;	
+  border-bottom: 3px dotted #e1e1e1;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+div#infobar div {
+  float: left;
+  margin-right: 20px;	
+}
+
+div#infobar div p {
+  font-size: 11px;
+  margin: 0;	
+}
+
+div#place {
+  float: left;
+  width: 100%;
+  margin-bottom: 0px;
+  padding-bottom: 20px;
+}
+
+p.description {
+  font-family: Georgia, sans-serif;	
+  margin: 0;
+  border-bottom: none;
+}
+
+span#close_map {
+  float: right;
+  font-size: 11px;
+  padding-right: 20px;
+  color: #096233;	
+}
+
+span#close_map:hover {
+  color: #F67B7B;
+  cursor: pointer;	
+}
+
+div.ratings {
+  float: ;	
+}
+
+div.ratings p {
+  font-size: 10px;
+  margin: 0;
+  text-align: ;	
+}
+
+	/*             styles for the star rater                */	
+	.star-rating{
+		list-style:none;
+		margin: 0px;
+		padding:0px;
+		width: 125px;
+		height: 25px;
+		position: relative;
+		overflow:hidden;
+		background: url("/images/alt_star2.png") top left repeat-x;		
+	}
+	.star-rating li{
+		padding:0px;
+		margin:0px;
+		width:25px;
+		height:25px;
+		/*\*/
+		float: left;
+		/* */
+	}
+	.star-rating li a{
+		display:block;
+		width:25px;
+		height: 25px;
+		line-height:25px;		
+		text-decoration: none;
+		text-indent: -9000px;
+		z-index: 20;
+		position: absolute;
+		padding: 0px;
+		overflow:hidden;
+	}
+	.star-rating li a:hover{
+		background: url("/images/alt_star2.png") left bottom;
+		z-index: 2;
+		left: 0px;
+		border:none;
+	}
+	.star-rating a.one-star{
+		left: 0px;
+	}
+	.star-rating a.one-star:hover{
+		width:25px;
+	}
+	.star-rating a.two-stars{
+		left:25px;
+	}
+	.star-rating a.two-stars:hover{
+		width: 50px;
+	}
+	.star-rating a.three-stars{
+		left: 50px;
+	}
+	.star-rating a.three-stars:hover{
+		width: 75px;
+	}
+	.star-rating a.four-stars{
+		left: 75px;
+	}	
+	.star-rating a.four-stars:hover{
+		width: 100px;
+	}
+	.star-rating a.five-stars{
+		left: 100px;
+	}
+	.star-rating a.five-stars:hover{
+		width: 125px;
+	}
+	.star-rating li.current-rating{
+		background: url("/images/alt_star2.png") left center;
+		position: absolute;
+		height: 25px;
+		display: block;
+		text-indent: -9000px;
+		z-index: 1;
+	}
+	
+	/* remove halo effect in firefox   */
+	a:active{
+		outline: none;
+	}	
+	
+div#filters ul {
+  margin:0;
+  padding: 0;
+  list-style-type: none;
+  display: inline;	
+}
+
+div#filters li a {
+  float: left;
+  height: 32px;
+  width: 32px;
+  margin-right: 10px;	
+}
+
+div#filters li a span {
+  font-size: 11px;
+  font-weight: bold;
+  position: relative;
+  top: 35px;
+  display: block;
+  width: 100%;
+  text-align: center;
+  color: #333;	
+}	
+
+
+div#filters li.eat a {
+  background: url('/images/eat_small.png') no-repeat top left;
+}
+
+div#filters li.drink a {
+  background: url('/images/drink_small.png') no-repeat top left;
+}
+
+div#filters li.do a {
+  background: url('/images/do_small.png') no-repeat top left;
+}
+
+div#filters li.see a {
+  background: url('/images/see_small.png') no-repeat top left;
+}
+
+div#filters li.buy a {
+  background: url('/images/buy_small.png') no-repeat top left;
+}
+
+div.print {
+  display: block;
+  height: 32px;
+  width: 32px;	
+  float: left;
+  background: url('/images/print-button.png') no-repeat top left;
+}
+
+div.print span {
+  font-size: 11px;
+  font-weight: bold;
+  position: relative;
+  top: 36px;
+  text-align: center;
+  color: #fff;	
+  float: left;
+  width: 32px;
+}
+
+div.print:hover {
+  cursor: pointer;
+  background-position: center left;	
+}
+
+div.print:hover span {
+  color: #666;	
+}
+
+div.print:active {
+  cursor: pointer;
+  background-position: bottom left;	
+}
+
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div id="top">
+	{% if request.user.is_authenticated %}
+	<div class="add-place-button"><a href="{% url add_place %}"><span>Add a place</span></a></div>
+	{% endif %}
+	
+<h1>Places in {{ current_city }}</h1>
+</div>
+
+<h2>{{ place.name }} ({{ place.chinese_name }})</h2>
+
+
+
+<div id="place">
+
+	<p class="description">{{ place.description }}</p>
+{% if place.has_map %}
+<div id="map_area" style="width: 560px; height: 80px;"></div>
+<span id="close_map" style="display: none;z-index: 9999;">Close map</span>
+{% else %}
+	{% if request.user.is_authenticated %}
+	<p><em>There's no map location for this place. <a href="{% url edit_location place.id %}">Add a map location</a></em></p>
+	{% endif %}
+{% endif %}
+
+</div>
+
+
+
+<div id="infobar">
+	<div class="ratings">
+	{% if rated %}
+	<p>You've rated this (avg. {{ place.get_average_rating }}/5)</p>
+	<ul class="star-rating">
+		<li class="current-rating" style="width:{{ current_rating }}px;"> Currently 3.5/5 Stars.</li>
+	</ul>
+	{% else %}
+	
+	<p>{{ place.rating_count }} rating{{ place.rating_count|pluralize }} (avg. {{ place.get_average_rating }}/5)</p>
+	<ul class="star-rating">
+		<li class="current-rating" style="width:{{ current_rating }}px;"> Currently 3.5/5 Stars.</li>
+		{% if request.user.is_authenticated %}
+		<li><a href="{% url add_rating place.id 1 %}" title="1 star out of 5" class="one-star">1</a></li>
+		<li><a href="{% url add_rating place.id 2 %}" title="2 stars out of 5" class="two-stars">2</a></li>
+		<li><a href="{% url add_rating place.id 3 %}" title="3 stars out of 5" class="three-stars">3</a></li>
+		<li><a href="{% url add_rating place.id 4 %}" title="4 stars out of 5" class="four-stars">4</a></li>
+		<li><a href="{% url add_rating place.id 5 %}" title="5 stars out of 5" class="five-stars">5</a></li>
+		{% endif %}
+	</ul>
+	
+	{% endif %}
+	</div>
+	<div>
+		<p><strong>Location</strong><br/> {{ place.location }}</p>
+	</div>
+	<div>
+		<div class="print" onClick="window.print()"><span>Print</span></div>
+	</div>
+	
+</div>
+
+
+
+{% with place as thing %}
+{% get_comment_count for thing as comment_count %}
+{% get_comment_form for thing as form %}
+{% get_comment_list for thing as comment_list %}
+
+<a href="#" id="comments_{{ thing.id }}"></a>
+	<div class="comments">
+	{% if comment_list %}
+	<h4>Comments ({{ comment_count }})</h4>
+	{% include "snippets/comment-list.html" %}
+	{% else %}
+	{% endif %}
+	</div>
+	{% if request.user.is_authenticated %}
+	<div id="comment-form">
+	{% with thing.get_absolute_url as next %}
+	{% include "snippets/comment-form.html" %}
+	{% endwith %}	
+	</div>
+	{% endif %}
+{% endwith %}				
+	
+
+
+		
+
+
+{% endblock %}

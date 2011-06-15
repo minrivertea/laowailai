@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block metadescription %}Unsubscribe from emails on LaoWaiLai.com{% endblock %}
+{% block pagetitle %}Unsubscribe{% endblock %}
+
+{% block content %}
+<h2>Unsubscribe</h2>
+<p>Enter your email address to unsubscribe from the mailing list:</p>
+
+<form action="." method="post">
+{{ form.as_p }}
+<input type="submit" value="Submit" class="submit"/>
+
+</form>
+
+{% endblock %}

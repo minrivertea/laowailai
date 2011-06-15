@@ -1,0 +1,285 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block metadescription %}Cities in China{% endblock %}
+{% block pagetitle %}{% endblock %}
+
+{% block extrajs %}
+<script type="text/javascript">
+
+function filter(type) {
+$.getJSON("/places/", {xhr: "true", filter: type, category: '{{ selected }}',},
+  function(data) {
+  	$('#places').children().remove();
+  	$('#reset').attr('style', 'display:block');
+  	$(data).appendTo('#places');
+  });
+}
+
+$("#filters ul li a").click(function () { 
+	$('#reset').attr('style', 'display:block'); 
+});
+
+$("#most_recent").click(function () { 
+	filter("recent");
+	$("#highest_rated").css('font-weight','normal').css('color', '');
+	$('#most_recent').attr('style', 'font-weight: bold').css('color', '#000'); 
+});
+$("#highest_rated").click(function () { 
+	filter("highest");
+	$("#most_recent").css('font-weight','normal').css('color', '');
+	$('#highest_rated').css('font-weight', 'bold').css('color', '#000'); 
+});
+
+
+</script>
+{% endblock %}
+
+{% block extracss %}
+<style type="text/css">
+
+
+div#places {
+  float: left;
+  width: 100%;	
+}
+
+div.place.wide {
+  width: 500px;	
+}
+
+div.place {
+  border-bottom: 1px solid #e1e1e1;
+  margin-bottom: 20px;	
+  padding-bottom: 20px;
+  width: 260px;
+  float: left;
+  height: 140px;
+  margin-right: 50px;
+}
+
+div.place.right {
+  margin-right: 0;	
+}
+
+div.place p {
+  margin: 0;
+  font-size: 12px;	
+}
+
+div.place h3 {
+  margin: 0 0 5px 0;
+  padding: 0;	
+  float: none;
+}
+
+div.ratings {
+  width: 260px;
+  float: left;
+  margin-bottom: 5px;
+}
+
+div.ratings p {
+  font-size: 10px;
+  margin: 0 0px 0 5px;
+  float: left;
+  text-align: right;
+  position: relative;
+  top: 2px;	
+}
+
+div.ratings ul {
+  float: left;	
+}
+
+	/*             styles for the star rater                */	
+	.star-rating{
+		list-style:none;
+		margin: 0px;
+		padding:0px;
+		width: 90px;
+		height: 18px;
+		position: relative;
+		overflow:hidden;
+		background: url("/images/alt_star_small2.png") top left repeat-x;		
+	}
+	.star-rating li{
+		padding:0px;
+		margin:0px;
+		width:25px;
+		height:18px;
+		/*\*/
+		float: left;
+		/* */
+	}
+
+
+
+	.star-rating li.current-rating{
+		background: url("/images/alt_star_small2.png") left center;
+		position: absolute;
+		height: 18px;
+		display: block;
+		text-indent: -9000px;
+		z-index: 1;
+	}
+	
+	/* remove halo effect in firefox   */
+	a:active{
+		outline: none;
+	}	
+
+div#filters {
+  margin-bottom: 0px;
+  float: left;
+  width: 100%;
+  padding-bottom: 20px;	
+}
+
+div#filters div {
+  float: left;	
+}
+
+div#filters div.right {
+  text-align: right;
+  float: right;
+}
+
+div#filters p {
+  margin: 0;
+  color: #999;
+  line-height: 1.4em;
+  font-size: 12px;	
+}
+
+div#filters ul {
+  margin:0;
+  padding: 0;
+  list-style-type: none;
+  display: inline;	
+}
+
+div#filters li a {
+  float: left;
+  height: 32px;
+  width: 32px;
+  margin-right: 10px;	
+}
+
+div#filters li a span {
+  font-size: 11px;
+  font-weight: bold;
+  position: relative;
+  top: 35px;
+  display: block;
+  width: 100%;
+  text-align: center;
+  color: #fff;	
+}
+
+div#filters li.eat a {
+  background: url('/images/eat_small.png') no-repeat top left;
+}
+
+div#filters li.drink a {
+  background: url('/images/drink_small.png') no-repeat top left;
+}
+
+div#filters li.do a {
+  background: url('/images/do_small.png') no-repeat top left;
+}
+
+div#filters li.see a {
+  background: url('/images/see_small.png') no-repeat top left;
+}
+
+div#filters li.buy a {
+  background: url('/images/buy_small.png') no-repeat top left;
+}
+
+div#filters li a:hover {
+  background-position: center left;	
+  cursor: pointer;
+}
+
+div#filters li a:hover span {
+  color: #666;	
+}
+
+div#filters li a:active {
+  background-position: bottom left;	
+}
+
+div#filters li a.selected {
+  background-position: bottom left;	
+}
+
+div#filters li a.selected span {
+  color: #666;	
+}
+
+a.small {
+  font-size: 10px;	
+}
+
+span#most_recent:hover, span#highest_rated:hover {
+  cursor: pointer;
+  color: #F67B7B;	
+}
+
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div id="top">
+	{% if request.user.is_authenticated %}
+	<div class="add-place-button"><a href="{% url add_place %}"><span>Add a place</span></a></div>
+	{% endif %}
+<h1>Places in {{ current_city }}</h1>
+</div>
+
+<div id="filters">
+	<ul>
+		<li class="eat">
+			<a id="eat" class="{% ifequal selected 'eat' %}selected{% endifequal %}" href="?category=eat"><span>Eat</span></a>
+		</li>
+		<li class="drink">
+			<a id="drink" class="{% ifequal selected 'drink' %}selected{% endifequal %}" href="?category=drink"><span>Drink</span></a>
+		</li>
+		<li class="do">
+			<a id="do" class="{% ifequal selected 'do' %}selected{% endifequal %}" href="?category=do"><span>Do</span></a>
+		</li>
+		<li class="see">
+			<a id="see" class="{% ifequal selected 'see' %}selected{% endifequal %}" href="?category=see"><span>See</span></a>
+		</li>
+		<li class="buy">
+			<a id="buy" class="{% ifequal selected 'buy' %}selected{% endifequal %}" href="?category=buy"><span>Buy</span></a>
+		</li>
+	</ul>
+		<div>
+
+		<p>&laquo; Click an icon to filter places<br/>
+		<span style="" id="most_recent">Most recent</span> | 
+		<span style="" id="highest_rated">Highest rated</span>
+		</p>
+		</div>
+		<div class="right">
+		<br/><a class="small" id="reset" style="display:{% if selected %}block{% else %}none{% endif %}" href="{% url places %}">Reset filters</a>
+		
+		</div>
+</div>
+
+{% include "snippets/search_bar.html" %}
+
+
+<div id="places">
+
+{% include "places/snippets/place-list.html" %}
+</div>
+
+
+
+
+{% endblock %}

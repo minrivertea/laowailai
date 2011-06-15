@@ -1,0 +1,92 @@
+{% load thumbnail %}
+
+<div id="header">
+	    	<div id="logo">
+		    	<a title="LaoWaiLai (Fuzhou) Home" alt="home" href="/">
+		    		<span>LaoWaiLai Fuzhou</span>
+		    	</a>
+		    </div>
+	    	<div id="site-introduction">News, events and info for the well connected <em>lǎo wài</em> in China.<br/>
+	    	</div>
+	    	
+	    	<div id="current-city">
+	    	<p class="city">{{ current_city.chinese_name }}</p>
+	    	<p>You're currently browsing {{ current_city }} (<a href="{% url cities %}">Change city</a>)</p>
+	    	</div>
+	    	
+	    			
+
+	    	{% if user.is_authenticated %}
+	    	<div id="account">
+	    		<div class="photo">
+	    		<a title="Click to view your profile" href="{% url laowai laowai.id %}">
+	    		{% if laowai.photo %}
+	    			<img class="avatar" title="Click to view your profile" alt="a picture of {{ laowai.user.name }}" src="{% thumbnail laowai.photo 60x60 crop %}">
+	    		{% else %}
+	    			<img class="avatar" title="Click to view your profile" alt="" src="/images/avatar_small.png">
+	    		{% endif %}
+	    		</a>
+	    		</div>
+	    		
+	    		<div class="info">
+	    			<p class="name"><a title="Click to view your profile" href="{% url laowai laowai.id %}">{{ user.email }}</a>	
+	    				<span class="small"><a title="Click to logout" href="{% url auth_logout %}">(log-out)</a></span>
+	    				</span>
+	    			</p>
+	    			<p>
+	    				<span class="small">
+	    				{% if laowai.subscribe %}
+	    					You are subscribed to weekly emails (<a title="Click to unsubscribe from weekly emails" href="{% url user_unsubscribe %}">unsubscribe</a>)
+	    				{% else %}
+	    					You are not subscribed to receive emails (<a title="Click to subscribe to weekly emails" href="{% url user_subscribe %}">subscribe</a>)
+	    				{% endif %}
+	    				</span>
+	    			</p>
+	    			<p>
+	    				<span class="small">
+	    					<a title="Click to upload a new profile photo" href="{% url upload_profile_photo %}">
+	    						{% if laowai.photo %}Change your profile photo
+	    						{% else %}Upload a profile photo
+	    						{% endif %}
+	    					</a>
+	    				</span>
+	    			</p>
+	    			<p><span class="small"><a href="{% url add_a_bio %}">{% if laowai.bio %}Edit bio{% else %}Add a bio{% endif %}</a></span></p>
+	    			<p><span class="small"><a href="{% url tell_a_friend %}">Tell a friend!</a></span></p>
+	    		</div>
+
+	    		
+	  
+
+	    	</div>
+	    	{% else %}
+	    			<div id="nav">
+	    			<a href="/" title="Home" alt="home">home</a> -
+	    			<a href="/about/" title="About LaoWaiLai.com">about</a> - 
+	    			<a title="Login" alt="login" href="/accounts/login/">login</a> - 
+	    			<a title="Register" alt="Register" href="{% url registration_register %}">register</a>
+	    			</div>
+	    	{% endif %}
+		
+
+			
+			{% if user.is_superuser %}
+			<div id="admin">
+			<h4>Admin stats</h4>
+	    		<p>{{ signups.count }} signups</p>
+	    		<p>{{ subscribers.count }} subscribers</p>
+	    		<p><a href="/admin/">Login to admin interface</a></p>
+	    		<p><a href="/newsletter/">Newsletter</a></p>
+	    		</div>
+	    	{% endif %}
+	
+			{% if user.is_authenticated %}
+			{% else %}
+			<div class="header-block" id="about-fuzhou">
+		
+				<a title="Find out more about Fuzhou" alt="a link to find out more about Fuzhou" href="/about/fuzhou/"><img alt="a small map of Fuzhou" class="map" src="/images/fuzhou-map.png"/></a>
+				<p>Fuzhou is the garden city of south China - hot in summer, cold in winter, and home to @500 strange <em>lao wai</em> who took a plane to China and accidentally ended up here.</p>
+			</div>
+			{% endif %}
+			
+       </div>

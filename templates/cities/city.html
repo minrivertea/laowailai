@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block metadescription %}Cities in China{% endblock %}
+{% block pagetitle %}{{ city.name }}{% endblock %}
+
+{% block extracss %}
+<style type="text/css">
+div#events {
+  float: left;
+  width: 100%;	
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div id="top">
+<h1>{{ city.name }} ({{ city.chinese_name }})</h1>
+</div>
+<p>{{ city.description }}</p>
+
+{% endblock %}

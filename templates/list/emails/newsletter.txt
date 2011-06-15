@@ -1,0 +1,13 @@
+
+Check out this week's Fuzhou news from http://www.laowailai.com:
+
+{% for i in infos %}
+{{ i.added_by.name }} wrote:
+{{ i|truncatewords:40 }}
+{{ i.get_absolute_url }}
+{% endfor %}
+
+Zai Jian!
+
+
+(Unsubscribe from these emails at http://www.laowailai.com/unsubscribe)

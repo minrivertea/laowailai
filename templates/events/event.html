@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block metadescription %}{{ event.description }}{% endblock %}
+{% block pagetitle %}Event {{ event.added_by }}{% endblock %}
+
+{% block content %}
+
+<div id="top">
+	{% if request.user.is_authenticated %}
+	<div class="add-event-button"><a href="{% url add_event %}"><span>Add an event</span></a></div>
+	{% endif %}
+<h1>Events in {{ current_city }}</h1>
+</div>
+
+<div class="event">
+	<h2>{{ event.title }}</h2>
+	<p class="added-by-metadata">{{ event.start_date|date:"d M Y" }} | <em>Added by <a href="{% url laowai event.added_by.id %}">{{ event.added_by.name }}</a></em></p>
+	<p>{{ event.description }}</p>
+
+
+</div>
+
+
+
+
+
+{% endblock %}

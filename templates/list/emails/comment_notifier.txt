@@ -1,0 +1,5 @@
+{{ commenter }} wrote a comment about your post on laowailai.com:
+
+"{{ comment }}"
+
+Write a response back - {{ post_url }}

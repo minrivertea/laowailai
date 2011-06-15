@@ -1,0 +1,50 @@
+# core python imports
+from django.conf import settings
+from django.core.urlresolvers import reverse
+from datetime import timedelta, datetime
+from PIL import Image
+from cStringIO import StringIO
+import os, md5
+import smtplib
+
+# stuff from my app
+from fuzhounet.list.models import Laowai
+from fuzhounet.cities.models import City
+
+# django stuff
+from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render_to_response
+from django.template import RequestContext
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.contrib.auth.decorators import login_required
+from django.core.context_processors import csrf
+
+from fuzhounet.events.models import Event
+
+
+#render shortcut
+def render(request, template, context_dict=None, **kwargs):
+    return render_to_response(
+        template, context_dict or {}, context_instance=RequestContext(request),
+                              **kwargs
+    )
+
+def cities(request):
+    cities = City.objects.all().order_by('name')
+    
+    return render(request, "cities/cities.html", locals())
+
+
+def city(request, slug):
+    city = get_object_or_404(City, slug=slug)
+    events = Event.objects.filter(city=city)
+    
+    return render(request, "cities/city.html", locals())
+
+def mark_city(request, id):
+    city = get_object_or_404(City, pk=id) 
+    request.session['CURRENTCITY'] = city.id
+    print city
+    url = request.META.get('HTTP_REFERER','/')
+    return HttpResponseRedirect(url)

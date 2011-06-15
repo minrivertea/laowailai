@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block pagetitle%}Tell a friend{% endblock %}
+
+{% block js %}{% endblock %}
+{% block map %}{% endblock %}
+
+    {% block content %}
+
+
+    <h2>Tell a friend!</h2>
+	<p>Let your friends know about this website by entering their email address below, and writing a custom message if you like: </p> 
+    
+    	<form enctype="multipart/form-data" method="post" action="/tell-a-friend/">
+
+			{% if user.is_authenticated %}
+				<div style="display: none;">
+				<input id="id_sender" type="text" name="sender" maxlength="200" value="{{ user.email }}"/>
+				</div>
+			{% else %}
+	            {{ form.sender.errors }}        
+				{{ form.sender }} <label>Your email</label>
+				<br/>
+			{% endif %}
+		
+			{{ form.recipient.errors }}        
+			{{ form.recipient }}<label>Your friend's email</label>
+			<br/>
+			{{ form.message.errors }}        
+			{{ form.message }}<label>Your message</label>
+			<br/>
+    		<input type="submit" value="Send" class="submit">
+		</form>
+
+	<p><span class="small">* we will not save or store your friend's email address - we just send them an email then delete it.</span></p>                        
+
+    {% endblock %}

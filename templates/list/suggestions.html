@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+{% load comments %}
+
+
+{% block metadescription %}Suggestions{% endblock %}
+{% block pagetitle %}Suggestions{% endblock %}
+
+{% block content %}
+
+<h2>Suggestions</h2>
+<p>How can we improve this site? Add a suggestion, or vote for the previous suggestions that you think we should work on.</p>
+{% for s in suggestions %}
+<div class="suggestion">
+	<div class="suggestion-vote">
+	<img src="/images/up-arrow.png" class="up-arrow"/>
+	<span class="vote-count">{{ s.votes }}</span><br/>
+	<a href="{% url suggestion_vote s.id %}">Vote for this idea</a>
+	</div>
+	<div class="suggestion-content">
+		<h3>{{ s.title }}</h3>
+ 		<p class="meta">Submitted by <strong>{{ s.submitted_by }}</strong> on {{ s.date_added|date:"d M Y" }}</p>
+ 		<p>{{ s.description }}</p>
+ 		{% get_comment_count for s as comment_count %}
+ 		<div class="likes">
+ 		<img class="comment-icon" src="/images/heart.png"/><a title="Click to view all comments" href="#comments_{{ s.id }}" onclick="toggle_visibility({{ s.id }});">{{ comment_count }} comment{{ comment_count|pluralize }}</a>
+ 		</div>
+		<br/>
+ 		{% get_comment_list for s as comment_list %}
+ 		
+				<div style="display: none;" id="comments_full_{{ s.id }}">
+					<div class="comments">
+						{% for comment in comment_list %}
+							<div class="a-comment{% if forloop.last %} last{% endif %}">
+								<div class="comment-name">
+									{% if comment.user_url %}<a href="{{ laowai.get_absolute_url }}">{% endif %}
+									<h4>
+										{{ comment.user_name }} <br/>
+										<span>{{ comment.submit_date|date:"d M Y" }}</span>
+									</h4>
+									{% if comment.user_url %}</a>{% endif %}
+								</div>
+								<div class="comment-content">{{ comment.comment|urlize }}</div>
+							</div>
+						{% endfor %}
+					
+					
+					{% get_comment_form for s as comment_form %}
+					<div class="comment-form">	
+							<form action="/comments/post/" method="post">
+									{% csrf_token %}
+									{{ form.content_type }}
+									{{ form.object_pk }}
+									{{ form.timestamp }}
+									{{ form.security_hash }}
+						
+									
+									<div style="display:none;">
+									<input type="hidden" name="next" value="/suggestions/" />
+									</div>
+										
+    	  							 
+							        <textarea id="id_comment" rows="10" cols="40" name="comment" default="Add your comment..." onclick="clearInput(this)">Add your comment...
+							        </textarea>
+	
+	       							<p style="display:none;">
+	       							{% if user.is_anonymous %}
+	       							<input id="id_name" type="text" name="name" maxlength="50" value="Anonymous" />
+	       							{% else %}
+	      							<input id="id_name" type="text" name="name" maxlength="50" value="{{ laowai.name }}" />
+	      							{% endif %}
+	       							</p>
+									
+									{% if laowai %}	
+									<p style="display:none;">
+									<input type="text" name="email" id="id_email" value="user.email" />
+	   								</p>
+	   								{% else %}
+	   								<p>
+									<input type="text" name="email" id="id_email" value="Your email address (required)" onclick="clearInput(this)" />
+	   								</p>
+	   								{% endif %}
+	    								
+	   								<p style="display:none;">
+	   								<input type="text" name="url" id="id_url" value="None" />
+	   								<label for="id_url">URL</label>
+									</p>
+	 
+	   								<p style="display:none;">
+	       							<label for="id_honeypot">If you enter anything in this field your comment will be treated as spam</label> 
+	       							<input type="text" name="honeypot" id="id_honeypot" />
+	   								</p>
+	    
+	   								<input type="submit" name="post" class="submit" value="Post" />		
+	
+								</form>
+								<div class="close"><a href="#" onclick="toggle_visibility({{ s.id }});"> x close comments</a></div>
+							</div>
+					
+					</div>
+					
+				</div>
+			
+	</div>
+</div>
+
+
+
+
+{% endfor %}
+	
+
+
+
+
+
+{% endblock %}
+
+	{% block extra-content %}
+	<div id="add-form">
+		<h2>Make a suggestion</h2>
+		<form action="." method="post">
+			<input type="text" name="title" id="id_title" value="Give a title to your suggestion" onclick="clearInput(this)" class="title" /><br/>
+			<textarea id="id_description" rows="10" cols="40" name="description"  onclick="clearInput(this)" >Give a description of your suggestion</textarea><br/>
+			<input type="submit" value="Submit" class="submit">
+		</form>
+	</div>
+	{% endblock %}

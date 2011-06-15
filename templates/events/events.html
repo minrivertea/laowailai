@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block metadescription %}{{ event.description }}{% endblock %}
+{% block pagetitle %}Event {{ event.added_by }}{% endblock %}
+
+{% block extracss %}
+<style type="text/css">
+div#events {
+  float: left;
+  width: 100%;	
+}
+
+div#events ul {
+  list-style-type: square;
+  margin: 0 0 0 20px;
+  padding: 0 0 0 10px;	
+}
+
+div#events ul h3 {
+  font-size: 15px;	
+  margin: 0;
+}
+
+div#events ul li {
+  margin-bottom: 10px;	
+}
+
+div#events ul li p {
+  margin: 0;
+  font-size: 11px;	
+}
+
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div id="top">
+	{% if request.user.is_authenticated %}
+	<div class="add-event-button"><a href="{% url add_event %}"><span>Add an event</span></a></div>
+	{% endif %}
+<h1>Events in {{ current_city }}</h1>
+</div>
+
+<p class="description"><em>This is a list of events for {{ current_city }} added by laowai living there. These are all public events, so feel free to just turn up unless otherwise specified.</em></p>
+
+
+<div id="events">
+<ul>
+{% for event in events %}
+<li>
+	<h3><a href="{% url event event.id %}">{{ event.title }}</a></h3>
+	<p>{{ event.start_date }} to {{ event.end_date }} | <em>Added by <a href="{% url laowai event.added_by.id %}">{{ event.added_by.name }}</a></em></p>
+
+</li>
+{% endfor %}
+</ul>
+</div>
+
+
+
+
+{% endblock %}

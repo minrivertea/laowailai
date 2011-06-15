@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block metadescription %}Add a question for Laowai to answer{% endblock %}
+{% block pagetitle %}Add a question{% endblock %}
+
+{% block extracss %}
+<style type="text/css">
+
+div#left input.submit-answer-button {
+  background: url('/images/submit-answer-button.png') no-repeat top left;
+  border: medium none;
+  height: 33px;
+  margin: 0px 0 10px 0px;
+  width: 142px;
+  float: right;
+}
+
+div#left input.submit-answer-button:hover {
+  background: url('/images/submit-answer-button.png') no-repeat center left;
+  cursor: pointer;
+}
+
+div#left input.submit-answer-button:active {
+  background: url('/images/submit-answer-button.png') no-repeat bottom left;
+  cursor: pointer;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div id="top">
+<h1>Answer a question</h1>
+</div>
+
+<p><strong>Question:</strong> {{ question.question }}</p>
+<form action="." method="post">
+{{ form.as_p }}
+<input type="submit" value="" class="submit-answer-button">
+</form>
+
+
+
+
+{% endblock %}

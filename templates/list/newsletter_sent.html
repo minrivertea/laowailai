@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+
+{% block metadescription %}Newsletter sent{% endblock %}
+{% block pagetitle %}Newsletter sent{% endblock %}
+
+{% block content %}
+<h2>Newsletter sent</h2>
+<p>A weekly newsletter has been sent to these subscribers:</p>
+	<h3>Subscribers</h3>
+	<ul>
+	{% for r in receivers %}
+	  {% if r.email %}
+	  {{ r.email }}, 
+	  {% else %}
+	  {{r.user.email }}, 
+	  {% endif %}
+	  
+	{% endfor %}
+	</ul>
+	
+	
+	<h3>Content</h3>
+	{% for i in infos %}
+	  <p><strong>{{ i.added_by.name }} wrote... </strong> {{ i|truncatewords:40 }}
+	  	<br/>{{ i.get_absolute_url }}</p>
+
+	{% endfor %}
+	
+	</ul>
+	
+{% endblock %}
+
+

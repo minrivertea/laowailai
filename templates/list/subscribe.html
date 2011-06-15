@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block metadescription %}Subscribe to emails on LaoWaiLai.com{% endblock %}
+{% block pagetitle %}Subscribe{% endblock %}
+
+{% block content %}
+
+{% if laowai %}
+	<h2>You're already signed up to receive emails!</h2>
+	<p>If you're not {{ laowai.email }} then <a href="{% url logout %}">click here</a></p>
+{% else %}
+	<h2>Sign me up!</h2>
+	<p>Subscribe to receive weekly emails from LaoWaiLai.com with news and events posted by fellow Fuzhou foreigners.</p>
+		<form action="/subscribe/" method="post">
+			<input type="text" onclick="clearInput(this)" name="email" value="Your email address" id="id_email" /><br/>
+			<br/>
+			<br/>
+			<input type="checkbox" name="receive_emails" id="id_receive_emails" checked="True" /> 
+			<span class="small">I would like to receive email updates (you can subscribe/unsubscribe at any time).</span>
+						
+			<input class="submit" type="submit" value="Submit" class="submit"/>
+		</form>
+{% endif %}
+
+
+{% endblock %}

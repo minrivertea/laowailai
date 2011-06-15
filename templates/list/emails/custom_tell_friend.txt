@@ -1,0 +1,6 @@
+Hey,
+
+{{ message }}
+
+http://www.laowailai.com
+

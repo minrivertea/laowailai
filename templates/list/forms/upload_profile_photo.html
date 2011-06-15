@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title%}Upload a profile photo |{% endblock %}
+
+{% block js %}{% endblock %}
+{% block map %}{% endblock %}
+
+    {% block content %}
+
+
+    <h2>{% if laowai.photo %}Upload a new profile photo{% else %}Add a profile photo{% endif %}</h2>
+	<p>Show the world your beautiful face!<br/> (TIP: for best results choose a square photo with your face in the middle.) </p> 
+    
+    	<form enctype="multipart/form-data" method="post" action="/upload_profile_photo/">
+
+            {{ form.photo.errors }}        
+			{{ form.photo }}
+			<br/>
+    		<input type="submit" value="Upload" class="submit">
+		</form>
+                        
+
+    {% endblock %}

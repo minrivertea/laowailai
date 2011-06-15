@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block metadescription %}Add a place in Fuzhou{% endblock %}
+{% block pagetitle %}Add a place{% endblock %}
+
+{% block mapscripts %}
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.1&services=true"></script>
+{% endblock %} 
+
+{% block extrajs %}
+<script type="text/javascript">
+var map = new BMap.Map("map_area");
+
+var myGeo = new BMap.Geocoder();   
+myGeo.getPoint("{{ place.city.centre_of_town }}", function(point){  
+ if (point) {  
+   map.centerAndZoom(point, 11);
+   map.addControl(new BMap.NavigationControl()); 
+   var marker = new BMap.Marker(point);
+   marker.enableDragging(); 
+   map.addOverlay(marker); 
+   marker.addEventListener("dragend", function(e){
+     var myGeo = new BMap.Geocoder();
+     myGeo.getLocation(new BMap.Point(e.point.lng, e.point.lat), function(result){
+       	  document.getElementById("id_location").value = result.address;
+     	  $("#id_longitude").attr("value", e.point.lng);
+     	  $("#id_latitude").attr("value", e.point.lat);
+     	  $("#id_location").attr("value", result.address);
+     });
+   }); 
+ }  
+}, "{{ place.city.chinese_name }}");
+
+ 
+</script> 
+
+
+<script type="application/javascript">
+$(function(){
+$('input').customInput();
+}); 
+</script>
+{% endblock %}
+
+{% block extracss %}
+<style type="text/css">
+div#left input.save-location-button {
+  background: url('/images/save-location-button.png') no-repeat top left;
+  border: medium none;
+  height: 33px;
+  margin: 10px 0 10px 0px;
+  width: 142px;
+  float: right;  
+}
+
+div#left input.save-location-button:hover {
+  cursor: pointer;
+  background: url('/images/save-location-button.png') no-repeat center left;	
+}
+
+div#left input.save-location-button:active {
+  cursor: pointer;
+  background: url('/images/save-location-button.png') no-repeat bottom left;	
+}
+
+div#categories {
+  float: left;
+  margin-bottom: 0px;
+  width: 560px;	
+  padding-bottom: 50px;
+  border-bottom: 3px dotted #e1e1e1;
+}
+
+div#categories h4 {
+  margin-top: 0;
+  margin-bottom: 10px;	
+}
+
+div#maps {
+  float: left;
+  width: 560px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 3px dotted #e1e1e1;	
+}
+
+div#maps h4 {
+  margin-bottom: 0px;	
+}
+
+div#maps p {
+  font-size: 11px;
+  margin: 0 0 10px 0;	
+}
+
+div#maps div#map_area {
+  margin-bottom: 20px;	
+}
+
+
+
+
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div id="top">
+<h1>Edit the location for {{ place.name }}</h1>
+</div>
+
+<p class="description"><em>Drag and drop the marker to highlight the map location of this place - we'll automatically find the street address.</em></p>
+
+{% if form.errors %}
+{{ form.errors }}
+{% endif %}
+
+{% for error in error_list %}
+{{ error }}
+{% endfor %}
+
+<form action="." method="post">
+
+<div style='display:none;'>
+{% csrf_token %}
+</div>
+
+
+
+<div id="maps">
+<div id="map_area" style="width:560px; height:330px"></div>
+<span id="close_map" style="display: none;">Close map</span>
+<label for="id_location">Location</label> <input id="id_location" type="text" name="location" maxlength="200" />
+<div style="display: none;">
+	<input id="id_longitude" type="text" name="longitude" maxlength="200" value="" />
+	<input id="id_latitude" type="text" name="latitude" maxlength="200" value="" />
+</div>
+</div>
+
+
+
+<input type="submit" class="save-location-button" value="">
+</form>
+
+
+
+
+{% endblock %}

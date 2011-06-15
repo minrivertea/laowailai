@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block metadescription %}Cities in China{% endblock %}
+{% block pagetitle %}{{ question.question }}{% endblock %}
+
+{% block extracss %}
+<style type="text/css">
+div#events {
+  float: left;
+  width: 100%;	
+}
+
+ul#answers {
+  list-style-type: none;	
+  margin: 0;
+  padding: 0;
+}
+
+ul#answers li {
+  font-size: 14px;
+  padding: 10px;
+  width: 560px;
+  float: left;
+}
+
+ul#answers li.grey {
+  background-color: #f1f1f1;	
+}
+
+ul#answers li div.left {
+  float: left;
+  width: 80px;	
+}
+
+ul#answers li div.left img {
+  border: 5px solid #fff;	
+}
+
+ul#answers li div.right {
+  float: left;
+  width: 410px;	
+}
+
+ul#answers li div.votes {
+  width: 50px;
+  float: right;
+}
+
+ul#answers li p {
+  margin: 0;	
+}
+
+a.thumbs-up span {
+    display: block;
+    font-size: 11px;
+    font-weight: bold;
+    left: 30px;
+    position: relative;
+    text-align: left;
+    top: 5px;
+}
+
+a.thumbs-up {
+  background: url('/images/thumbs-up.png') no-repeat top left;
+  height: 24px;
+  width: 24px;
+  display: block;
+  float: left;	
+  margin-right: 15px;
+}
+
+a.thumbs-up:hover {
+  background-position: center left;	
+}
+
+a.thumbs-up:active {
+  background-position: bottom left;	
+}
+
+a.thumbs-up.selected {
+  background-position: bottom left;	
+}
+
+a.thumbs-up.voted, a.thumbs-up.voted:hover, a.thumbs-up.voted:active {
+  background-position: center left;	
+}
+
+a.thumbs-up.owner, a.thumbs-up.owner:hover, a.thumbs-up.owner:active {
+  background-position: top left;	
+}
+
+{% if not question.description %}
+p.description { padding: 0;}
+{% endif %}
+
+div.add-answer-button {
+  float: left;
+  height: 33px;
+  width: 142px;
+  position: relative;
+  top: 0px;
+  margin: 10px 0 0 0;
+}
+
+div.add-answer-button a span {
+  display: none;	
+}
+
+div.add-answer-button a {
+  background: url('/images/add-answer-button.png') no-repeat top left;
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+div.add-answer-button a:hover {
+  background: url('/images/add-answer-button.png') no-repeat center left;	
+}
+
+div.add-answer-button a:active {
+  background: url('/images/add-answer-button.png') no-repeat bottom left;	
+}
+
+
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div id="top">
+	{% if request.user.is_authenticated %}
+	<div class="add-question-button"><a href="{% url add_question %}"><span>Add a question</span></a></div>
+	{% endif %}
+<h1>How to: {{ current_city }}</h1>
+</div>
+<h2>{{ question.question }}</h2>
+<p class="added-by-metadata">Added by <a href="{% url laowai question.added_by.id %}">{{ question.added_by.name }}</a> {{ question.date_added|timesince }} ago</p>
+<p class="description"><em>{{ question.description }}</em></p>
+
+
+
+
+
+
+{% if answers %}
+<h3>Answers</h3>
+<ul id="answers">
+{% for thing in answers %}
+<li class="{% cycle 'grey' '' %}">
+<div class="votes">
+	{% ifequal request.user.get_profile thing.answer.added_by %}
+		<a title="You can't vote for your own answer!" class="thumbs-up owner" href=""><span>{{ thing.answer.vote_count }}</span></a>
+	{% else %}
+		{% if thing.voted %}
+			<a title="You voted for this!" class="thumbs-up voted" href=""><span>{{ thing.answer.vote_count }}</span></a>
+		{% else %}
+			<a title="Click to vote this answer up, if you think it's a good answer" class="thumbs-up" href="{% if request.user.is_authenticated %}{% url vote thing.answer.id %}{% endif %}">
+			<span>{{ thing.answer.vote_count }}</span>
+			</a>
+		{% endif %}
+	{% endifequal %}
+
+		</div>
+  <div class="left">
+  	<img src="{% thumbnail thing.answer.added_by.photo 60x60 crop %}"/>
+	</div>
+	<div class="right">
+		
+		<p><a href="{% url laowai thing.answer.added_by.id %}"><strong>{{ thing.answer.added_by.name }} says:</strong></a> {{ thing.answer.answer }}</p>
+	</div>
+</li>
+{% endfor %}
+{% else %}
+<p><em>Nobody has answered this question yet!</em></p>
+{% endif %}
+
+{% if request.user.is_authenticated %}
+<div class="add-answer-button">
+<a href="{% url add_answer question.slug %}"></a>
+</div>
+{% else %}
+<p><em>You need to <a href="{% url auth_login %}">login</a> or <a href="{% url registration_register %}">register</a> to post an answer</em></p>
+{% endif %}
+
+{% endblock %}
