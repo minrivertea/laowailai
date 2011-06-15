@@ -3,7 +3,9 @@
 <div class="a-comment{% if forloop.last %} last{% endif %}">
 	<div class="comment-name">
 	    {% if comment.user.get_profile.photo %}
-	        <img src="{% thumbnail comment.user.get_profile.photo 30x30 crop %}">
+	    	{% thumbnail comment.user.get_profile.photo "30x30" crop="center" as im %}
+	        <img src="{{ im.url }}">
+	        {% endthumbnail %}
 	    {% else %}
 	    	<img src="/images/avatar.png">
 	    {% endif %}

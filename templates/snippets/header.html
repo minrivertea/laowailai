@@ -21,7 +21,9 @@
 	    		<div class="photo">
 	    		<a title="Click to view your profile" href="{% url laowai laowai.id %}">
 	    		{% if laowai.photo %}
-	    			<img class="avatar" title="Click to view your profile" alt="a picture of {{ laowai.user.name }}" src="{% thumbnail laowai.photo 60x60 crop %}">
+	    			{% thumbnail laowai.photo "60x60" crop="center" as im %}
+	    			<img class="avatar" title="Click to view your profile" alt="a picture of {{ laowai.user.name }}" src="{{ im.url }}">
+	    			{% endthumbnail %}
 	    		{% else %}
 	    			<img class="avatar" title="Click to view your profile" alt="" src="/images/avatar_small.png">
 	    		{% endif %}
