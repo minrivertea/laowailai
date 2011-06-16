@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% load thumbnail %}
 
-{% block metadescription %}An up-to-date listing of events happening in {{ current_city }} for foreigners living there.{% endblock %}
-{% block pagetitle %}Events in {{ current_city }}{% endblock %}
+{% block metadescription %}An up-to-date listing of events happening in {{ city }} for foreigners living there.{% endblock %}
+{% block pagetitle %}Events in {{ city }}{% endblock %}
 
 {% block extracss %}
 <style type="text/css">
@@ -39,19 +39,19 @@ div#events ul li p {
 
 <div id="top">
 	{% if request.user.is_authenticated %}
-	<div class="add-event-button"><a href="{% url add_event %}"><span>Add an event</span></a></div>
+	<div class="add-event-button"><a href="{% url add_event city.slug %}"><span>Add an event</span></a></div>
 	{% endif %}
-<h1>Events in {{ current_city }}</h1>
+<h1>Events in {{ city }}</h1>
 </div>
 
-<p class="description"><em>This is a list of events for {{ current_city }} added by laowai living there. These are all public events, so feel free to just turn up unless otherwise specified.</em></p>
+<p class="description"><em>This is a list of events for {{ city }} added by laowai living there. These are all public events, so feel free to just turn up unless otherwise specified.</em></p>
 
 
 <div id="events">
 <ul>
 {% for event in events %}
 <li>
-	<h3><a href="{% url event event.id %}">{{ event.title }}</a></h3>
+	<h3><a href="{% url event city.slug event.id %}">{{ event.title }}</a></h3>
 	<p>{{ event.start_date }} to {{ event.end_date }} | <em>Added by <a href="{% url laowai event.added_by.id %}">{{ event.added_by.name }}</a></em></p>
 
 </li>

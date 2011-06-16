@@ -6,6 +6,7 @@ from PIL import Image
 from cStringIO import StringIO
 import os, md5
 import smtplib
+import re
 
 # stuff from my app
 from laowailai.list.models import Laowai
@@ -40,9 +41,9 @@ def render(request, template, context_dict=None, **kwargs):
                               **kwargs
     )
 
-def places(request, cityslug, category=None, qs=None, parameters={}):
+def places(request, slug, category=None, qs=None, parameters={}):
     
-    city = get_object_or_404(City, slug=cityslug)
+    city = get_object_or_404(City, slug=slug)
     if city.slug == "china":
         places = Place.objects.all()
     else:
@@ -111,7 +112,9 @@ def places(request, cityslug, category=None, qs=None, parameters={}):
 
     return render(request, "places/places.html", locals())
 
-def place(request, id):
+def place(request, slug, id):
+    city = get_object_or_404(City, slug=slug)
+    
     place = get_object_or_404(Place, pk=id)
     try:
         laowai = get_object_or_404(Laowai, user=request.user)
@@ -129,7 +132,8 @@ def place(request, id):
     return render(request, "places/place.html", locals())
 
 @login_required
-def add_place(request):
+def add_place(request, slug):
+    city = get_object_or_404(City, slug=slug)
     
     if request.method == 'POST':
         form = AddPlaceForm(request.POST)
@@ -156,7 +160,7 @@ def add_place(request):
                    
             
             place = Place.objects.create(**creation_args)
-            redirect_url = reverse('places')
+            redirect_url = reverse('places', args=[city.slug])
             return HttpResponseRedirect(redirect_url)
     
     else:

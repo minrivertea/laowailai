@@ -39,7 +39,6 @@ def cities(request):
 
 def city(request, slug):
     city = get_object_or_404(City, slug=slug)
-    
     return render(request, "list/index.html", locals())
 
 def mark_city(request, id):

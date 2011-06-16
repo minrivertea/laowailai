@@ -3,7 +3,7 @@ from django.forms import ModelForm
 from django.forms.extras.widgets import SelectDateWidget
 
 
-
+from laowailai.cities.models import City
 from laowailai.list.models import Laowai, Info, Subscriber
 
  
@@ -13,10 +13,7 @@ class SubscriberAddForm(forms.Form):
           
 class InfoAddForm(forms.Form):
     content = forms.CharField(required=True, widget=forms.Textarea)
-    contact_details = forms.CharField(max_length=200, required=False)
-    related_url = forms.CharField(max_length=200, required=False)
-    location = forms.CharField(max_length=200, required=False)
-    date = forms.DateField(required=False, widget=SelectDateWidget())
+    city = forms.ModelChoiceField(queryset=City.objects.all())
 
 
 class AnonAddForm(InfoAddForm):

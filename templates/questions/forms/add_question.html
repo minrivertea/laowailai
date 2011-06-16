@@ -30,10 +30,10 @@ div#left input.submit-question-button:active {
 
 {% block content %}
 <div id="top">
-<h1>Add a question ({{ current_city }})</h1>
+<h1>Add a question ({{ city }})</h1>
 </div>
 
-<p class="description"><em>You're adding a question for {{ current_city }} laowai - please try to be as descriptive as possible to get a good response. Remember any profanity, racist language or otherwise offensive questions will be removed.</em></p>
+<p class="description"><em>You're adding a question for {{ city }} laowai - please try to be as descriptive as possible to get a good response. Remember any profanity, racist language or otherwise offensive questions will be removed.</em></p>
 
 
 
@@ -44,7 +44,7 @@ div#left input.submit-question-button:active {
 	
 	<div style="display:none;">
 	<p><label for="id_city">City:</label> <select name="city" id="id_city">
-		<option selected="selected" value="{{ current_city.id }}">{{ current_city }}</option>
+		<option selected="selected" value="{{ city.id }}">{{ city }}</option>
 	</select></p>
 	</div>
 

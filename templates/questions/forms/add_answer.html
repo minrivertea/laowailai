@@ -34,6 +34,7 @@ div#left input.submit-answer-button:active {
 </div>
 
 <p><strong>Question:</strong> {{ question.question }}</p>
+<p><em>{{ question.description }}</p>
 <form action="." method="post">
 {{ form.as_p }}
 <input type="submit" value="" class="submit-answer-button">

@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% load thumbnail %}
 
-{% block metadescription %}An up-to-date listing of places in {{ current_city }}, China{% endblock %}
-{% block pagetitle %}Places in {{ current_city }}{% endblock %}
+{% block metadescription %}An up-to-date listing of places in {{ city }}, China{% endblock %}
+{% block pagetitle %}Places in {{ city }}{% endblock %}
 
 {% block extrajs %}
 <script type="text/javascript">
@@ -255,9 +255,9 @@ div#loading {
 
 <div id="top">
 	{% if request.user.is_authenticated %}
-	<div class="add-place-button"><a href="{% url add_place current_city.slug %}"><span>Add a place</span></a></div>
+	<div class="add-place-button"><a href="{% url add_place city.slug %}"><span>Add a place</span></a></div>
 	{% endif %}
-<h1>Places in {{ current_city }}</h1>
+<h1>Places in {{ city }}</h1>
 </div>
 
 <div id="filters">
@@ -286,7 +286,7 @@ div#loading {
 		</p>
 		</div>
 		<div class="right">
-		<br/><a class="small" id="reset" style="display:{% if selected %}block{% else %}none{% endif %}" href="{% url places current_city.slug %}">Reset filters</a>
+		<br/><a class="small" id="reset" style="display:{% if selected %}block{% else %}none{% endif %}" href="{% url places city.slug %}">Reset filters</a>
 		
 		</div>
 </div>

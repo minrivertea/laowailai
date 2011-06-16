@@ -7,8 +7,9 @@ urlpatterns = patterns('',
     url(r'^$', views.questions, name="questions"),
     url(r'^add/$', views.add_question, name="add_question"),
     url(r'^answer/([\w+])/$', views.vote, name="vote"),
-    url(r'^(?P<slug>[\w-]+)/$', views.question, name="question"),
-    url(r'^(?P<slug>[\w-]+)/add-answer/$', views.add_answer, name="add_answer"),
+    url(r'^(?P<questionslug>[\w-]+)/add-answer/$', views.add_answer, name="add_answer"),
+    url(r'^(?P<questionslug>[\w-]+)/$', views.question, name="question"),
+    
 
 )
 

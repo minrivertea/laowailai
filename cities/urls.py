@@ -4,7 +4,11 @@ from laowailai.cities import views
 
 
 urlpatterns = patterns('',
-    url(r'^$', views.cities, name="cities"),
+    url(r'^$', views.city, name="city"),
+    (r'^places/', include('laowailai.places.urls')),
+    (r'^feed/', include('laowailai.list.urls')),
+    (r'^events/', include('laowailai.events.urls')),
+    (r'^questions/', include('laowailai.questions.urls')),
     url(r'^mark_city/(\w+)/$', views.mark_city, name="mark_city"),
 )
 

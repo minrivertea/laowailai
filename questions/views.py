@@ -34,8 +34,8 @@ def render(request, template, context_dict=None, **kwargs):
                               **kwargs
     )
 
-def questions(request, qs=None, parameters={}):
-    city = get_current_city(request)['current_city']
+def questions(request, slug, qs=None, parameters={}):
+    city = get_object_or_404(City, slug=slug)
         
     # if there's a search query
     if request.GET.get('q'):
@@ -51,8 +51,8 @@ def questions(request, qs=None, parameters={}):
     return render(request, "questions/questions.html", locals())
 
 
-def question(request, slug):
-    question = get_object_or_404(Question, slug=slug)
+def question(request, slug, questionslug):
+    question = get_object_or_404(Question, slug=questionslug)
     if not question.is_published:
         return Http404()
     
@@ -60,6 +60,7 @@ def question(request, slug):
         laowai = request.user.get_profile()
     else:
         laowai = None
+        
     vote_list = Vote.objects.filter(laowai=laowai)
     answers_list = []
     for answer in Answer.objects.filter(question=question):
@@ -77,7 +78,9 @@ def question(request, slug):
     return render(request, "questions/question.html", locals())
 
 @login_required
-def add_question(request):
+def add_question(request, slug):
+    city = get_object_or_404(City, slug=slug)
+    
     if request.method == 'POST':
         form = AddQuestionForm(request.POST)
         if form.is_valid():
@@ -106,8 +109,8 @@ def add_question(request):
     return render(request, "questions/forms/add_question.html", locals())
 
 @login_required
-def add_answer(request, slug):
-    question = get_object_or_404(Question, slug=slug)
+def add_answer(request, slug, questionslug):
+    question = get_object_or_404(Question, slug=questionslug)
     if request.method == 'POST':
         form = AddAnswerForm(request.POST)
         if form.is_valid():

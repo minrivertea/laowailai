@@ -11,7 +11,7 @@ import smtplib
 from laowailai.list.models import Laowai
 from laowailai.events.models import Event
 from laowailai.events.forms import AddEventForm
-from laowailai.list.context_processors import get_current_city
+from laowailai.cities.models import City
 
 # django stuff
 from django.http import Http404, HttpResponse, HttpResponseRedirect
@@ -32,30 +32,33 @@ def render(request, template, context_dict=None, **kwargs):
                               **kwargs
     )
 
-def event(request, id):
+def event(request, slug, id):
+    city = get_object_or_404(City, slug=slug)
     event = get_object_or_404(Event, pk=id)
     
     return render(request, "events/event.html", locals())
     
-def events(request):
-    city = get_current_city(request)['current_city']
+def events(request, slug):
+    city = get_object_or_404(City, slug=slug)
     events = Event.objects.filter(city=city).order_by('-start_date')
 
     return render(request, "events/events.html", locals())
 
 @login_required    
-def add_event(request):
-    
-    try:
-        laowai = request.user.get_profile()
-    except:
-        laowai = None
+def add_event(request, slug):
+    city = get_object_or_404(City, slug=slug)
+    laowai = request.user.get_profile()
     
     if request.method == 'POST':
         form = AddEventForm(request.POST)
         if form.is_valid():
             date = datetime.strptime(form.cleaned_data['start_date'], '%m/%d/%Y')
-            print date
+            if form.cleaned_data['longitude']:
+                longitude = form.cleaned_data['longitude']
+                latitude = form.cleaned_data['latitude']
+            else:
+                longitude = 0
+                latitude = 0
             creation_args = {
                         'title': form.cleaned_data['title'],
                         'description': form.cleaned_data['description'],
@@ -63,13 +66,12 @@ def add_event(request):
                         'location': form.cleaned_data['location'],
                         'added_by': laowai,
                         'city': form.cleaned_data['city'],
-                        'longitude': form.cleaned_data['longitude'],
-                        'latitude': form.cleaned_data['latitude'],
+                        'longitude': longitude,
+                        'latitude': latitude,
             }
                      
-            
+            print creation_args
             event = Event.objects.create(**creation_args)
-            message = "Event added!"
             return render(request, "events/event.html", locals())
     
     else:

@@ -15,5 +15,5 @@ class AddEventForm(forms.Form):
     start_date = forms.CharField(max_length=200)
     location = forms.CharField(max_length=200)
     city = forms.ModelChoiceField(queryset=City.objects.all())
-    longitude = forms.CharField(max_length=200)
-    latitude = forms.CharField(max_length=200)
+    longitude = forms.CharField(max_length=200, required=False)
+    latitude = forms.CharField(max_length=200, required=False)

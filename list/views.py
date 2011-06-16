@@ -43,12 +43,13 @@ def index(request):
 
 
 # news feed for a particular city
-def news_feed(request):
-    city = get_current_city(request)['current_city']   
-    infos = Info.objects.filter(added_by__city=city).order_by('-date_added')
+def news_feed(request, slug):
+    city = get_object_or_404(City, slug=slug) 
+    infos = Info.objects.filter(city=city).order_by('-date_added')
     objects = []
     for i in infos:
         if request.user.is_authenticated():
+            laowai = request.user.get_profile()
             if laowai in i.get_likers():
                 i_like = True
             else:
@@ -112,10 +113,11 @@ def news_feed(request):
 
 def laowai(request, id):
     this_laowai = get_object_or_404(Laowai, id=id)
-    try:
-        laowai = get_object_or_404(Laowai, user=request.user)
-    except:
+    if request.user.is_authenticated():
+        laowai = request.user.get_profile()
+    else:
         laowai = None
+        
     if this_laowai == laowai:
         pass
     else:
@@ -136,38 +138,25 @@ def laowai(request, id):
     return render(request, 'list/laowai.html', {'these_infos': these_infos, 'this_laowai': this_laowai})
 
 @login_required
-def post(request):
-    
+def post(request, slug):
+    city = get_object_or_404(City, slug=slug) 
+    laowai = request.user.get_profile()
     if request.method == 'POST':
         form = InfoAddForm(request.POST)
         if form.is_valid():
             content = form.cleaned_data['content']
-            contact_details = form.cleaned_data['contact_details']
-            date = form.cleaned_data['date']
-            location = form.cleaned_data['location']
-            url = form.cleaned_data['related_url']
-            
-            # ignore the extra inputs if they are just the default values
-            if contact_details == "Your contact details?":
-                contact_details = ""
-            if location == "A location for this piece of news?":
-                location = ""
-            if url == "A related URL?":
-                url = ""
-            
+                        
             # create the new piece of info
             new = Info.objects.create(
                                       content=content,
-                                      contact_details=contact_details,
-                                      location=location,
-                                      date=date,
-                                      related_url=url,
                                       added_by=laowai,
+                                      city=form.cleaned_data['city']
                                       )
             
             new.save()
             
-            return HttpResponseRedirect("/")
+            url = reverse('news_feed', args=[city.slug])
+            return HttpResponseRedirect(url)
         
         else:
             if form.non_field_errors():
@@ -179,7 +168,7 @@ def post(request):
     else:
         infoform = InfoAddForm()
     
-    return render(request, 'post.html', locals())
+    return render(request, 'list/post.html', locals())
             
 def a_post(request, number):
     info = get_object_or_404(Info, id=number)
@@ -530,20 +519,14 @@ def suggestion_vote(request, suggestion):
 #    form = SuggestionForm()
 #    return render(request, 'suggestions.html', locals())
 
-def people(request):
+def people(request, slug):
     try:
         laowai = request.user.get_profile()
     except:
         laowai = None
     
     
-    try:
-        city = get_object_or_404(City, id=request.session['CURRENTCITY'])
-    except:
-        if request.user.is_authenticated():
-            city = laowai.city
-        else:
-            return HttpResponseRedirect('/')
+    city = get_object_or_404(City, slug=slug)
             
     people = Laowai.objects.filter(city=city).exclude(id=laowai.id)        
     

@@ -3,31 +3,14 @@ from django.conf import settings
 import django.views.static
 
 from list.feeds import LatestEntriesFeed
-from list.views import index, people, ajax_comment
-from cities.views import city
+from list.views import index, ajax_comment, tell_a_friend, laowai, upload_profile_photo, add_a_bio, like
+from cities.views import cities, mark_city
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
 
-urlpatterns = patterns('',
-    url(r'^/?$', index, name="home_page"),
-    url(r'^(?P<slug>[\w-]+)/', city, name="city"),
-    url(r'^people/?$', people, name="people"),
-    url(r'^comments/posted/$', ajax_comment, name="ajax_comment"),
-    (r'^comments/', include('django.contrib.comments.urls')), 
-    (r'^feed/', include('laowailai.list.urls')),
-    (r'^events/', include('laowailai.events.urls')),
-    (r'^places/', include('laowailai.places.urls')),
-    (r'^questions/', include('laowailai.questions.urls')),
-    (r'^admin/', include(admin.site.urls)),
-    (r'^accounts/', include('registration.backends.default.urls')),
-    (r'^latest/feed/$', LatestEntriesFeed()),
-)
-
-
-urlpatterns += patterns('',
-
+urlpatterns = patterns(
     # CSS, Javascript and IMages
     (r'^photos/(?P<path>.*)$', django.views.static.serve,
         {'document_root': settings.MEDIA_ROOT + '/photos',
@@ -44,4 +27,21 @@ urlpatterns += patterns('',
     (r'^js/(?P<path>.*)$', django.views.static.serve,
         {'document_root': settings.MEDIA_ROOT + '/js',
         'show_indexes': settings.DEBUG}),
+)
+
+urlpatterns += patterns('',
+    url(r'^/?$', index, name="home_page"),
+    url(r'^comments/posted/$', ajax_comment, name="ajax_comment"),
+    (r'^comments/', include('django.contrib.comments.urls')), 
+    url(r'^cities/$', cities, name="cities"),
+    url(r'^mark_city/(\w+)/$', mark_city, name="mark_city"),
+    (r'^admin/', include(admin.site.urls)),
+    (r'^accounts/', include('registration.backends.default.urls')),
+    url(r'^upload_profile_photo/$', upload_profile_photo, name="upload_profile_photo"),
+    url(r'^laowai/bio$', add_a_bio, name="add_a_bio"),
+    url(r'^laowai/(\w+)/$', laowai, name="laowai"),
+    url(r'^like/(\w+)$', like, name="like"),
+    (r'^latest/feed/$', LatestEntriesFeed()),
+    url(r'^tell-a-friend/$', tell_a_friend, name="tell_a_friend"),
+    url(r'^(?P<slug>[\w-]+)/', include('laowailai.cities.urls')),
 )

@@ -42,9 +42,9 @@ p.description {
 {% block content %}
 <div id="top">
 	{% if request.user.is_authenticated %}
-	<div class="add-question-button"><a href="{% url add_question %}"><span>Add a question</span></a></div>
+	<div class="add-question-button"><a href="{% url add_question city.slug %}"><span>Add a question</span></a></div>
 	{% endif %}
-<h1>How to: {{ current_city }}</h1>
+<h1>How to: {{ city }}</h1>
 </div>
 
 <p class="description"><em>Ask a question, get an answer - simple as that. Ask any question about {{ current_city }} and the loving laowais from that town will help you out with an answer.</em></p>
@@ -58,7 +58,7 @@ p.description {
 	{% for question in questions %}
 		<li>
 		<div class="question">
-			<h3><a href="{% url question question.slug %}">{{ question.question }}</a></h3>
+			<h3><a href="{% url question city.slug question.slug %}">{{ question.question }}</a></h3>
 			<p><em>{{ question.answers_count }} {{ question.answers_count|pluralize:"answer, answers" }}</em> | added {{ question.date_added|timesince }} ago</p>
 		</div>
 		</li>

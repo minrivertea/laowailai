@@ -8,9 +8,9 @@
 
 <div id="top">
 	{% if request.user.is_authenticated %}
-	<div class="add-event-button"><a href="{% url add_event %}"><span>Add an event</span></a></div>
+	<div class="add-event-button"><a href="{% url add_event city.slug %}"><span>Add an event</span></a></div>
 	{% endif %}
-<h1>Events in {{ current_city }}</h1>
+<h1>Events in {{ city }}</h1>
 </div>
 
 <div class="event">

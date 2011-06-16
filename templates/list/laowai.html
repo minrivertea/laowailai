@@ -93,7 +93,7 @@ div#top div#photo p {
 
 	<p class="description">
 	{% if this_laowai.bio %}
-			<em>{{ this_laowai.bio }}</em><br/>
+			<em>{{ this_laowai.bio|urlize }}</em><br/>
 			{% ifequal this_laowai laowai %}<span class="small"><a href="{% url add_a_bio %}">Edit bio</a></span>{% endifequal %}
 	{% else %}
 	    {% ifequal this_laowai laowai %}

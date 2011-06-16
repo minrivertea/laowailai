@@ -10,11 +10,8 @@
 	    	</div>
 	    	
 	    	<div id="current-city">
-	    		{% ifequal current_city.slug "china" %}
-				{% else %}
-			    	<p class="city">{{ current_city.chinese_name }}</p>
-			    	<p>You're currently browsing {{ current_city }} (<a href="">Change city</a>)</p>
-			    {% endifequal %}
+			    	<p class="city">{{ city.chinese_name }}</p>
+			    	<p>You're currently browsing {{ city }} (<a href="{% url cities %}">Change city</a>)</p>
 	    	</div>
 	    	
 	    			

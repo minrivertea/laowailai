@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load thumbnail %}
 
-{% block metadescription %}A list of foreigners living in {{ current_city }}, China{% endblock %}
+{% block metadescription %}A list of foreigners living in {{ city }}, China{% endblock %}
 {% block pagetitle %}Home{% endblock %}
 
 
@@ -19,7 +19,7 @@ div#people div.person {
 
 {% block content %}
 <div id="top">	
-<h1>Laowai in {{ current_city }} ({{ current_city.chinese_name }})</h1>
+<h1>Laowai in {{ city }} ({{ city.chinese_name }})</h1>
 </div>
 
 <div id="people">

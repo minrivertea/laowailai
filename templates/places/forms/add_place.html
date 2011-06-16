@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load thumbnail %}
 
-{% block metadescription %}Add a place in Fuzhou{% endblock %}
+{% block metadescription %}Add a place in {{ city }}{% endblock %}
 {% block pagetitle %}Add a place{% endblock %}
 
 {% block mapscripts %}
@@ -12,7 +12,7 @@
 <script type="text/javascript">
 var map = new BMap.Map("map_area");
 var myGeo = new BMap.Geocoder();   
-myGeo.getPoint("{{ current_city.centre_of_town }}", function(point){  
+myGeo.getPoint("{{ city.centre_of_town }}", function(point){  
  if (point) {  
    map.centerAndZoom(point, 11);
    map.addControl(new BMap.NavigationControl()); 
@@ -29,7 +29,7 @@ myGeo.getPoint("{{ current_city.centre_of_town }}", function(point){
      });
    }); 
  }  
-}, "{{ current_city.chinese_name }}");  
+}, "{{ city.chinese_name }}");  
 
   
 
@@ -193,7 +193,7 @@ div#maps span#close_map:hover {
 {% block content %}
 
 <div id="top">
-<h1>Add a place in {{ current_city }}</h1>
+<h1>Add a place in {{ city }}</h1>
 </div>
 
 <p class="description"><em>A place might be a coffee shop, a tourist destination, a gym or a clothes shop - anywhere that you can go and do/buy/see something. Please try to be as descriptive as possible, and give Chinese names if you know them.</em></p>
@@ -254,7 +254,7 @@ div#maps span#close_map:hover {
 <div style="display:none;">
 <label for="id_city">City:</label> 
 <select name="city" id="id_city">
-<option selected="selected" value="{{ current_city.id }}">{{ current_city }}</option>
+<option selected="selected" value="{{ city.id }}">{{ city }}</option>
 </select>
 
 </div>

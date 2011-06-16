@@ -134,9 +134,9 @@ div.add-answer-button a:active {
 
 <div id="top">
 	{% if request.user.is_authenticated %}
-	<div class="add-question-button"><a href="{% url add_question %}"><span>Add a question</span></a></div>
+	<div class="add-question-button"><a href="{% url add_question city.slug %}"><span>Add a question</span></a></div>
 	{% endif %}
-<h1>How to: {{ current_city }}</h1>
+<h1>How to: {{ city }}</h1>
 </div>
 <h2>{{ question.question }}</h2>
 <p class="added-by-metadata">Added by <a href="{% url laowai question.added_by.id %}">{{ question.added_by.name }}</a> {{ question.date_added|timesince }} ago</p>
@@ -183,7 +183,7 @@ div.add-answer-button a:active {
 
 {% if request.user.is_authenticated %}
 <div class="add-answer-button">
-<a href="{% url add_answer question.slug %}"></a>
+<a href="{% url add_answer city.slug question.slug %}"></a>
 </div>
 {% else %}
 <p><em>You need to <a href="{% url auth_login %}">login</a> or <a href="{% url registration_register %}">register</a> to post an answer</em></p>

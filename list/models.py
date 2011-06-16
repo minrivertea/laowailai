@@ -91,12 +91,7 @@ class Info(models.Model):
     content = models.TextField()
     added_by = models.ForeignKey(Laowai)
     date_added = models.DateTimeField('date added', default=datetime.now)
-    
-    #extra details fields
-    date = models.DateTimeField('date', blank=True, null=True)
-    related_url = models.CharField(max_length=200, blank=True, null=True)
-    contact_details = models.CharField(max_length=200, blank=True, null=True)
-    location = models.CharField(max_length=200, blank=True, null=True)
+    city = models.ForeignKey(City)
     
     def __unicode__(self):
         return self.content

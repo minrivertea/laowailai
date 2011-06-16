@@ -3,7 +3,7 @@
  {% for place in places %}
 	
 <div class="place{% cycle '' ' right' %}">
-	<h3><a href="{% url place current_city.slug place.id %}">{{ place.name }}</a></h3>
+	<h3><a href="{% url place city.slug place.id %}">{{ place.name }}</a></h3>
 	<div class="ratings">
 	<ul class="star-rating">
 		<li class="current-rating" style="width:{{ place.get_current_rating }}px;"> Currently 3.5/5 Stars.</li>

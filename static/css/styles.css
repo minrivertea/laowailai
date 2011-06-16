@@ -197,10 +197,6 @@ div#navigation a {
     padding: 5px 10px;
 }
 
-div#navigation a.city {
-    background-color: #FF8400;
-}
-
 div#navigation a.suggestion {
     background-color: #408a34;
 }
@@ -214,7 +210,7 @@ div#navigation a.cities {
 }
 
 div#navigation a.places {
-    background-color: #2aaea0;
+    background-color: #FF8400;
 }
 
 div#navigation a.people {
@@ -242,10 +238,6 @@ div#navigation a.current-city {
   float: left;
 }
 
-div#navigation a.city:hover {
-  background-color: #ffaa4e;	
-  cursor: pointer;
-}
 
 div#navigation a.suggestion:hover {
   background-color: #76b86c;	
@@ -263,7 +255,7 @@ div#navigation a.cities:hover {
 }
 
 div#navigation a.places:hover {
-  background-color: #6fc8bf;	
+  background-color: #ffaa4e;	
   cursor: pointer;
 }
 

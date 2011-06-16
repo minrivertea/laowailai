@@ -14,7 +14,7 @@ class Event(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True, null=True)
     date_added = models.DateTimeField('date added', default=datetime.now)
-    start_date = models.DateField('date added')
+    start_date = models.DateTimeField('date added')
     added_by = models.ForeignKey(Laowai)
     location = models.CharField(max_length=200, blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)

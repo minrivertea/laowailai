@@ -330,10 +330,10 @@ div.print:active {
 
 <div id="top">
 	{% if request.user.is_authenticated %}
-	<div class="add-place-button"><a href="{% url add_place %}"><span>Add a place</span></a></div>
+	<div class="add-place-button"><a href="{% url add_place city.slug %}"><span>Add a place</span></a></div>
 	{% endif %}
 	
-<h1>Places in {{ current_city }}</h1>
+<h1>Places in {{ city }}</h1>
 </div>
 
 <h2>{{ place.name }} ({{ place.chinese_name }})</h2>
@@ -348,7 +348,7 @@ div.print:active {
 <span id="close_map" style="display: none;z-index: 9999;">Close map</span>
 {% else %}
 	{% if request.user.is_authenticated %}
-	<p><em>There's no map location for this place. <a href="{% url edit_location place.id %}">Add a map location</a></em></p>
+	<p><em>There's no map location for this place. <a href="{% url edit_location city.slug place.id %}">Add a map location</a></em></p>
 	{% endif %}
 {% endif %}
 
@@ -369,11 +369,11 @@ div.print:active {
 	<ul class="star-rating">
 		<li class="current-rating" style="width:{{ current_rating }}px;"> Currently 3.5/5 Stars.</li>
 		{% if request.user.is_authenticated %}
-		<li><a href="{% url add_rating place.id 1 %}" title="1 star out of 5" class="one-star">1</a></li>
-		<li><a href="{% url add_rating place.id 2 %}" title="2 stars out of 5" class="two-stars">2</a></li>
-		<li><a href="{% url add_rating place.id 3 %}" title="3 stars out of 5" class="three-stars">3</a></li>
-		<li><a href="{% url add_rating place.id 4 %}" title="4 stars out of 5" class="four-stars">4</a></li>
-		<li><a href="{% url add_rating place.id 5 %}" title="5 stars out of 5" class="five-stars">5</a></li>
+		<li><a href="{% url add_rating city.slug place.id 1 %}" title="1 star out of 5" class="one-star">1</a></li>
+		<li><a href="{% url add_rating city.slug place.id 2 %}" title="2 stars out of 5" class="two-stars">2</a></li>
+		<li><a href="{% url add_rating city.slug place.id 3 %}" title="3 stars out of 5" class="three-stars">3</a></li>
+		<li><a href="{% url add_rating city.slug place.id 4 %}" title="4 stars out of 5" class="four-stars">4</a></li>
+		<li><a href="{% url add_rating city.slug place.id 5 %}" title="5 stars out of 5" class="five-stars">5</a></li>
 		{% endif %}
 	</ul>
 	
