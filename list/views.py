@@ -45,7 +45,12 @@ def index(request):
 # news feed for a particular city
 def news_feed(request, slug):
     city = get_object_or_404(City, slug=slug) 
-    infos = Info.objects.filter(city=city).order_by('-date_added')
+    infos = Info.objects.all()
+    for i in infos:
+        i.city = i.added_by.city
+        i.save()
+            
+    # infos = Info.objects.filter(city=city).order_by('-date_added')
     objects = []
     for i in infos:
         if request.user.is_authenticated():
