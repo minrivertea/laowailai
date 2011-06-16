@@ -39,9 +39,8 @@ def cities(request):
 
 def city(request, slug):
     city = get_object_or_404(City, slug=slug)
-    events = Event.objects.filter(city=city)
     
-    return render(request, "cities/city.html", locals())
+    return render(request, "list/index.html", locals())
 
 def mark_city(request, id):
     city = get_object_or_404(City, pk=id) 

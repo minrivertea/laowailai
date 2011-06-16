@@ -17,11 +17,11 @@ def get_current_city(request):
             if laowai.city:
                 city = laowai.city
             else:
-                city = get_object_or_404(City, pk="1")
+                city = get_object_or_404(City, slug="fuzhou")
         else:
-            city = get_object_or_404(City, slug="china")
+            city = get_object_or_404(City, slug="fuzhou")
         
-    return {'current_city': city}
+    return {'city': city}
     
 def get_laowai(request):
     try:

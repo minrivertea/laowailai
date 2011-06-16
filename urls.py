@@ -4,6 +4,7 @@ import django.views.static
 
 from list.feeds import LatestEntriesFeed
 from list.views import index, people, ajax_comment
+from cities.views import city
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -11,13 +12,16 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^/?$', index, name="home_page"),
+    url(r'^(?P<slug>[\w-]+)/', city, name="city"),
+    
+    
+    
     url(r'^people/?$', people, name="people"),
     url(r'^comments/posted/$', ajax_comment, name="ajax_comment"),
     (r'^comments/', include('django.contrib.comments.urls')), 
     (r'^feed/', include('laowailai.list.urls')),
-    (r'^cities/', include('laowailai.cities.urls')),
     (r'^events/', include('laowailai.events.urls')),
-    (r'^(?P<cityslug>[\w-]+)/places/', include('laowailai.places.urls')),
+    (r'^places/', include('laowailai.places.urls')),
     (r'^questions/', include('laowailai.questions.urls')),
     (r'^admin/', include(admin.site.urls)),
     (r'^accounts/', include('registration.backends.default.urls')),

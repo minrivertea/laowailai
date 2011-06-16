@@ -37,6 +37,26 @@ def render(request, template, context_dict=None, **kwargs):
     )
 
 def index(request):     
+    city = get_current_city(request)['city']
+    url = reverse('city', args=[city.slug])
+    return HttpResponseRedirect(url) 
+
+
+# news feed for a particular city
+def news_feed(request):
+    city = get_current_city(request)['current_city']   
+    infos = Info.objects.filter(added_by__city=city).order_by('-date_added')
+    objects = []
+    for i in infos:
+        if request.user.is_authenticated():
+            if laowai in i.get_likers():
+                i_like = True
+            else:
+                i_like = False
+        else:
+            i_like = False    
+        objects.append((i, i_like))
+        
     if request.method == 'POST':
         form = InfoAddForm(request.POST)
         if form.is_valid():
@@ -86,24 +106,6 @@ def index(request):
     
 
         infoform = InfoAddForm()
-                
-    return render(request, 'list/index.html', locals())
-
-
-# news feed for a particular city
-def news_feed(request):
-    city = get_current_city(request)['current_city']   
-    infos = Info.objects.filter(added_by__city=city).order_by('-date_added')
-    objects = []
-    for i in infos:
-        if request.user.is_authenticated():
-            if laowai in i.get_likers():
-                i_like = True
-            else:
-                i_like = False
-        else:
-            i_like = False    
-        objects.append((i, i_like))
     
     return render(request, "list/news_feed.html", locals())
 

@@ -69,13 +69,13 @@ ul.explanation li p {
 <li class="first">
 	<h3>Choose a city</h3>
 	<p>Any city in China that you live in, or want to know more about<br/>
-	<a href="{% url cities %}">Choose your city &raquo;</a>
+	<a href="">Choose your city &raquo;</a>
 	</p>
 </li>
 <li>
 	<h3>Browse</h3>
 	<p>Find places to eat, drink, visit or shop, or do something.<br/>
-	{% ifequal current_city.slug "china" %}{% else %}<a href="{% url places current_city.slug %}">Find places &raquo;</a>{% endifequal %}
+	{% ifequal current_city.slug "china" %}{% else %}<a href="{% url places %}">Find places &raquo;</a>{% endifequal %}
 	</p>
 </li>
 <li class="last">
