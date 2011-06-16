@@ -13,9 +13,6 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^/?$', index, name="home_page"),
     url(r'^(?P<slug>[\w-]+)/', city, name="city"),
-    
-    
-    
     url(r'^people/?$', people, name="people"),
     url(r'^comments/posted/$', ajax_comment, name="ajax_comment"),
     (r'^comments/', include('django.contrib.comments.urls')), 
