@@ -201,7 +201,7 @@ def register(request, backend, success_url=None, form_class=RegistrationFormNoUs
             new_laowai = Laowai.objects.create(user=new_user, name=form.cleaned_data['name'])
 
             # custom - send the user an email welcoming them
-            body = render_to_string('emails/welcome_laowai.txt', {
+            body = render_to_string('list/emails/welcome_laowai.txt', {
                     'email_address': new_laowai.user.email,   
                     'name': new_laowai.name,                                              
                     })

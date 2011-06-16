@@ -225,7 +225,7 @@ def subscribe(request):
                 subscriber.save()
                 
                 # subscriber is saved now, let's send them a welcome email immediately
-                body = render_to_string('emails/welcome_subscriber.txt', {
+                body = render_to_string('list/emails/welcome_subscriber.txt', {
                     'email_address': subscriber.email,                                                 
                     })
                 
