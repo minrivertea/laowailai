@@ -2,8 +2,8 @@
 {% load thumbnail %}
 {% load comments %}
 
-{% block metadescription %}The best place to share news and events for foreigners in Fuzhou, China.{% endblock %}
-{% block pagetitle %}Home{% endblock %}
+{% block metadescription %}The best place to share news and events for foreigners in {{ current_city }}, China.{% endblock %}
+{% block pagetitle %}News from {{ current_city }}{% endblock %}
 
 {% block extrajs %}
 <script type="text/javascript" charset="utf-8">  

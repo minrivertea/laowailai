@@ -10,6 +10,7 @@ from django.template import RequestContext
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.contrib.auth import authenticate, login
+from django.core.urlresolvers import reverse
 
 
 import datetime
@@ -199,11 +200,13 @@ def register(request, backend, success_url=None, form_class=RegistrationFormNoUs
             
             # custom - create a laowai
             new_laowai = Laowai.objects.create(user=new_user, name=form.cleaned_data['name'])
+            url = reverse('laowai', args=[new_laowai.id])
 
             # custom - send the user an email welcoming them
             body = render_to_string('list/emails/welcome_laowai.txt', {
                     'email_address': new_laowai.user.email,   
-                    'name': new_laowai.name,                                              
+                    'name': new_laowai.name,  
+                    'url': url,                                            
                     })
                 
             send_mail(

@@ -1,9 +1,8 @@
 {% extends "base.html" %}
-{% load thumbnail %}
 {% load comments %}
 
-{% block metadescription %}Cities in China{% endblock %}
-{% block pagetitle %}{{ city.name }}{% endblock %}
+{% block metadescription %}{{ place.description }}{% endblock %}
+{% block pagetitle %}{{ place.name }} - {{ place.city }}{% endblock %}
 
 {% block canonical %}
 <link rel="canonical" href="{{ place.canonical_url }}" />

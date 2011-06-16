@@ -2,20 +2,7 @@
 {% load thumbnail %}
 
 {% for comment in comment_list %}
-	<div class="a-comment{% if forloop.last %} last{% endif %}">
-		<div class="comment-name">	
-			{% if request.user.get_profile.photo %}				
-			<img src="{% thumbnail request.user.get_profile.photo 60x60 crop %}"/>
-			{% else %}
-			<img src="/images/avatar_60.jpg"/>
-			{% endif %}
-		</div>
-		<div class="comment-content">
-			<p><strong><a href="{{ comment.user_url }}">{{ comment.user_name }}</a> says:</strong> 
-			{{ comment.comment|urlize }}</p>
-			<p class="submit-date"><em>{{ comment.submit_date|date:"d M Y" }}</em></p>
-		</div>
-	</div>
+	{% include "snippets/comment.html" %}
 {% endfor %}
 
 	

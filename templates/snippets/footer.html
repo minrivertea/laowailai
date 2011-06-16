@@ -1,10 +1,5 @@
 	<div id="footer">
 	<a href="/about/" title="About Laowai Lai" alt="about">About Laowailai</a> - 
-	{% if user.is_authenticated %}
-	<a title="Unsubscribe from weekly emails" href="{% url user_unsubscribe %}">Unsubscribe</a> - 
-	{% else %}
-	<a title="Unsubscribe from weekly emails" href="{% url unsubscribe %}">Unsubscribe</a> -  
-	{% endif %}
 	<a title="Contact LaoWaiLai.com" href="/contact/">Contact</a> - 
 	<a title="Tell a friend about LaoWaiLai.com" href="{% url tell_a_friend %}">Tell a friend!</a> - 
 	© Copyright LaoWaiLai 2011

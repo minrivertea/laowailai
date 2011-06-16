@@ -2,7 +2,7 @@
 {% load thumbnail %}
 
 {% block metadescription %}{{ event.description }}{% endblock %}
-{% block pagetitle %}Event {{ event.added_by }}{% endblock %}
+{% block pagetitle %}{{ event.title }} - {{ event.city }}{% endblock %}
 
 {% block content %}
 
