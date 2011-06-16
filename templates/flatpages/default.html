@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block pagetitle %}{{ flatpage.title }}{% endblock %}
+
+{% block content %}
+	
+<div id="top">
+<h1>{{ flatpage.title }}</h1>
+</div>
+
+
+{{ flatpage.content|safe }}
+
+
+
+</div>
+{% endblock %}
