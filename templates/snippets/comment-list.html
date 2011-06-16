@@ -7,6 +7,7 @@
 			{% if request.user.get_profile.photo %}				
 			<img src="{% thumbnail request.user.get_profile.photo 60x60 crop %}"/>
 			{% else %}
+			<img src="/images/avatar_60.jpg"/>
 			{% endif %}
 		</div>
 		<div class="comment-content">
