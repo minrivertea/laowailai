@@ -19,7 +19,7 @@ def get_current_city(request):
             else:
                 city = get_object_or_404(City, pk="1")
         else:
-            city = get_object_or_404(City, pk="1")
+            city = get_object_or_404(City, slug="china")
         
     return {'current_city': city}
     

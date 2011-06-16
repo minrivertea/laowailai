@@ -255,7 +255,7 @@ div#loading {
 
 <div id="top">
 	{% if request.user.is_authenticated %}
-	<div class="add-place-button"><a href="{% url add_place %}"><span>Add a place</span></a></div>
+	<div class="add-place-button"><a href="{% url add_place current_city.slug %}"><span>Add a place</span></a></div>
 	{% endif %}
 <h1>Places in {{ current_city }}</h1>
 </div>
@@ -286,7 +286,7 @@ div#loading {
 		</p>
 		</div>
 		<div class="right">
-		<br/><a class="small" id="reset" style="display:{% if selected %}block{% else %}none{% endif %}" href="{% url places %}">Reset filters</a>
+		<br/><a class="small" id="reset" style="display:{% if selected %}block{% else %}none{% endif %}" href="{% url places current_city.slug %}">Reset filters</a>
 		
 		</div>
 </div>

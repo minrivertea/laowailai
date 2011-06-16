@@ -84,7 +84,7 @@ def index(request):
     
     else:
     
-        emailform = SubscriberAddForm()
+
         infoform = InfoAddForm()
                 
     return render(request, 'list/index.html', locals())

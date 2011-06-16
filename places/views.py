@@ -40,10 +40,13 @@ def render(request, template, context_dict=None, **kwargs):
                               **kwargs
     )
 
-def places(request, category=None, qs=None, parameters={}):
+def places(request, cityslug, category=None, qs=None, parameters={}):
     
-    city = get_current_city(request)['current_city']
-    places = Place.objects.filter(city=city).order_by('?')
+    city = get_object_or_404(City, slug=cityslug)
+    if city.slug == "china":
+        places = Place.objects.all()
+    else:
+        places = Place.objects.filter(city=city).order_by('?')
     
     # if there's a search query
     if request.GET.get('q'):
@@ -207,6 +210,7 @@ def add_rating(request, place, value):
 def get_place_by_slug(request, city, slug):
     city = get_object_or_404(City, slug=city)
     place = get_object_or_404(Place, slug=slug)
+    request.session['CURRENTCITY'] = city.id
     
     url = reverse('place', args=[place.id])
     return HttpResponseRedirect(url)

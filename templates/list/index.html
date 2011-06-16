@@ -75,7 +75,7 @@ ul.explanation li p {
 <li>
 	<h3>Browse</h3>
 	<p>Find places to eat, drink, visit or shop, or do something.<br/>
-	<a href="{% url places %}">Find places &raquo;</a>
+	{% ifequal current_city.slug "china" %}{% else %}<a href="{% url places current_city.slug %}">Find places &raquo;</a>{% endifequal %}
 	</p>
 </li>
 <li class="last">
