@@ -31,6 +31,7 @@ class Laowai(models.Model):
     subscribe = models.BooleanField(default=True)
     photo = models.ImageField(blank=True, upload_to='photos/profiles/')
     rank_points = models.IntegerField(default="0")
+    profile_views = models.IntegerField(default="0")
     
     def __unicode__(self):
         return self.user.email

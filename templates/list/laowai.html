@@ -84,6 +84,9 @@ div#top div#photo p {
 	<p>{{ this_laowai.added_places.count }} place{{ this_laowai.added_places.count|pluralize }}</p>
 	<p>{{ this_laowai.added_questions.count }} question{{ this_laowai.added_questions.count|pluralize }}</p>
 	<p>{{ this_laowai.added_answers.count }} answer{{ this_laowai.added_answers.count|pluralize }}</p>
+	{% ifequal this_laowai laowai %}
+	<p>{{ this_laowai.profile_views }} profile view{{ this_laowai.profile_views|pluralize }}</p>
+	{% endifequal %}
 	</div>
 	
 	<h1>{% ifequal this_laowai laowai %}Your posts{% else %}All posts by {{ this_laowai.name }}{% endifequal %}</h1>

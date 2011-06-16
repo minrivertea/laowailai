@@ -114,6 +114,11 @@ def laowai(request, id):
         laowai = get_object_or_404(Laowai, user=request.user)
     except:
         laowai = None
+    if this_laowai == laowai:
+        pass
+    else:
+        this_laowai.profile_views += "1"
+        
     infos = Info.objects.filter(added_by=this_laowai).order_by('-date_added')
     these_infos = []
     for i in infos:
