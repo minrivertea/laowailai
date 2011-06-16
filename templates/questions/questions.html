@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% load thumbnail %}
 
-{% block metadescription %}Questions and answers about {{ current_city }} by the foreigners living there.{% endblock %}
-{% block pagetitle %}How to: {{ current_city }}{% endblock %}
+{% block metadescription %}Questions and answers about {{ city }} by the foreigners living there.{% endblock %}
+{% block pagetitle %}How to: {{ city }}{% endblock %}
 
 {% block extracss %}
 <style type="text/css">
@@ -47,7 +47,7 @@ p.description {
 <h1>How to: {{ city }}</h1>
 </div>
 
-<p class="description"><em>Ask a question, get an answer - simple as that. Ask any question about {{ current_city }} and the loving laowais from that town will help you out with an answer.</em></p>
+<p class="description"><em>Ask a question, get an answer - simple as that. Ask any question about {{ city }} and the loving laowais from that town will help you out with an answer.</em></p>
 
 {% include "snippets/search_bar.html" %}
 
@@ -65,7 +65,7 @@ p.description {
 	{% endfor %}
 </ul>
 {% else %}
-<p><em>There's no questions for {{ current_city }}!</em></p>
+<p><em>There's no questions for {{ city }}!</em></p>
 {% endif %}
 </div>
 
