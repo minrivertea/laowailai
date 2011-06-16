@@ -7,11 +7,11 @@
 		    <div class="avatar">
 		    	<a title="{{ info.added_by.name }}" href="{% url laowai info.added_by.id %}">
 		    	{% if info.added_by.photo %}
-		    		{% thumbnail info.added_by.photo "50x50" crop="center" as im %}
+		    		{% thumbnail info.added_by.photo "60x60" crop="center" as im %}
 	    			<img class="avatar" title="{{ info.added_by.name }}" alt="a picture of {{ info.added_by.name }}" src="{{ im.url }}">
 	    			{% endthumbnail %}
 	    		{% else %}
-			    	<img class="avatar" title="{{ info.added_by.name }}" alt="" src="/images/avatar_micro.png">
+			    	<img class="avatar" title="{{ info.added_by.name }}" alt="" src="/images/avatar_60.png">
 				{% endif %}
 				</a>
 		    </div>
@@ -75,7 +75,7 @@
 								        <img src="{{ im.url }}">
 								        {% endthumbnail %}
 								    {% else %}
-								    	<img src="/images/avatar.png">
+								    	<img src="/images/avatar_30.png">
 								    {% endif %}
 								</div>
 							{% get_comment_form for info as form %}	
