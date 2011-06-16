@@ -33,10 +33,12 @@ $("#highest_rated").click(function () {
 
 $("#loading").ajaxStart(function(){
    $(this).show();
+   $('#places').hide();
  });
 
 $("#loading").ajaxStop(function(){
    $(this).hide();
+   $('#places').show();
  });
 
 </script>
