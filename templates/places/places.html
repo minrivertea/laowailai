@@ -8,7 +8,7 @@
 <script type="text/javascript">
 
 function filter(type) {
-$.getJSON("/places/", {xhr: "true", filter: type, category: '{{ selected }}',},
+$.getJSON("/{{ city.slug }}/places/", {xhr: "true", filter: type, category: '{{ selected }}',},
   function(data) {
   	$('#places').children().remove();
   	$('#reset').attr('style', 'display:block');

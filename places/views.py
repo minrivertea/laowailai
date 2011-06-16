@@ -63,8 +63,9 @@ def places(request, slug, category=None, qs=None, parameters={}):
         if request.GET.get('filter') == 'recent':
             new_list = []
             if request.GET.get('category'):
-                new_list.append(render_to_string('places/snippets/place-list.html', 
-                    {'places': places.filter(category=request.GET.get('category')).order_by('-date_added')}
+                new_list.append(render_to_string('places/snippets/place-list.html', {
+                    'places': places.filter(category=request.GET.get('category')).order_by('-date_added'),
+                }
                 ))
             else:
                 new_list.append(render_to_string('places/snippets/place-list.html', 
