@@ -117,7 +117,8 @@ def laowai(request, id):
     if this_laowai == laowai:
         pass
     else:
-        this_laowai.profile_views += "1"
+        this_laowai.profile_views += 1
+        this_laowai.save()
         
     infos = Info.objects.filter(added_by=this_laowai).order_by('-date_added')
     these_infos = []
