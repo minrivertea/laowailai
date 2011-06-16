@@ -398,10 +398,11 @@ div.print:active {
 
 <a href="#" id="comments_{{ thing.id }}"></a>
 	<div class="comments">
-	{% if comment_list %}
 	<h4>Comments ({{ comment_count }})</h4>
+	{% if comment_list %}
 	{% include "snippets/comment-list.html" %}
 	{% else %}
+	<p><em>There are no comments about this place yet. Why not add yours below?</em></p>
 	{% endif %}
 	</div>
 	{% if request.user.is_authenticated %}

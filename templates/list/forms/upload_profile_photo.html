@@ -2,21 +2,44 @@
 
 {% block title%}Upload a profile photo |{% endblock %}
 
-{% block js %}{% endblock %}
-{% block map %}{% endblock %}
+{% block extracss %}
+<style type="text/css">
+div#left input.save-photo-button {
+  background: url('/images/save-photo-button.png') no-repeat top left;
+  border: medium none;
+  height: 33px;
+  margin: 10px 0 10px 0px;
+  width: 142px;
+  float: left;  
+}
+
+div#left input.save-photo-button:hover {
+  cursor: pointer;
+  background: url('/images/save-photo-button.png') no-repeat center left;	
+}
+
+div#left input.save-photo-button:active {
+  cursor: pointer;
+  background: url('/images/save-photo-button.png') no-repeat bottom left;	
+}
+
+</style>
+{% endblock %}
 
     {% block content %}
 
+<div id="top">
+<h1>{% if laowai.photo %}Upload a new profile photo{% else %}Add a profile photo{% endif %}</h1>
+</div>
 
-    <h2>{% if laowai.photo %}Upload a new profile photo{% else %}Add a profile photo{% endif %}</h2>
-	<p>Show the world your beautiful face!<br/> (TIP: for best results choose a square photo with your face in the middle.) </p> 
+<p class="description">Show the world your beautiful face!<br/> <em>(TIP: for best results choose a square photo with your face in the middle.)</em></p> 
     
-    	<form enctype="multipart/form-data" method="post" action="/upload_profile_photo/">
+    	<form enctype="multipart/form-data" method="post" action="{% url upload_profile_photo %}">
 
             {{ form.photo.errors }}        
 			{{ form.photo }}
 			<br/>
-    		<input type="submit" value="Upload" class="submit">
+    		<input type="submit" value="" class="save-photo-button">
 		</form>
                         
 

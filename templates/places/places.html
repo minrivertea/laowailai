@@ -31,6 +31,13 @@ $("#highest_rated").click(function () {
 	$('#highest_rated').css('font-weight', 'bold').css('color', '#000'); 
 });
 
+$("#loading").ajaxStart(function(){
+   $(this).show();
+ });
+
+$("#loading").ajaxStop(function(){
+   $(this).hide();
+ });
 
 </script>
 {% endblock %}
@@ -227,6 +234,13 @@ span#most_recent:hover, span#highest_rated:hover {
   color: #F67B7B;	
 }
 
+div#loading {
+  display: none;
+  width: 100%;
+  text-align: center;
+  margin-top: 40px;	
+}
+
 
 </style>
 {% endblock %}
@@ -275,7 +289,7 @@ span#most_recent:hover, span#highest_rated:hover {
 
 
 <div id="places">
-
+<div id="loading"><img src="/images/spinner.gif"/></div>
 {% include "places/snippets/place-list.html" %}
 </div>
 
