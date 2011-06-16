@@ -36,13 +36,7 @@
 	    				</span>
 	    			</p>
 	    			<p>
-	    				<span class="small">
-	    				{% if laowai.subscribe %}
-	    					You are subscribed to weekly emails (<a title="Click to unsubscribe from weekly emails" href="{% url user_unsubscribe %}">unsubscribe</a>)
-	    				{% else %}
-	    					You are not subscribed to receive emails (<a title="Click to subscribe to weekly emails" href="{% url user_subscribe %}">subscribe</a>)
-	    				{% endif %}
-	    				</span>
+
 	    			</p>
 	    			<p>
 	    				<span class="small">
@@ -54,7 +48,7 @@
 	    				</span>
 	    			</p>
 	    			<p><span class="small"><a href="{% url add_a_bio %}">{% if laowai.bio %}Edit bio{% else %}Add a bio{% endif %}</a></span></p>
-	    			<p><span class="small"><a href="{% url tell_a_friend %}">Tell a friend!</a></span></p>
+
 	    		</div>
 
 	    		
