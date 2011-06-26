@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load comments %}
 
-{% block metadescription %}{{ place.description }}{% endblock %}
+{% block metadescription %}{{ place.description|safe }}{% endblock %}
 {% block pagetitle %}{{ place.name }} - {{ place.city }}{% endblock %}
 
 {% block canonical %}
