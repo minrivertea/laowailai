@@ -119,9 +119,16 @@ def news_feed(request, slug):
 
 def laowai(request, id):
     this_laowai = get_object_or_404(Laowai, id=id)
-    laowai = request.user.get_profile()
-    city = laowai.city
-    if this_laowai == laowai:
+
+    if request.user.is_authenticated():
+        laowai = request.user.get_profile()
+        city = laowai.city
+        if this_laowai == laowai:
+            pass
+    else:
+        laowai = None
+        
+    if laowai is not None and this_laowai == laowai:
         pass
     else:
         this_laowai.profile_views += 1
