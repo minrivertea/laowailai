@@ -535,9 +535,9 @@ def suggestion_vote(request, suggestion):
 #    return render(request, 'suggestions.html', locals())
 
 def people(request, slug):
-    try:
+    if request.user.is_authenticated():
         laowai = request.user.get_profile()
-    except:
+    else:
         laowai = None
     
     city = get_object_or_404(City, slug=slug)       
