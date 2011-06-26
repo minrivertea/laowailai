@@ -85,26 +85,19 @@ def find_places(q=None, skip_photoless=False, city=None,
             for word in q.split():
                 if word.lower() in STOPWORDS:
                     continue
-                
-                
-                
+
                 if qset is None:
-                    qset = Q(corefrock__material__iexact=word) | \
-                           Q(corefrock__colour__name__iexact=word) | \
-                           Q(corefrock__designer__iexact=word) | \
-                           Q(corefrock__label__iexact=word) | \
-                           Q(corefrock__category__name__iexact=word) | \
-                           Q(corefrock__type__name__iexact=word) | \
-                           Q(corefrock__title__icontains=word)
+                    qset = Q(name__iexact=word) | \
+                        Q(chinese_name__iexact=word) | \
+                        Q(category__iexact=word) | \
+                        Q(location__iexact=word) | \
+                        Q(description__icontains=word)
                 else:
-                    qset = qset | \
-                           Q(corefrock__material__iexact=word) | \
-                           Q(corefrock__colour__name__iexact=word) | \
-                           Q(corefrock__designer__iexact=word) | \
-                           Q(corefrock__label__iexact=word) | \
-                           Q(corefrock__category__name__iexact=word) | \
-                           Q(corefrock__type__name__iexact=word) | \
-                           Q(corefrock__title__icontains=word)
+                    qset = Q(name__iexact=word) | \
+                        Q(chinese_name__iexact=word) | \
+                        Q(category__iexact=word) | \
+                        Q(location__iexact=word) | \
+                        Q(description__icontains=word)
 
                 qs = qs.filter(qset)
         
@@ -153,12 +146,12 @@ def find_places(q=None, skip_photoless=False, city=None,
                             for each in value:
                                 # http://groups.google.com/group/django-users/browse_thread/thread/f9b7e3ef99958bd6
                                 if qset is None:
-                                    qset = Q(**{'corefrock__%s__iexact' % attr: each})
+                                    qset = Q(**{'%s__iexact' % attr: each})
                                 else:
-                                    qset = qset | Q(**{'corefrock__%s__iexact' % attr: each})
+                                    qset = qset | Q(**{'%s__iexact' % attr: each})
                             qs = qs.filter(qset)
                         else:
-                            qs = qs.filter(**{'corefrock__%s__in' % attr: value})
+                            qs = qs.filter(**{'%s__in' % attr: value})
                     else:
                         qs = qs.filter(pk=-1) # this will never match
                 else:
@@ -168,9 +161,9 @@ def find_places(q=None, skip_photoless=False, city=None,
                         # not expect to get anything back
                         qs = qs.filter(pk=-1) # this will never match
                     elif type_ in (basestring, unicode, str):
-                        qs = qs.filter(**{'corefrock__%s__iexact' % attr: value})
+                        qs = qs.filter(**{'%s__iexact' % attr: value})
                     else:
-                        qs = qs.filter(**{'corefrock__%s' % attr: value})
+                        qs = qs.filter(**{'%s' % attr: value})
                         
         return qs
                         
@@ -180,66 +173,6 @@ def find_places(q=None, skip_photoless=False, city=None,
     
     qs = check_parameter_attributes(qs, string_attributes, basestring)
     
-    if 'type' in parameters:
-        value = parameters.pop('type')
-        if isinstance(value, (tuple, list)):
-            value = [_ok_string(x) for x in value if _ok_string(x)]
-            if value:
-                qset = None
-                for each in value:
-                    if qset is None:
-                        qset = Q(corefrock__type__name__iexact=each)
-                    else:
-                        qset = qset | Q(corefrock__type__name__iexact=each)
-                qs = qs.filter(qset)
-            else:
-                # no valid strings in the list of frock types
-                qs = qs.filter(pk=-1)
-        else:
-            value = _ok_string(value)
-            if value is None:
-                # invalid value
-                qs = qs.filter(pk=-1)
-            else:
-                qs = qs.filter(corefrock__type__name__iexact=value)
-                
-    if 'value' in parameters:
-        value = parameters.pop('value')
-        if isinstance(value, (tuple, list)):
-            value = [_ok_string(x) for x in value if _ok_string(x)]
-            if value:
-                qset = None
-                for each in value:
-                    if qset is None:
-                        qset = Q(corefrock__category__name__iexact=each)
-                    else:
-                        qset = qset | Q(corefrock__category__name__iexact=each)
-                qs = qs.filter(qset)
-            else:
-                # no valid strings in the list of frock types
-                qs = qs.filter(pk=-1)
-        else:
-            value = _ok_string(value)
-            if value is None:
-                # invalid value
-                qs = qs.filter(pk=-1)
-            else:
-                qs = qs.filter(corefrock__category__name__iexact=value)
-                
-    if 'coming_soon' in parameters:
-        value = parameters.pop('coming_soon')
-        if value:
-            # the frock must have a coming_soon and it must be something
-            # in the future
-            qs = qs.filter(coming_soon_date__isnull=False, 
-                           coming_soon_date__gt=datetime.datetime.today())
-        else:
-            
-            # coming_soon date must be null or past
-            qset = Q(coming_soon_date__isnull=True) | \
-                   Q(coming_soon_date__lte=datetime.datetime.today())
-            qs = qs.filter(qset)
-                
 
     # If you have default_find_all to be False and there are parameters
     # left that means that you have provided invalid keys and this should
@@ -250,18 +183,16 @@ def find_places(q=None, skip_photoless=False, city=None,
 
         
     # if there was a searchterm (q) and nothing was found, then
-    # repeat the find_frocks() but with split_searchterm being True
+    # repeat the find_places() but with split_searchterm being True
     if q and len(q.split()) > 1 and not split_searchterm and \
       [w for w in q.split() if w.lower() not in STOPWORDS] and not qs.count():
         # getting desperate
-        qs = find_frocks(split_searchterm=True,
+        qs = find_places(split_searchterm=True,
                          q=q,
-                         skip_photoless=skip_photoless,
+                         city=city,
                          default_find_all=default_find_all,
                          **parameters)
         
-    if skip_photoless:
-        raise NotImplementedError, "Feature not implemented yet"
 
     return qs
     

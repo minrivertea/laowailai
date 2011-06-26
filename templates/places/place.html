@@ -403,7 +403,13 @@ div.print:active {
 	{% if comment_list %}
 	{% include "snippets/comment-list.html" %}
 	{% else %}
-	<p><em>There are no comments about this place yet. Why not add yours below?</em></p>
+	
+	<p><em>There are no comments about this place yet. 
+	{% if request.user.is_authenticated %}Why not add yours below?
+	{% else %}
+	<br/><a href="{% url registration_register %}"><strong>Signup</strong></a> or <a href="/accounts/login/"><strong>login</strong></a> to add a comment</p>
+	{% endif %}
+	</em></p>
 	{% endif %}
 	</div>
 	{% if request.user.is_authenticated %}

@@ -114,7 +114,7 @@ ul#cities {
 
 <ul id="cities">
 {% for city in cities %}
-<li><a href="{% url city city.slug %}">{{ city }}</a></li>
+<li><a href="{% url city city.slug %}">{{ city }} ({{ city.chinese_name }})</a></li>
 {% endfor %}
 </ul>
 {% endif %}
