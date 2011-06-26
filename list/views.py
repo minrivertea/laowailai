@@ -117,7 +117,6 @@ def news_feed(request, slug):
     return render(request, "list/news_feed.html", locals())
 
 
-@login_required
 def laowai(request, id):
     this_laowai = get_object_or_404(Laowai, id=id)
     laowai = request.user.get_profile()
@@ -541,11 +540,8 @@ def people(request, slug):
     except:
         laowai = None
     
-    
-    city = get_object_or_404(City, slug=slug)
-            
+    city = get_object_or_404(City, slug=slug)       
     people = Laowai.objects.filter(city=city).exclude(id=laowai.id)        
-    
     return render(request, "list/people.html", locals())
 
 
