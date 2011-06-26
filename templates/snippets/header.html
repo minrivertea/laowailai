@@ -9,12 +9,7 @@
 	    	<div id="site-introduction">News, events and info for the well connected <em>lǎo wài</em> in China.<br/>
 	    	</div>
 	    	
-	    	<div id="current-city">
-			    	<p class="city">{{ city.chinese_name }}</p>
-			    	<p>You're currently browsing {{ city }} (<a href="{% url cities %}">Change city</a>)</p>
-	    	</div>
-	    	
-	    			
+	    		    			
 
 	    	{% if user.is_authenticated %}
 	    	<div id="account">
@@ -32,8 +27,7 @@
 	    		
 	    		<div class="info">
 	    			<p class="name"><a title="Click to view your profile" href="{% url laowai laowai.id %}">{{ user.email }}</a>	
-	    				<span class="small"><a title="Click to logout" href="{% url auth_logout %}">(log-out)</a></span>
-	    				</span>
+	    				
 	    			</p>
 	    			<p>
 
@@ -48,6 +42,7 @@
 	    				</span>
 	    			</p>
 	    			<p><span class="small"><a href="{% url add_a_bio %}">{% if laowai.bio %}Edit bio{% else %}Add a bio{% endif %}</a></span></p>
+	    			<p><span class="small"><a title="Click to logout" href="{% url auth_logout %}">Logout</a></span></p>
 
 	    		</div>
 
@@ -57,12 +52,15 @@
 	    	</div>
 	    	{% else %}
 	    			<div id="nav">
-	    			<a href="/" title="Home" alt="home">home</a> -
-	    			<a href="/about/" title="About LaoWaiLai.com">about</a> - 
-	    			<a title="Login" alt="login" href="/accounts/login/">login</a> - 
-	    			<a title="Register" alt="Register" href="{% url registration_register %}">register</a>
+	    				<div class="signup-button">
+	    					<a title="Register" alt="Register" href="{% url registration_register %}"><span>register</span></a>
+	    				</div>
+	    				<div class="login">
+							<p>...or if you have an account, <a title="Login" alt="login" href="/accounts/login/"><strong>login</strong></a> </p>
+						</div>
 	    			</div>
 	    	{% endif %}
+	    	
 		
 
 			

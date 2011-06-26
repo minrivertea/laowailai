@@ -93,13 +93,20 @@ div#header div#latest-signups img {
   border: 2px solid white;
 }
 
+div#header span#changecity {
+ color: #2D7886;
+}
+
+div#header span#changecity:hover {
+  color: #F67B7B;
+  cursor: pointer;	
+}
+
 
 
 div#header div#admin {
-    -moz-border-radius: 10px 10px 10px 10px;
     background-color: #FFFFFF;
-    border-bottom: 1px solid #A1CDD2;
-    border-top: 1px solid #A1CDD2;
+    border-radius: 10px 10px 10px 10px;
     float: left;
     margin-left: 10px;
     margin-top: 20px;
@@ -119,14 +126,14 @@ div#header div.header-block#about-fuzhou {
 }
 
 div#header p {
-  font-family: Georgia, serif;
   color: #333;	
 }
 
 div#header div#nav {
+    float: left;
     font-size: 13px;
     font-weight: bold;
-    margin: 40px 20px 0 0;
+    margin: 0 20px 0 0;
     padding: 10px 0 10px 20px;
     text-align: right;
 }
@@ -155,36 +162,42 @@ div#site-introduction {
 }
 
 div#current-city {
-  border-top: 3px dotted #92CCD3;
-  float:right;
-  margin: 20px 20px 0 0;
-  padding-top: 10px;
-  width: 260px;	
+    background-color: #14565E;
+    border-radius: 5px 5px 0 0;
+    float: left;
+    margin: 26px 0 0 50px;
+    padding: 2px 10px 2px 0;
+    text-align: right;
+    width: 92px;
+}
+
+div#current-city:hover {
+  cursor: pointer;	
 }
 
 div#current-city p {
   margin: 0;
-  font-size: 11px;	
-  text-align: right;
+  font-size: 10px;	
+  font-weight: bold;
+  color: #d6ebed;
 }
 
 div#current-city p.city {
-  float: right;
-  font-size: 38px;
-  font-weight: bold;
-  width: auto;
-  margin-left: 10px;
-  color: #388c96;
-  position: relative;
-  top: -8px;
-  text-shadow: 0 1px 1px #fff;
+    color: #388C96;
+    float: right;
+    font-size: 30px;
+    font-weight: bold;
+    margin-left: 10px;
+    position: relative;
+    text-shadow: 0 1px 1px #FFFFFF;
+    top: -5px;
+    width: auto;
 }
 
 div#navigation {
-  float: left;
-  width: 540px;	
-  margin: 0px 0 0 80px;
-
+    float: right;
+    margin: 22px 10px 0 0;
+    width: 420px;
 }
 
 div#navigation a {
@@ -1052,11 +1065,58 @@ div.add-event-button a {
 }
 
 div.add-event-button a:hover {
-  background: url('/images/add-event-button.png') no-repeat center left;	
+  background-position: center left;	
 }
 
 div.add-event-button a:active {
-  background: url('/images/add-event-button.png') no-repeat bottom left;	
+  background-position: bottom left;	
+}
+
+div.login {
+  float: left;
+  width: 260px;	
+  font-weight: normal;
+}
+
+div.login p {
+  margin: 5px 0 0 0;	
+}
+
+div.signup-button {
+  margin: 10px 0 0 0;	
+  float: right;	
+}
+
+div.signup-button p {
+  font-weight: normal;
+  font-size: 11px;
+  float: left;
+  width: 100px;
+  color: #666;
+
+}
+
+div.signup-button a {
+  background: url('/images/signup-button.png') no-repeat top left;
+  display: block;
+  position: relative;
+  float: right;
+  height: 50px;
+  width: 215px;
+  top: 0;
+  left: 0;
+}
+
+div.signup-button a span {
+  display: none;	
+}
+
+div.signup-button a:hover {
+  background-position: center left;	
+}
+
+div.signup-button a:active {
+  background-position: bottom left;	
 }
 
 div.add-place-button {
@@ -1183,4 +1243,28 @@ p.added-by-metadata {
     margin: -10px 0 10px;
     width: 560px;
     font-weight: bold;
+}
+
+div#otherplaces {
+    background-color: #14565E;
+    border-color: #D1D1D1;
+    border-radius: 0 0 5px 5px;
+    border-style: solid;
+    border-width: 0 1px 1px;
+    box-shadow: 0 10px 9px #E1E1E1;
+    float: left;
+    font-size: 11px;
+    margin: 2px 0 0 -1px;
+    position: absolute;
+    text-align: left;
+    width: 400px;
+}
+
+div#otherplaces ul {
+  list-style-type: square;
+  color: #fff;	
+}
+
+div#otherplaces a {
+  color: #fff;	
 }

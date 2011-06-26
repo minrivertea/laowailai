@@ -6,22 +6,8 @@ from laowailai.cities.models import City
 def common(request):
     from laowailai import settings
     ga_is_on = settings.GA_IS_ON
-    return {'ga_is_on': ga_is_on}
-
-def get_current_city(request):
-    try:
-        city = get_object_or_404(City, pk=request.session['CURRENTCITY'])
-    except:
-        if request.user.is_authenticated():
-            laowai = get_object_or_404(Laowai, user=request.user)
-            if laowai.city:
-                city = laowai.city
-            else:
-                city = get_object_or_404(City, slug="fuzhou")
-        else:
-            city = get_object_or_404(City, slug="fuzhou")
-        
-    return {'city': city}
+    sitename = settings.SITE_NAME
+    return {'ga_is_on': ga_is_on, 'sitename': sitename}
     
 def get_laowai(request):
     try:

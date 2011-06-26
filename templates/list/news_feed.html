@@ -33,10 +33,21 @@ function bindPostCommentHandler(idx) {
         return false;
     });  
 }  
+
+function bindLikeHandler(idx) {
+   $('#like_'+ idx).click(function() {
+        $.getJSON("/like/", {xhr: "true", info: idx, laowai: '{{ laowai.id }}',},
+          function(data) {
+            $('#like_'+ idx).replaceWith(data);
+        });	
+   });
+}
+
       
 $(document).ready(function() { 
 	{% for info, i_like in objects %} 
    	     bindPostCommentHandler({{ info.id }});
+   	     bindLikeHandler({{ info.id }});
 	{% endfor %}  
 });  
 </script>  
@@ -48,6 +59,15 @@ $(document).ready(function() {
 div#introduction {
   height: 300px;
   float: left;	
+}
+
+span.like {
+ color: #2D7886;	
+}
+
+span.like:hover {
+  color: #F67B7B;
+  cursor: pointer;	
 }
 </style>
 {% endblock %}

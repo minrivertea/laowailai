@@ -14,7 +14,6 @@ from laowailai.places.models import Place
 from laowailai.places.forms import AddPlaceForm, SearchForm, EditLocationForm
 from laowailai.places.data import find_places
 from laowailai.slugify import get_slugify
-from laowailai.list.context_processors import get_current_city
 from laowailai.ratings.models import Rating
 from laowailai.cities.models import City
 

@@ -33,17 +33,20 @@ def render(request, template, context_dict=None, **kwargs):
 
 def cities(request):
     cities = City.objects.all().order_by('name')
-    
     return render(request, "cities/cities.html", locals())
 
 
 def city(request, slug):
     city = get_object_or_404(City, slug=slug)
-    return render(request, "list/index.html", locals())
-
-def mark_city(request, id):
-    city = get_object_or_404(City, pk=id) 
-    request.session['CURRENTCITY'] = city.id
-    print city
-    url = request.META.get('HTTP_REFERER','/')
+    url = reverse("news_feed", args=[city.slug])
     return HttpResponseRedirect(url)
+
+def mark_city(request, slug):
+    city = get_object_or_404(City, slug=slug) 
+    url = reverse('city', args=[city.slug])
+    return HttpResponseRedirect(url)
+    
+    
+    
+    
+    

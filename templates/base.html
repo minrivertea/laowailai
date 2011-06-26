@@ -68,14 +68,34 @@
 		{% endif %}
 		
 		<!-- the main section of the page --!>
-			
+		
+	    		{% if not city %}
+			    	
+			    {% else %}
+			    <div id="current-city">
+			    	<img src="/images/expand.png" style="float: left; margin-left: 10px; position:relative;top: 1px;">
+					<p><span id="changecity" href="">Change city</span></p>
+			    
+			    	<div id="otherplaces" style="display:none;">
+			    		<ul>
+			    			<li><a href="/beijing/">Beijing</a></li>
+			    			<li><a href="/fuzhou/">Fuzhou</a></li>
+			    			<li><a href="/shanghai/">Shanghai</a></li>
+			    			<li><a href="/guangzhou/">Guangzhou</a></li>
+			    		</ul>
+			    	</div>
+			    </div>	
+			    {% endif %}
 
 		<div id="navigation">
+				{% if city %}
 					<a class="events" href="{% url events city.slug %}">Events</a>
 					<a class="places" href="{% url places city.slug %}">Places</a>
 					{% if request.user.is_authenticated %}<a class="people" href="{% url people city.slug %}">People</a>{% endif %}
 					<a class="questions" href="{% url questions city.slug %}">How-to</a>
 					<a class="news" href="{% url news_feed city.slug%}">News</a>
+				{% endif %}
+
 		</div>
 	  	
 	  	<div id="left">
@@ -98,6 +118,16 @@
     </div>
 
 {% block extrajs %}{% endblock %}
+<script type="application/javascript">
+$('#current-city').click(function() {
+	if ($("#otherplaces").is(":hidden")) {
+	$("#otherplaces").slideDown("100");
+	} else {
+	$("#otherplaces").slideUp("slow");
+	}
+});
+
+</script>
 
 </body>
 

@@ -32,7 +32,7 @@ div#left input.login-button:active {
 <h1>Login</h1>
 </div>
 
-<p class="description">Login to laowailai.com - if you haven't got an account, <a href="{% url registration_register %}">register here</a>.</p>
+<p class="description">Login to {{ sitename }} - if you haven't got an account, <a href="{% url registration_register %}">register here</a>.</p>
 
 {% if form.errors %}
 <p>Your username and password didn't match. Please try again.</p>

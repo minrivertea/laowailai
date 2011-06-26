@@ -99,7 +99,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.auth',
     'laowailai.list.context_processors.common',
     'laowailai.list.context_processors.get_laowai',
-    'laowailai.list.context_processors.get_current_city',
     'laowailai.list.context_processors.get_stats',
     'laowailai.list.context_processors.get_latest_users',
 )
@@ -110,6 +109,8 @@ AUTH_PROFILE_MODULE = "list.Laowai"
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_PATH, "templates/")
 )
+
+SITE_NAME = "Laowailai.com"
 
 GA_IS_ON = True
 

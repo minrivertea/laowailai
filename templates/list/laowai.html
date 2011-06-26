@@ -56,10 +56,9 @@ p.description {
 }
 
 div#top div#photo {
-  width: 100px;
-  float: left;	
-  margin-right: 30px;
-  margin-bottom: 20px;
+    float: left;
+    margin: 10px 30px 20px 0;
+    width: 100px;
 }
 
 div#top div#photo p {
@@ -75,7 +74,7 @@ div#top div#photo p {
 <div id="top">
 	<div id="photo">
 	{% if this_laowai.photo %}
-		{% thumbnail this_laowai.photo "80x80" crop="center" as im %}
+		{% thumbnail this_laowai.photo "110x110" crop="center" as im %}
 		<img class="profile-photo-large" title="{{ this_laowai.name }}" alt="{{ this_laowai.name }}'s photo" src="{{ im.url }}">
 		{% endthumbnail %}
 	{% else %}

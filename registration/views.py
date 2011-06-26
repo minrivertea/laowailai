@@ -217,7 +217,7 @@ def register(request, backend, success_url=None, form_class=RegistrationFormNoUs
                           fail_silently=False,
             )
 
-            success_url = "/feed/laowai/%s" % new_laowai.id
+            success_url = reverse('whats_next')
 
 
 

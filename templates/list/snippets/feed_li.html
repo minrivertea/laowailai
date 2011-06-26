@@ -24,8 +24,8 @@
 					<div class="meta">
 						{% if info.date %}Posted {{ info.date|timesince }} ago |{% endif %} 
 						
-						{% get_comment_count for info as comment_count %}
-						{% ifequal comment_count 0 %}
+					{% get_comment_count for info as comment_count %}
+					{% ifequal comment_count 0 %}
 						{% if user.is_authenticated %}
 							<span class="show-comments" title="Add the first comment" href="#comments_{{ info.id }}" onclick="toggle_visibility({{ info.id }});"><strong>Add the first comment</strong></span>
 						{% else %}
@@ -34,26 +34,31 @@
 					{% else %}
 						<span class="show-comments" title="Click to view all comments" href="" onclick="toggle_visibility({{ info.id }});"><strong>{{ comment_count }} comment{{ comment_count|pluralize }}</strong></span>
 					{% endifequal %} | 
-					
+					    
+					    
 						{% if user.is_authenticated %}
-						{% if i_like %}
-							{% ifequal info.get_like_count 1 %}
-								You like this
+							{% if i_like %}
+								{% ifequal info.get_like_count 1 %}
+									You like this
+								{% else %}
+									You and {{ info.get_like_count|add:"-1" }} other 
+									{{ info.get_like_count|pluralize:"person,people" }} like{{ info.get_like_count|add:-1|pluralize:",s" }} this
+								{% endifequal %}
 							{% else %}
-								You and {{ info.get_like_count|add:"-1" }} other {{ info.get_like_count|pluralize:"person,people" }} like{{ info.get_like_count|add:-1|pluralize:",s" }} this
-							{% endifequal %}
+							  <span id="like_{{ info.id }}" class="like">
+							    {% ifequal info.get_like_count 0 %}
+							    	<a>Like</a>
+							    {% else %}
+									{{ info.get_like_count }} {{ info.get_like_count|pluralize:"person,people" }} 
+									like{{ info.get_like_count|pluralize:"s," }} this
+									- <a>Like</a>
+								{% endifequal %}
+								</span>
+							{% endif %}
 						{% else %}
-						    {% ifequal info.get_like_count 0 %}
-						    	<a title="Click to like this post" href="{% url like info.id %}">Like</a>
-						    {% else %}
-								{{ info.get_like_count }} {{ info.get_like_count|pluralize:"person,people" }} like{{ info.get_like_count|pluralize:"s," }} this
-								- <a title="Click to like this post" href="{% url like info.id %}">Like</a>
-							{% endifequal %}
+							{{ info.get_like_count }} {{ info.get_like_count|pluralize:"person,people" }} like{{ info.get_like_count|pluralize:"s," }} this
 						{% endif %}
-					{% else %}
-						{{ info.get_like_count }} {{ info.get_like_count|pluralize:"person,people" }} like{{ info.get_like_count|pluralize:"s," }} this
-					{% endif %}
-					
+						
 						
 						
 					</div>

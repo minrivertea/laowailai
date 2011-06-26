@@ -33,6 +33,7 @@ class Laowai(models.Model):
     rank_points = models.IntegerField(default="0")
     profile_views = models.IntegerField(default="0")
     
+    
     def __unicode__(self):
         return self.user.email
         

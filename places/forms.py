@@ -9,11 +9,11 @@ from laowailai.places.models import CATEGORY_CHOICES
  
 class AddPlaceForm(forms.Form):
     name = forms.CharField(max_length=200)
-    chinese_name = forms.CharField(max_length=200)
+    chinese_name = forms.CharField(max_length=200, required=False)
     description = forms.CharField(required=True, widget=forms.Textarea)
-    location = forms.CharField(max_length=200)
-    longitude = forms.CharField(max_length=200)
-    latitude = forms.CharField(max_length=200)
+    location = forms.CharField(max_length=200, required=False)
+    longitude = forms.CharField(max_length=200, required=False)
+    latitude = forms.CharField(max_length=200, required=False)
     city = forms.ModelChoiceField(queryset=City.objects.all())
     category = forms.ChoiceField(choices=CATEGORY_CHOICES, widget=forms.RadioSelect)
     

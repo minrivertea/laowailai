@@ -11,7 +11,6 @@ import smtplib
 from models import Laowai, Info, Likes, Subscriber, Suggestion
 from forms import InfoAddForm, UnsubscribeForm, SubscriberAddForm, ProfilePhotoUploadForm, TellAFriendForm, AddBioForm, SuggestionForm
 from laowailai.cities.models import City
-from laowailai.list.context_processors import get_current_city
 
 # django stuff
 from django.http import Http404, HttpResponse, HttpResponseRedirect
@@ -36,9 +35,17 @@ def render(request, template, context_dict=None, **kwargs):
                               **kwargs
     )
 
-def index(request):     
-    city = get_current_city(request)['city']
-    url = reverse('city', args=[city.slug])
+def index(request, slug=None):  
+    if not request.user.is_authenticated():
+        cities = City.objects.all()
+        return render(request, "list/index.html", locals()) 
+    else:
+        laowai = request.user.get_profile()
+        if slug:
+            city = get_object_or_404(City, slug=slug)
+        else:
+            city = laowai.city
+    url = reverse('news_feed', args=[city.slug])
     return HttpResponseRedirect(url) 
 
 
@@ -105,27 +112,23 @@ def news_feed(request, slug):
         
     
     else:
-    
-
         infoform = InfoAddForm()
     
     return render(request, "list/news_feed.html", locals())
 
 
+@login_required
 def laowai(request, id):
     this_laowai = get_object_or_404(Laowai, id=id)
-    if request.user.is_authenticated():
-        laowai = request.user.get_profile()
-    else:
-        laowai = None
-        
+    laowai = request.user.get_profile()
+    city = laowai.city
     if this_laowai == laowai:
         pass
     else:
         this_laowai.profile_views += 1
         this_laowai.save()
         
-    infos = Info.objects.filter(added_by=this_laowai).order_by('-date_added')
+    infos = Info.objects.filter(added_by=this_laowai).order_by('-date_added')[:3]
     these_infos = []
     for i in infos:
         if laowai:
@@ -136,7 +139,8 @@ def laowai(request, id):
         else:
             i_like = False    
         these_infos.append((i, i_like))
-    return render(request, 'list/laowai.html', {'these_infos': these_infos, 'this_laowai': this_laowai})
+
+    return render(request, 'list/laowai.html', locals())
 
 @login_required
 def post(request, slug):
@@ -414,21 +418,29 @@ def newsletter_send(request):
 
     
 #GROUP : LIKES
-def like(request, item):
-    try:
-        laowai = get_object_or_404(Laowai, user=request.user)
-    except:
-        return HttpResponseRedirect('/accounts/login')
-    info = get_object_or_404(Info, id=item)
-    new_object = Likes.objects.create(liker=laowai, liked=info)
- 
-    return HttpResponseRedirect("/#info_%s" % info.id)
-    #(request, 'index.html', locals())
+@login_required
+def like(request, item=None):
+   
+    if request.GET.get('xhr'):
+        info = get_object_or_404(Info, id=request.GET.get('info'))
+        laowai = get_object_or_404(Laowai, id=request.GET.get('laowai'))
+        new_object = Likes.objects.create(liker=laowai, liked=info)
+        message = "You like this"
+        json =  simplejson.dumps(message, cls=DjangoJSONEncoder)
+        return HttpResponse(json, mimetype='application/json')
+        
+    else:
+        laowai = request.user.get_profile()
+        info = get_object_or_404(Info, id=item)
+        new_object = Likes.objects.create(liker=laowai, liked=info)
+
+        return HttpResponseRedirect("/%s/feed/#info_%s" % (info.city.slug, info.id))
+
  
 
 # GROUP : PROFILE UPDATE STUFF
 
-def upload_profile_photo(request):
+def upload_profile_photo(request, next=None):
     if request.method == 'POST':
         form = ProfilePhotoUploadForm(request.POST, request.FILES)
         if form.is_valid():
@@ -452,11 +464,14 @@ def upload_profile_photo(request):
             open(path, 'w').write(image_content)
             laowai.photo = 'photos/profiles/%s' % filename
             laowai.save()
-            
-            return HttpResponseRedirect("/")
+            next = request.POST['next']
+            return HttpResponseRedirect(next)
+
 
     else:
         form = ProfilePhotoUploadForm()
+        url = request.META.get('HTTP_REFERER','/')
+        next = url
     return render(request, 'list/forms/upload_profile_photo.html', locals())
     
     
@@ -543,8 +558,18 @@ def ajax_comment(request):
     else:
        return False
 
+@login_required
+def whats_next(request):
+    cities = City.objects.all()
+    return render(request, "list/whats_next.html", locals())
 
-
-
-
+@login_required
+def set_city(request, slug):
+    laowai = request.user.get_profile()
+    city = get_object_or_404(City, slug=slug)
+    laowai.city = city
+    laowai.save()
+       
+    url = request.META.get('HTTP_REFERER','/')
+    return HttpResponseRedirect(url)
 

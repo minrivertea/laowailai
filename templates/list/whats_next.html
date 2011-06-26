@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block metadescription %}A list of foreigners living in {{ city }}, China{% endblock %}
+{% block pagetitle %}Home{% endblock %}
+
+{% block extrajs %}
+<script type="application/javascript">
+$('#set-city').click(function () {
+	$('#city-list').slideDown();
+});
+</script>
+{% endblock %}
+
+{% block extracss %}
+<style type="text/css">
+
+div#people div.person {
+  float: left;
+  width: 80px;
+  margin: 0 10px 10px 0;	
+}
+
+ul.explanation {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;	
+}
+
+ul.explanation li {
+    border-color: #E1E1E1 #E9E9E9;
+    border-style: solid;
+    border-width: 0 1px 0 0;
+    float: left;
+    height: 100px;
+    padding: 0 20px;
+    width: 165px;
+}
+
+ul.explanation li.first {
+  padding-left: 0;
+}
+
+ul.explanation li.done {
+  opacity: 0.5;
+}
+
+ul.explanation li.last {
+  border-right: none;	
+  padding-right: 0;
+}
+
+ul.explanation li h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+  text-shadow: 0 1px 2px #fff;
+
+}
+
+ul.explanation li p {
+  font-size: 12px;
+  margin: 5px 0 0 0;	
+}
+
+div#city-list {
+  height: 200px;
+  width: 600px;
+  background-color: #f1f1f1;
+  border: 1px solid #e1e1e1;
+  border-radius: 10px;
+  display: block;	
+}
+
+div#city-list a {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+
+</style>
+{% endblock %}
+
+{% block content %}
+<div id="top">	
+<h1>Welcome to {{ sitename }}</h1>
+</div>
+
+<p class="description">You've successfully registered and you can start posting and browsing right away.</p>
+
+<ul class="explanation">
+<li class="first{% if laowai.city %} done{% endif %}">
+	<h3>Choose a city</h3>
+	<p>Any city in China that you live in, or want to know more about<br/>
+	{% if laowai.city %}
+		<strong>Your city is {{ laowai.city }}</strong>
+	{% else %}
+		<a id="set-city" href="#">Choose your city &raquo;</a>
+			<div id="city-list" style="display:none;">
+			{% for city in cities %}
+			<a href="{% url set_city city.slug %}">{{ city.name }} ({{ city.chinese_name }})</a><br/>
+			{% endfor %}
+			</div>
+	{% endif %}
+			</p>
+</li>
+<li class="{% if laowai.photo %} done{% endif %}">
+	<h3>Add your photo</h3>
+	<p>Everyone looks better with a nice profile picture.<br/>
+	{% if laowai.photo %}<strong>Photo added!</strong>{% else %}<a href="{% url upload_profile_photo %}">Add a profile photo &raquo;</a>{% endif %}
+	</p>
+</li>
+<li class="last">
+	<h3>Start browsing</h3>
+	<p>Check out places, information and news from your city<br/>
+	<a href="{% url city laowai.city.slug %}">Browse {{ laowai.city }} &raquo;</a></p>
+</li>
+</ul>
+
+
+
+
+{% endblock %}

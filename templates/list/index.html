@@ -23,17 +23,25 @@ ul.explanation {
 }
 
 ul.explanation li {
-    border-color: #E1E1E1 #E9E9E9;
-    border-style: solid;
-    border-width: 0 1px 0 0;
     float: left;
-    height: 100px;
-    padding: 0 20px;
+    margin-bottom: 10px;
     width: 165px;
+    position: relative;
+    top: 30px;
+    background-color: #e1e1e1;
 }
 
 ul.explanation li.first {
-  padding-left: 0;
+  width: 535px;
+  background-color: #fff;
+  position: relative;
+  top: 2px;
+}
+
+ul.explanation li.first span.small {
+  font-weight: normal;
+  font-size: 12px;
+  padding-left: 5px;	
 }
 
 ul.explanation li.last {
@@ -54,17 +62,27 @@ ul.explanation li p {
   margin: 5px 0 0 0;	
 }
 
+ul#cities {
+  width: 535px;
+  padding: 0;
+  margin: 0;
+  float: left;
+  list-style-type: none;
+  font-size: 12px;	
+}
+
 </style>
 {% endblock %}
 
 {% block content %}
 
 <div id="top">
-<h1>Welcome to laowailai.com</h1>
+<h1>Welcome to {{ sitename }}</h1>
 </div>
 
 <p class="description"><em>This site is for foreigners living or working in China. It's a place to exchange knowledge about places to go, and life in China. <a href="/about/">Find out more &raquo;</a></em></p>
 
+{% if city %}
 <ul class="explanation">
 <li class="first">
 	<h3>Choose a city</h3>
@@ -85,6 +103,22 @@ ul.explanation li p {
 </li>
 </ul>
 
+{% else %}
+
+<ul class="explanation">
+<li class="first">
+	<h3>Choose a city
+	<span class="small">(pick a city in China that you want to know more about)</span>
+	</h3>
+</li>
+</ul>
+
+<ul id="cities">
+{% for city in cities %}
+<li><a href="{% url city city.slug %}">{{ city }}</a></li>
+{% endfor %}
+</ul>
+{% endif %}
 	
 	
 	<div id="feed">

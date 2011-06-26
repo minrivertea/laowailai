@@ -15,7 +15,7 @@ from laowailai.questions.forms import AddQuestionForm, AddAnswerForm, SearchForm
 from laowailai.questions.data import find_questions
 from laowailai.slugify import get_slugify
 from laowailai.cities.models import City
-from laowailai.list.context_processors import get_current_city
+
 
 # django stuff
 from django.http import Http404, HttpResponse, HttpResponseRedirect
@@ -52,9 +52,11 @@ def questions(request, slug, qs=None, parameters={}):
 
 
 def question(request, slug, questionslug):
+    city = get_object_or_404(City, slug=slug)
     question = get_object_or_404(Question, slug=questionslug)
     if not question.is_published:
         return Http404()
+    
     
     if request.user.is_authenticated():
         laowai = request.user.get_profile()
