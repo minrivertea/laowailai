@@ -76,6 +76,10 @@ span.like:hover {
 	
 <div id="top">
 <h1>News from {{ city }}</h1>
+{% if request.user.is_authenticated %}
+{% else %}
+	<p class="signup"><a href="{% url registration_register %}"><strong>Signup</strong></a> or <a href="/accounts/login/"><strong>login</strong></a> to add your news</p>
+	{% endif %}
 </div>
 <p class="description">This is a feed of news and info from {{ city }} - it's posted by the <em>laowai</em> that live here!</p>
 	

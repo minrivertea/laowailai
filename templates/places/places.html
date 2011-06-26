@@ -256,6 +256,8 @@ div#loading {
 <div id="top">
 	{% if request.user.is_authenticated %}
 	<div class="add-place-button"><a href="{% url add_place city.slug %}"><span>Add a place</span></a></div>
+	{% else %}
+	<p class="signup"><a href="{% url registration_register %}"><strong>Signup</strong></a> or <a href="/accounts/login/"><strong>login</strong></a> to add a place</p>
 	{% endif %}
 <h1>Places in {{ city }}</h1>
 </div>

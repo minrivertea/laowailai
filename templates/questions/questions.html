@@ -43,6 +43,9 @@ p.description {
 <div id="top">
 	{% if request.user.is_authenticated %}
 	<div class="add-question-button"><a href="{% url add_question city.slug %}"><span>Add a question</span></a></div>
+	{% else %}
+	<p class="signup"><a href="{% url registration_register %}"><strong>Signup</strong></a> or <a href="/accounts/login/"><strong>login</strong></a> to add a question</p>
+
 	{% endif %}
 <h1>How to: {{ city }}</h1>
 </div>

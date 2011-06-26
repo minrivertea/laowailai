@@ -1042,6 +1042,13 @@ div#top h1 {
   float:left;	
 }
 
+div#top .signup {
+    float: right;
+    font-size: 11px;
+    position: relative;
+    top: 5px;
+}
+
 div.add-event-button {
   float: right;
   height: 33px;
