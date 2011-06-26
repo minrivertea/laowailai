@@ -7,7 +7,11 @@
 {% block extrajs %}
 <script type="application/javascript">
 $('#set-city').click(function () {
-	$('#city-list').slideDown();
+	if ($("#city-list").is(":hidden")) {
+	$("#city-list").slideDown("100");
+	} else {
+	$("#city-list").slideUp("100");
+	}
 });
 </script>
 {% endblock %}
@@ -70,6 +74,7 @@ div#city-list {
   border: 1px solid #e1e1e1;
   border-radius: 10px;
   display: block;	
+  float: left;
 }
 
 div#city-list a {
@@ -91,11 +96,13 @@ div#city-list a {
 
 <ul class="explanation">
 <li class="first{% if laowai.city %} done{% endif %}">
+
+	{% if laowai.city %}
+	<h3>Your city is {{ laowai.city }}</h3>
+	<p>Any city in China that you live in, or want to know more about<br/>
+	{% else %}
 	<h3>Choose a city</h3>
 	<p>Any city in China that you live in, or want to know more about<br/>
-	{% if laowai.city %}
-		<strong>Your city is {{ laowai.city }}</strong>
-	{% else %}
 		<a id="set-city" href="#">Choose your city &raquo;</a>
 			<div id="city-list" style="display:none;">
 			{% for city in cities %}
@@ -106,15 +113,25 @@ div#city-list a {
 			</p>
 </li>
 <li class="{% if laowai.photo %} done{% endif %}">
+	{% if laowai.photo %}
+	<h3>Photo added!</h3>
+	<p>Great! The world can see your beautiful face now.</p>
+	{% else %}
 	<h3>Add your photo</h3>
 	<p>Everyone looks better with a nice profile picture.<br/>
-	{% if laowai.photo %}<strong>Photo added!</strong>{% else %}<a href="{% url upload_profile_photo %}">Add a profile photo &raquo;</a>{% endif %}
+	<a href="{% url upload_profile_photo %}">Add a profile photo &raquo;</a>
 	</p>
+	{% endif %}
 </li>
 <li class="last">
 	<h3>Start browsing</h3>
 	<p>Check out places, information and news from your city<br/>
-	<a href="{% url city laowai.city.slug %}">Browse {{ laowai.city }} &raquo;</a></p>
+	{% if laowai.city %}
+		<a href="{% url city laowai.city.slug %}">Browse {{ laowai.city }} &raquo;</a></p>
+	{% else %}
+		Choose a city first!</p>
+	{% endif %}
+
 </li>
 </ul>
 

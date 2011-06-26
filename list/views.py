@@ -128,10 +128,14 @@ def laowai(request, id):
         laowai = None
         city = this_laowai.city
         
-    if laowai is not None and this_laowai == laowai:
+    if laowai and this_laowai == laowai:
         pass
     else:
-        this_laowai.profile_views += 1
+        if this_laowai.profile_views == None:
+            this_laowai.profile_views = 1
+        else:
+            this_laowai.profile_views += 1
+            
         this_laowai.save()
         
     infos = Info.objects.filter(added_by=this_laowai).order_by('-date_added')[:3]
@@ -548,7 +552,7 @@ def people(request, slug):
         laowai = None
     
     city = get_object_or_404(City, slug=slug)       
-    people = Laowai.objects.filter(city=city).exclude(id=laowai.id)        
+    people = Laowai.objects.filter(city=city)        
     return render(request, "list/people.html", locals())
 
 
