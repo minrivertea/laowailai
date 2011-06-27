@@ -1,7 +1,7 @@
 {% load comments %}
 {% load thumbnail %}
 
-	
+<li id="info_{{ info.id }}" class="{% if forloop.first and forloop.last %}first only{% else %}{% if forloop.first %}first{% else %}{% if forloop.last %}last{% endif %}{% endif %}{% endif %}">	
 
 		    <a href="#" id="info_{{ info.id }}"></a>
 		    <div class="avatar">
@@ -36,8 +36,8 @@
 					{% endifequal %} | 
 					    
 					    
-						{% if user.is_authenticated %}
-							{% if i_like %}
+						{% if laowai %}
+						   {% if laowai in info.get_likers %}
 								{% ifequal info.get_like_count 1 %}
 									You like this
 								{% else %}
@@ -95,3 +95,4 @@
 				</div>
 			</div>
 
+	</li>

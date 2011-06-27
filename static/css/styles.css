@@ -165,10 +165,10 @@ div#current-city {
     background-color: #14565E;
     border-radius: 5px 5px 0 0;
     float: left;
-    margin: 24px 0 0 50px;
+    margin: 22px 0 0 50px;
     padding: 4px 10px 2px 0;
     text-align: right;
-    width: 92px;
+    width: 100px;
 }
 
 div#current-city:hover {
@@ -177,8 +177,7 @@ div#current-city:hover {
 
 div#current-city p {
   margin: 0;
-  font-size: 10px;	
-  font-weight: bold;
+  font-size: 11px;	
   color: #d6ebed;
 }
 
@@ -238,6 +237,15 @@ div#navigation a.news {
   background-color: #3a74a0;	
 }
 
+div#navigation a.selected {
+    color: #333333;
+    font-size: 13px;
+    font-weight: bold;
+    margin-top: -10px;
+    padding: 9px 15px;
+    background-color: #fff;
+}
+
 div#navigation span.current-city {
   color: #333;
   font-size: 11px;
@@ -285,6 +293,11 @@ div#navigation a.questions:hover {
 div#navigation a.news:hover {
   background-color: #6697bc;	
   cursor: pointer;
+}
+
+div#navigation a.selected:hover {
+  color: #F67B7B;
+  background-color: #fff;	
 }
 
 
@@ -1274,4 +1287,17 @@ div#otherplaces ul {
 
 div#otherplaces a {
   color: #fff;	
+}
+
+div#loading {
+    background-color: #F1F1F1;
+    border: 1px solid #E9E9E9;
+    color: #999999;
+    float: left;
+    font-size: 10px;
+    margin-bottom: 40px;
+    padding: 15px 0;
+    text-align: center;
+    width: 100%;
+    display: none;
 }

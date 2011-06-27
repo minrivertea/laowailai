@@ -22,7 +22,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 from django.utils import simplejson
 from django import http
-
+from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.core.serializers.json import DjangoJSONEncoder
 
 
@@ -41,10 +41,8 @@ def index(request, slug=None):
         return render(request, "list/index.html", locals()) 
     else:
         laowai = request.user.get_profile()
-        if slug:
-            city = get_object_or_404(City, slug=slug)
-        else:
-            city = laowai.city
+        url = reverse('laowai', args=[laowai.id])
+        return HttpResponseRedirect(url)
     url = reverse('news_feed', args=[city.slug])
     return HttpResponseRedirect(url) 
 
@@ -52,19 +50,34 @@ def index(request, slug=None):
 # news feed for a particular city
 def news_feed(request, slug):
     city = get_object_or_404(City, slug=slug) 
-            
-    infos = Info.objects.filter(city=city).order_by('-date_added')
-    objects = []
-    for i in infos:
-        if request.user.is_authenticated():
-            laowai = request.user.get_profile()
-            if laowai in i.get_likers():
-                i_like = True
-            else:
-                i_like = False
-        else:
-            i_like = False    
-        objects.append((i, i_like))
+    objects_list = Info.objects.filter(city=city).order_by('-date_added')
+
+    paginator = Paginator(objects_list, 8) # Show 10 infos per page
+    
+    # this is where we load some ajax stuff
+    try:
+        page = int(request.GET.get('page', '1'))
+
+    except ValueError:
+        page = 1
+    
+    if request.GET.get('xhr') and page > 1:
+        infos = paginator.page(int(request.GET.get('page')))
+        objects_list = []
+        for info in infos.object_list:
+            objects_list.append(render_to_string('list/snippets/feed_li.html', {
+                    'info': info,
+            }))
+
+        json =  simplejson.dumps(objects_list, cls=DjangoJSONEncoder)
+        return HttpResponse(json, mimetype='application/json')
+        
+
+    # If page request (9999) is out of range, deliver last page of results.
+    try:
+        objects = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        objects = paginator.page(paginator.num_pages)
         
     if request.method == 'POST':
         form = InfoAddForm(request.POST)
@@ -138,9 +151,9 @@ def laowai(request, id):
             
         this_laowai.save()
         
-    infos = Info.objects.filter(added_by=this_laowai).order_by('-date_added')[:3]
-    these_infos = []
-    for i in infos:
+    info_list = Info.objects.filter(added_by=this_laowai).order_by('-date_added')[:3]
+    objects = []
+    for i in info_list:
         if laowai:
             if laowai in i.get_likers():
                 i_like = True
@@ -148,7 +161,7 @@ def laowai(request, id):
                 i_like = False
         else:
             i_like = False    
-        these_infos.append((i, i_like))
+        objects.append((i, i_like))
 
     return render(request, 'list/laowai.html', locals())
 

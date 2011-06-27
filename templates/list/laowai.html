@@ -80,7 +80,10 @@ div#top div#photo p {
 	{% else %}
 		<img class="profile-photo-large" title="{{ this_laowai.name }}" alt="" src="/images/avatar_80.jpg">
 	{% endif %}
+	{% if laowai.city %}
 	<p><strong>City:</strong> <a href="{% url city this_laowai.city.slug %}">{{ this_laowai.city }}</a></p>
+	{% else %}
+	{% endif %}
 	<p>{{ this_laowai.added_places.count }} place{{ this_laowai.added_places.count|pluralize }}</p>
 	<p>{{ this_laowai.added_questions.count }} question{{ this_laowai.added_questions.count|pluralize }}</p>
 	<p>{{ this_laowai.added_answers.count }} answer{{ this_laowai.added_answers.count|pluralize }}</p>
@@ -89,7 +92,7 @@ div#top div#photo p {
 	{% endifequal %}
 	</div>
 	
-	<h1>{% ifequal this_laowai laowai %}Your posts{% else %}All posts by {{ this_laowai.name }}{% endifequal %}</h1>
+	<h1>{% ifequal this_laowai laowai %}Your profile{% else %}All posts by {{ this_laowai.name }}{% endifequal %}</h1>
 
 	<p class="description">
 	{% if this_laowai.bio %}
@@ -105,10 +108,13 @@ div#top div#photo p {
 </div>
 	
 	
+	{% if laowai.city %}
 	<div id="feed">
 	{% include "list/snippets/personal_feed.html" %}
-
 	</div>
+	{% else %}
+	<p><strong>You haven't <a href="{% url cities %}">set a city</a> yet, so nothing shows in your feed</strong></p>
+	{% endif %}
 	
 
 
@@ -117,8 +123,3 @@ div#top div#photo p {
 
 {% endblock %}
 
-	{% block extra-content %}
-	<div id="add-form">
-	{% include "snippets/add-form.html" %}
-	</div>
-	{% endblock %}

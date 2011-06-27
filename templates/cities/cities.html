@@ -2,7 +2,7 @@
 {% load thumbnail %}
 
 {% block metadescription %}Choose your city in China to browse news, places and events from that city.{% endblock %}
-{% block pagetitle %}{{ city.name }}{% endblock %}
+{% block pagetitle %}Set your city{% endblock %}
 
 {% block extracss %}
 <style type="text/css">
@@ -52,23 +52,27 @@ p.note {
 
 {% block content %}
 <div id="top">
-<h1>Cities in China</h1>
+<h1>Set your home town in China</h1>
 </div>
 
-<p><strong>Current city: </strong><span class="selected">{{ city.name }} ({{ city.chinese_name }})</span></p>
-<p class="description"><em>Just click a city to select it, and start browsing that city. You can change your city at any time, it's not a permanent setting.</em></p>
+<p class="description"><em>Choose a city as your 'hometown' in China - this will be saved, and your feed will show updates from that town. Of course, you can still browse other cities.</em></p>
 
 <div id="cities">
 <ul>
 {% for city in cities %}
-{% ifequal current_city city %}{% else %}
-  <li><a class="" href="{% url mark_city city.id %}">{{ city.name }} ({{ city.chinese_name }})</a></li>
-{% endifequal %}
+
+  <li>
+    {% ifequal laowai.city city %}
+    <strong>{{ city.name }} ({{ city.chinese_name }})</strong>
+    {% else %}
+  	<a class="" href="{% url set_city city.slug %}">{{ city.name }} ({{ city.chinese_name }})</a>
+  	{% endifequal %}
+  </li>
+
 {% endfor %}
 </ul>
 </div>
 
-<p class="note">* this site is currently in 'beta', so we only have 1 city (Fuzhou) in the list. If you want your city to be added, please let us know by emailing mail@laowailai.com - thanks!</p>
 
 
 

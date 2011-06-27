@@ -43,9 +43,32 @@ function bindLikeHandler(idx) {
    });
 }
 
+function nextPage(page) {
+$.getJSON("/{{ city.slug }}/feed/", {xhr: "true", page: page},
+  function(data) {
+  	$(data).appendTo('#feed ul');
+  	pageNum++;
+  });
+}
+
+var pageNum = {{ objects.next_page_number }}
+$("#pagination").click(function () { 
+	nextPage(pageNum); 
+});
+
+$("#loading").ajaxStart(function(){
+   $('#pagination').hide();
+   $(this).show();
+ });
+
+$("#loading").ajaxStop(function(){
+   $(this).hide();
+   $('#pagination').show();
+ });
+
       
 $(document).ready(function() { 
-	{% for info, i_like in objects %} 
+	{% for info in objects.object_list %} 
    	     bindPostCommentHandler({{ info.id }});
    	     bindLikeHandler({{ info.id }});
 	{% endfor %}  
@@ -68,6 +91,25 @@ span.like {
 span.like:hover {
   color: #F67B7B;
   cursor: pointer;	
+}
+
+div#pagination {
+    background-color: #F1F1F1;
+    border: 2px dotted #e1e1e1;
+    color: #2D7886;
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 40px;
+    padding: 15px 0;
+    text-align: center;
+    width: 100%;
+}
+
+div#pagination:hover {
+  cursor: pointer;
+  background-color: #e1e1e1;
+  color: #F67B7B;	
 }
 </style>
 {% endblock %}
