@@ -323,6 +323,13 @@ div.print:active {
   background-position: bottom left;	
 }
 
+div#photos {
+  float: left;
+  width: 560px;	
+  border-bottom: 3px dotted #e1e1e1;
+  padding-bottom: 20px;
+}
+
 
 </style>
 {% endblock %}
@@ -395,12 +402,13 @@ div.print:active {
 </div>
 
 {% if place.get_photos %}
-<h3>Photos of {{ place.name }}</h3>
+<div id="photos">
 {% for photo in place.get_photos %}
 	{% thumbnail photo.photo "80x80" crop="center" as im %}
 		<img src="{{ im.url }}">
 	{% endthumbnail %}
 {% endfor %}
+</div>
 {% endif %}
 
 

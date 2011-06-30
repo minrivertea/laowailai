@@ -6,6 +6,7 @@
 {% block metadescription %}{{ this_laowai.name }}'s posts on LaoWaiLai - {{ this_laowai.bio }}{% endblock %}
 {% block pagetitle %}{% ifequal this_laowai laowai %}Your{% else %}{{ this_laowai.name }}'s{% endifequal %} posts{% endblock %}
 
+
 {% block extrajs %}
 <script type="text/javascript" charset="utf-8">  
 
@@ -34,13 +35,47 @@ function bindPostCommentHandler(idx) {
         return false;
     });  
 }  
+
+function bindLikeHandler(idx) {
+   $('#like_'+ idx).click(function() {
+        $.getJSON("/like/", {xhr: "true", info: idx, laowai: '{{ laowai.id }}',},
+          function(data) {
+            $('#like_'+ idx).replaceWith(data);
+        });	
+   });
+}
+
+function nextPage(page) {
+$.getJSON("/{{ city.slug }}/feed/", {xhr: "true", page: page},
+  function(data) {
+  	$(data).appendTo('#feed ul');
+  	pageNum++;
+  });
+}
+
+var pageNum = {{ objects.next_page_number }}
+$("#pagination").click(function () { 
+	nextPage(pageNum); 
+});
+
+$("#loading").ajaxStart(function(){
+   $('#pagination').hide();
+   $(this).show();
+ });
+
+$("#loading").ajaxStop(function(){
+   $(this).hide();
+   $('#pagination').show();
+ });
+
       
 $(document).ready(function() { 
-	{% for info, i_like in these_infos %} 
+	{% for info in objects.object_list %} 
    	     bindPostCommentHandler({{ info.id }});
+   	     bindLikeHandler({{ info.id }});
 	{% endfor %}  
 });  
-</script>  
+</script>
 {% endblock %}
 
 
@@ -110,7 +145,7 @@ div#top div#photo p {
 	
 	{% if laowai.city %}
 	<div id="feed">
-	{% include "list/snippets/personal_feed.html" %}
+	{% include "list/snippets/feed.html" %}
 	</div>
 	{% else %}
 	<p><strong>You haven't <a href="{% url cities %}">set a city</a> yet, so nothing shows in your feed</strong></p>

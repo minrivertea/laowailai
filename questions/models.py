@@ -33,7 +33,7 @@ class Question(models.Model):
         return self.question 
     
     def get_absolute_url(self):
-        return "/questions/%s/" % self.slug
+        return "/%s/questions/%s/" % (self.city, self.slug)
     
     def answers_count(self):
         answers = Answer.objects.filter(question=self)

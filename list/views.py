@@ -133,6 +133,21 @@ def news_feed(request, slug):
 def laowai(request, id):
     this_laowai = get_object_or_404(Laowai, id=id)
     
+    
+    objects_list = Info.objects.filter(added_by=this_laowai).order_by('-date_added')
+    paginator = Paginator(objects_list, 3) # Show 3 infos per page
+    
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+    
+    # If page request (9999) is out of range, deliver last page of results.
+    try:
+        objects = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        objects = paginator.page(paginator.num_pages)
+    
     # check if the user is authenticated - if they are, we have a city and laowai
     if request.user.is_authenticated():
         laowai = request.user.get_profile()
@@ -157,18 +172,7 @@ def laowai(request, id):
         this_laowai.save()
         
     # gather up the list of infos for this laowai.    
-    info_list = Info.objects.filter(added_by=this_laowai).order_by('-date_added')[:3]
-    print info_list
-    objects = []
-    for i in info_list:
-        if laowai:
-            if laowai in i.get_likers():
-                i_like = True
-            else:
-                i_like = False
-        else:
-            i_like = False    
-        objects.append((i, i_like))
+    
 
     return render(request, 'list/laowai.html', locals())
 

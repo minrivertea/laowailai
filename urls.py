@@ -43,7 +43,6 @@ urlpatterns += patterns('',
     (r'^latest/feed/$', LatestEntriesFeed()),
     url(r'^cities/$', cities, name="cities"),
     url(r'^mark_city/(\w+)/$', mark_city, name="mark_city"),
-
     url(r'^upload_profile_photo/$', upload_profile_photo, name="upload_profile_photo"),
     url(r'^laowai/bio$', add_a_bio, name="add_a_bio"),
     url(r'^laowai/(\w+)/$', laowai, name="laowai"),
