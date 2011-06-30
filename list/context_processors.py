@@ -5,9 +5,10 @@ from laowailai.cities.models import City
 
 def common(request):
     from laowailai import settings
-    ga_is_on = settings.GA_IS_ON
-    sitename = settings.SITE_NAME
-    return {'ga_is_on': ga_is_on, 'sitename': sitename}
+    context = {}
+    context['sitename'] = settings.SITE_NAME
+    context['ga_is_on'] = settings.GA_IS_ON
+    return context
     
 def get_laowai(request):
     try:
