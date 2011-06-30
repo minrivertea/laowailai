@@ -25,3 +25,6 @@ class EditLocationForm(forms.Form):
     location = forms.CharField(max_length=200)
     longitude = forms.CharField(max_length=200)
     latitude = forms.CharField(max_length=200)    
+
+class AddPhotoForm(forms.Form):
+    photo = forms.ImageField()

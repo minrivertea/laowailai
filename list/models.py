@@ -86,9 +86,9 @@ class Laowai(models.Model):
         answers = Answer.objects.filter(added_by=self)
         return answers 
 
+
         
 class Info(models.Model):
-    #core fields
     content = models.TextField()
     added_by = models.ForeignKey(Laowai)
     date_added = models.DateTimeField('date added', default=datetime.now)
@@ -98,21 +98,23 @@ class Info(models.Model):
         return self.content
     
     def get_like_count(self):
+        from laowailai.list.models import Likes
         objects = Likes.objects.filter(liked=self.id)
         number = objects.count()
         return number
 
     def get_likers(self):
-        objects = Likes.objects.filter(liked=self.id)
+        from laowailai.list.models import Likes
+        object_list = Likes.objects.filter(liked=self)
         likers = []
-        for p in objects:
+        for p in object_list:
             likers.append(p.liker)
         return likers
     
     def get_absolute_url(self):
         return "http://www.laowailai.com/posts/%s/" % self.id
         
-    
+
 class Likes(models.Model):
    liker = models.ForeignKey(Laowai)
    liked = models.ForeignKey(Info)
@@ -120,6 +122,7 @@ class Likes(models.Model):
 #   def __unicode__(self):
 #       return '%s likes %s' % self.liker, self.liked
       
+    
 
 class Suggestion(models.Model):
     title = models.CharField(max_length=200)
@@ -132,3 +135,19 @@ class Suggestion(models.Model):
         return self.title
 
 #comment_was_posted.connect(comment_notifier, sender=Comment)
+
+
+class Photo(models.Model):
+    from laowailai.events.models import Event
+    related_event = models.ForeignKey(Event, blank=True, null=True)
+    related_info = models.ForeignKey(Info, blank=True, null=True)
+    
+    from laowailai.places.models import Place
+    related_place = models.ForeignKey(Place, blank=True, null=True)
+    photo = models.ImageField(upload_to="photos/photos")
+    owner = models.ForeignKey(Laowai, related_name="random_photo")
+    date_added = models.DateTimeField(default=datetime.now())
+    
+    def __unicode__(self):
+        return self.owner.name
+        

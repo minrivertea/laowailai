@@ -132,15 +132,20 @@ def news_feed(request, slug):
 
 def laowai(request, id):
     this_laowai = get_object_or_404(Laowai, id=id)
+    
+    # check if the user is authenticated - if they are, we have a city and laowai
     if request.user.is_authenticated():
         laowai = request.user.get_profile()
         city = laowai.city
         if this_laowai == laowai:
             pass
+    
+    # if not, there's no laowai, and the city belongs to the this_laowai
     else:
         laowai = None
         city = this_laowai.city
-        
+    
+    # if you're viewing your own profile, nothing. Otherwise, increment the profile views count    
     if laowai and this_laowai == laowai:
         pass
     else:
@@ -151,7 +156,9 @@ def laowai(request, id):
             
         this_laowai.save()
         
+    # gather up the list of infos for this laowai.    
     info_list = Info.objects.filter(added_by=this_laowai).order_by('-date_added')[:3]
+    print info_list
     objects = []
     for i in info_list:
         if laowai:

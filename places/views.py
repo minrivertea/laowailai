@@ -9,9 +9,9 @@ import smtplib
 import re
 
 # stuff from my app
-from laowailai.list.models import Laowai
+from laowailai.list.models import Laowai, Photo
 from laowailai.places.models import Place
-from laowailai.places.forms import AddPlaceForm, SearchForm, EditLocationForm
+from laowailai.places.forms import AddPlaceForm, SearchForm, EditLocationForm, AddPhotoForm
 from laowailai.places.data import find_places
 from laowailai.slugify import get_slugify
 from laowailai.ratings.models import Rating
@@ -116,6 +116,7 @@ def place(request, slug, id):
     city = get_object_or_404(City, slug=slug)
     
     place = get_object_or_404(Place, pk=id)
+    
     try:
         laowai = get_object_or_404(Laowai, user=request.user)
     except:
@@ -167,6 +168,45 @@ def add_place(request, slug):
         form = AddPlaceForm()
         
     return render(request, "places/forms/add_place.html", locals())
+
+@login_required
+def add_photo(request, slug, id):
+    place = get_object_or_404(Place, pk=id)
+    city = place.city
+    laowai = request.user.get_profile()
+    if request.method == 'POST':
+        form = AddPhotoForm(request.POST, request.FILES)
+        if form.is_valid():
+            photo = request.FILES['photo']
+            image_content = photo.read()
+            image = Image.open(StringIO(image_content))
+            format = image.format
+            format = format.lower().replace('jpeg', 'jpg')
+            filename = md5.new(image_content).hexdigest() + '.' + format
+            # Save the image
+            path = os.path.join(settings.MEDIA_ROOT, 'photos/photos', filename)
+            # check that the dir of the path exists
+            dirname = os.path.dirname(path)
+            if not os.path.isdir(dirname):
+                try:
+                    os.mkdir(dirname)
+                except IOError:
+                    raise IOError, "Unable to create the directory %s" % dirname
+            open(path, 'w').write(image_content)
+            
+            Photo.objects.create(
+                photo = 'photos/photos/%s' % filename,
+                related_place = place,
+                owner = laowai,
+            )
+
+            url = reverse('place', args=[place.city.slug, place.id])
+            return HttpResponseRedirect(url)
+    else:
+        form = AddPhotoForm()
+    
+    return render(request, "places/forms/add_photo_form.html", locals())
+    
 
 @login_required
 def edit_location(request, id):

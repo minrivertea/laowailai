@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block metadescription %}Add a photo to {{ place.name }} in Fuzhou{% endblock %}
+{% block pagetitle %}Add a photo to {{ place.name }}{% endblock %}
+
+
+{% block extracss %}
+<style type="text/css">
+div#left input.save-location-button {
+  background: url('/images/save-photo-button.png') no-repeat top left;
+  border: medium none;
+  height: 33px;
+  margin: 10px 0 10px 0px;
+  width: 142px;
+  float: right;  
+}
+
+div#left input.save-location-button:hover {
+  cursor: pointer;
+  background-position: center left;	
+}
+
+div#left input.save-location-button:active {
+  cursor: pointer;
+  background-position: bottom left;	
+}
+
+div#categories {
+  float: left;
+  margin-bottom: 0px;
+  width: 560px;	
+  padding-bottom: 50px;
+  border-bottom: 3px dotted #e1e1e1;
+}
+
+div#categories h4 {
+  margin-top: 0;
+  margin-bottom: 10px;	
+}
+
+div#maps {
+  float: left;
+  width: 560px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 3px dotted #e1e1e1;	
+}
+
+div#maps h4 {
+  margin-bottom: 0px;	
+}
+
+div#maps p {
+  font-size: 11px;
+  margin: 0 0 10px 0;	
+}
+
+div#maps div#map_area {
+  margin-bottom: 20px;	
+}
+
+
+
+
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div id="top">
+<h1>Add a photo for {{ place.name }}</h1>
+</div>
+
+<p class="description"><em>Upload a photo that relates to {{ place.name }}</em></p>
+
+{% if form.errors %}
+{{ form.errors }}
+{% endif %}
+
+{% for error in error_list %}
+{{ error }}
+{% endfor %}
+
+<form enctype="multipart/form-data" action="." method="post">
+
+
+{{ form.as_p }}
+
+
+
+<input type="submit" class="save-location-button" value="">
+</form>
+
+
+
+
+{% endblock %}

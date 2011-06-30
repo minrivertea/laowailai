@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load comments %}
+{% load thumbnail %}
 
 {% block metadescription %}{{ place.description|safe }}{% endblock %}
 {% block pagetitle %}{{ place.name }} - {{ place.city }}{% endblock %}
@@ -387,8 +388,20 @@ div.print:active {
 	<div>
 		<div class="print" onClick="window.print()"><span>Print</span></div>
 	</div>
+	<div>
+	    <a href="{% url add_photo_to_place place.city.slug place.id %}">add a photo</a>
+	</div>
 	
 </div>
+
+{% if place.get_photos %}
+<h3>Photos of {{ place.name }}</h3>
+{% for photo in place.get_photos %}
+	{% thumbnail photo.photo "80x80" crop="center" as im %}
+		<img src="{{ im.url }}">
+	{% endthumbnail %}
+{% endfor %}
+{% endif %}
 
 
 
@@ -399,7 +412,7 @@ div.print:active {
 
 <a href="#" id="comments_{{ thing.id }}"></a>
 	<div class="comments">
-	<h4>Comments ({{ comment_count }})</h4>
+	<h3>Comments ({{ comment_count }})</h3>
 	{% if comment_list %}
 	{% include "snippets/comment-list.html" %}
 	{% else %}

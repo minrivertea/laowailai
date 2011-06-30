@@ -69,4 +69,7 @@ class Place(models.Model):
     def get_absolute_url(self):
         return "/places/%s/" % self.pk  
         
-        
+    def get_photos(self):
+        from laowailai.list.models import Photo
+        photos = Photo.objects.filter(related_place=self.id)
+        return photos   
