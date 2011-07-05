@@ -168,17 +168,22 @@ div#current-city {
     margin: 22px 0 0 50px;
     padding: 4px 10px 2px 0;
     text-align: right;
-    width: 100px;
+    width: auto;
 }
 
 div#current-city:hover {
   cursor: pointer;	
 }
 
+div#current-city p a {
+  color: #fff;	
+}
+
 div#current-city p {
   margin: 0;
   font-size: 11px;	
   color: #d6ebed;
+  float: right
 }
 
 div#current-city p.city {
@@ -193,10 +198,14 @@ div#current-city p.city {
     width: auto;
 }
 
+div#current-city span.bold {
+  color: #fff;	
+}
+
 div#navigation {
     float: right;
     margin: 22px 10px 0 0;
-    width: 420px;
+    width: 330px;
 }
 
 div#navigation a {
@@ -1274,7 +1283,7 @@ div#otherplaces {
     box-shadow: 0 10px 9px #E1E1E1;
     float: left;
     font-size: 11px;
-    margin: 2px 0 0 -1px;
+    margin: 19px 0 0 -1px;
     position: absolute;
     text-align: left;
     width: 400px;

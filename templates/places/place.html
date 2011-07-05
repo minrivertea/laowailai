@@ -330,6 +330,12 @@ div#photos {
   padding-bottom: 20px;
 }
 
+div#photos a.add-one {
+  width: 560px;
+  float: left;
+  font-size: 11px;	
+}
+
 
 </style>
 {% endblock %}
@@ -395,14 +401,13 @@ div#photos {
 	<div>
 		<div class="print" onClick="window.print()"><span>Print</span></div>
 	</div>
-	<div>
-	    <a href="{% url add_photo_to_place place.city.slug place.id %}">add a photo</a>
-	</div>
+
 	
 </div>
 
 {% if place.get_photos %}
 <div id="photos">
+<a class="add-one" href="{% url add_photo_to_place place.city.slug place.id %}">Add a photo of {{ place }} &raquo;</a><br/>
 {% for photo in place.get_photos %}
 	{% thumbnail photo.photo "80x80" crop="center" as im %}
 		<img src="{{ im.url }}">

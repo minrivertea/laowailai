@@ -2,7 +2,7 @@
 {% load comments %}
 {% load thumbnail %}
 <ul>
-	{% for info in objects.object_list %}		
+	{% for object in objects.object_list %}		
 		{% include "list/snippets/feed_li.html" %}
 	{% endfor %}
 </ul>

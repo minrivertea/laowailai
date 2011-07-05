@@ -8,9 +8,10 @@ import os, md5
 import smtplib
 
 # stuff from my app
-from models import Laowai, Info, Likes, Subscriber, Suggestion
+from models import *
 from forms import InfoAddForm, UnsubscribeForm, SubscriberAddForm, ProfilePhotoUploadForm, TellAFriendForm, AddBioForm, SuggestionForm
 from laowailai.cities.models import City
+from laowailai.places.models import Place
 
 # django stuff
 from django.http import Http404, HttpResponse, HttpResponseRedirect
@@ -41,7 +42,7 @@ def index(request, slug=None):
         return render(request, "list/index.html", locals()) 
     else:
         laowai = request.user.get_profile()
-        url = reverse('laowai', args=[laowai.id])
+        url = reverse('news_feed', args=[laowai.city.slug])
         return HttpResponseRedirect(url)
     url = reverse('news_feed', args=[city.slug])
     return HttpResponseRedirect(url) 
@@ -50,8 +51,8 @@ def index(request, slug=None):
 # news feed for a particular city
 def news_feed(request, slug):
     city = get_object_or_404(City, slug=slug) 
-    objects_list = Info.objects.filter(city=city).order_by('-date_added')
-
+    objects_list = NewInfo.objects.filter(city=city).order_by('-date')    
+    print objects_list
     paginator = Paginator(objects_list, 8) # Show 10 infos per page
     
     # this is where we load some ajax stuff

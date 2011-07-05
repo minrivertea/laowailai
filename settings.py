@@ -92,6 +92,7 @@ INSTALLED_APPS = (
     'questions',
     'registration',
     'sorl.thumbnail',
+    'south',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

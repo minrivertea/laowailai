@@ -35,7 +35,7 @@ class Laowai(models.Model):
     
     
     def __unicode__(self):
-        return self.user.email
+        return self.name
         
     def get_absolute_url(self):
         return "http://www.laowailai.com/laowai/%s/" % self.id
@@ -87,13 +87,24 @@ class Laowai(models.Model):
         return answers 
 
 
+class CommonInfo(models.Model):
+    owner = models.ForeignKey(Laowai, null=True)
+    date = models.DateTimeField('date added', default=datetime.now, null=True)
+    city = models.ForeignKey(City, null=True)
+
+
+class NewInfo(CommonInfo):
+    content = models.TextField()
+    
+    def __unicode__(self):
+        return self.content
+        
         
 class Info(models.Model):
     content = models.TextField()
     added_by = models.ForeignKey(Laowai)
     date_added = models.DateTimeField('date added', default=datetime.now)
-    city = models.ForeignKey(City)
-    
+    city = models.ForeignKey(City)    
     def __unicode__(self):
         return self.content
     
