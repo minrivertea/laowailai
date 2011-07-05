@@ -114,12 +114,15 @@
 
 {% block extrajs %}{% endblock %}
 <script type="application/javascript">
-$('#current-city').click(function() {
-	if ($("#otherplaces").is(":hidden")) {
-	$("#otherplaces").slideDown("100");
-	} else {
-	$("#otherplaces").slideUp("slow");
-	}
+
+jQuery(function() {
+	$('#current-city').click(function() {
+		if ($("div#otherplaces").is(":hidden")) {
+			$("div#otherplaces").slideDown("slow");
+		} else {
+			$("div#otherplaces").slideUp("slow");
+		}
+	});
 });
 
 </script>
