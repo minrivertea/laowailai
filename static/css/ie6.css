@@ -1,3 +1,7 @@
 div#container {
   margin-left: 50px	
 }
+
+div#left {
+  width: 600px;	
+}
