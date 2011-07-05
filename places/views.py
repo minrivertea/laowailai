@@ -10,7 +10,7 @@ import re
 
 # stuff from my app
 from laowailai.list.models import Laowai, Photo
-from laowailai.places.models import Place
+from laowailai.places.models import Place, NewPlace
 from laowailai.places.forms import AddPlaceForm, SearchForm, EditLocationForm, AddPhotoForm
 from laowailai.places.data import find_places
 from laowailai.slugify import get_slugify
@@ -44,9 +44,9 @@ def places(request, slug, category=None, qs=None, parameters={}):
     
     city = get_object_or_404(City, slug=slug)
     if city.slug == "china":
-        places = Place.objects.all()
+        places = NewPlace.objects.all()
     else:
-        places = Place.objects.filter(city=city).order_by('?')
+        places = NewPlace.objects.filter(city=city).order_by('?')
     
     # if there's a search query
     if request.GET.get('q'):

@@ -5,6 +5,7 @@ class PlaceAdmin(admin.ModelAdmin):
     list_display = ('name', 'date_added', 'city')
 
 admin.site.register(Place, PlaceAdmin)
+admin.site.register(NewPlace)
 
 
 

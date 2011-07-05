@@ -7,7 +7,7 @@ from django.contrib.comments.models import Comment
 from django.contrib.comments.signals import comment_was_posted
 from django.template.loader import render_to_string
 
-from laowailai.list.models import Laowai
+from laowailai.list.models import Laowai, CommonInfo
 from laowailai.cities.models import City
 
 #these are the values in the database
@@ -25,6 +25,19 @@ CATEGORY_CHOICES = (
             (CATEGORY_5, u"Somewhere to shop"),     
 )
  
+class NewPlace(CommonInfo):
+    name = models.CharField(max_length=200)
+    chinese_name = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=200)
+    description = models.TextField()
+    location = models.CharField(max_length=200)
+    longitude = models.FloatField(blank=True, null=True)
+    latitude = models.FloatField(blank=True, null=True)
+    rating_count = models.IntegerField(default="0")
+    rating_total = models.IntegerField(default="0")
+    category = models.CharField(max_length=200, choices=CATEGORY_CHOICES)
+
+
 class Place(models.Model):
     name = models.CharField(max_length=200)
     chinese_name = models.CharField(max_length=200)
