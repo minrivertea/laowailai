@@ -7,7 +7,8 @@ caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;
 html {
   border: none;
   margin: none;
-  padding: none;	
+  padding: none;
+  background-color: #BDDFE3;	
 }
 
 body {
@@ -60,17 +61,14 @@ div#header {
 }
 
 div#logo {
-    background: url("/images/logo.png") no-repeat scroll top left transparent;
     float: left;
     height: 40px;
     margin: 85px 0 10px 0;
     position: relative;
     width: 288px;
+    overflow: hidden;
 }
 
-div#logo:hover {
-  background: url("/images/logo.png") no-repeat scroll bottom left transparent;		
-}
 
 div#header div#logo a span {
   display: none;	
