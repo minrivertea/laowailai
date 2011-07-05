@@ -1120,6 +1120,7 @@ div.login p {
 div.signup-button {
   margin: 10px 0 0 0;	
   float: right;	
+  width: 215px;
 }
 
 div.signup-button p {
