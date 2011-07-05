@@ -98,16 +98,7 @@ class NewInfo(CommonInfo):
     
     def __unicode__(self):
         return self.content
-        
-        
-class Info(models.Model):
-    content = models.TextField()
-    added_by = models.ForeignKey(Laowai)
-    date_added = models.DateTimeField('date added', default=datetime.now)
-    city = models.ForeignKey(City)    
-    def __unicode__(self):
-        return self.content
-    
+
     def get_like_count(self):
         from laowailai.list.models import Likes
         objects = Likes.objects.filter(liked=self.id)
@@ -123,7 +114,18 @@ class Info(models.Model):
         return likers
     
     def get_absolute_url(self):
-        return "http://www.laowailai.com/posts/%s/" % self.id
+        return "http://www.laowailai.com/posts/%s/" % self.id        
+    
+        
+class Info(models.Model):
+    content = models.TextField()
+    added_by = models.ForeignKey(Laowai)
+    date_added = models.DateTimeField('date added', default=datetime.now)
+    city = models.ForeignKey(City)    
+    def __unicode__(self):
+        return self.content
+    
+
         
 
 class Likes(models.Model):
