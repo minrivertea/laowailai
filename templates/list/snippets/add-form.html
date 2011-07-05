@@ -1,5 +1,6 @@
 <form action="{% url post city.slug %}" method="POST">
-	<textarea id="id_content" rows="10" cols="40" name="content" onclick="clearInput(this)">{% ifequal laowai.get_posts.count 0 %}For your first post, why not let everyone know what's your favourite place to go in Fuzhou?{% else %}Add something to the feed - news, an event, some information....{% endifequal %}</textarea>
+	
+	<textarea id="id_content" rows="10" cols="40" name="content" class="clearMeFocus">Add something</textarea>
 	
 	{% if form.errors %}
 	    {{ form.errors }}

@@ -8,27 +8,37 @@
 {% block extrajs %}
 <script type="text/javascript" charset="utf-8">  
 
-function bindPostCommentHandler(idx) {    
+function bindPostCommentHandler(idx) { 
     $('#comment-form-' + idx + ' form').submit(function() {
     	if ($('#comment-form-' + idx + ' form textarea').val() == '') {
     		$('#comment-form-' + idx + ' form').prepend('<p class="warning" style="color:red; display:block;"><em>You must type something</em></p>');
     	}
     	else {
-        $.ajax({  
-            type: "POST",  
-            data: $('#comment-form-' + idx + ' form').serialize(),  
-            url: "{% comment_form_target %}",  
-            cache: false,  
-            dataType: "html",  
-            success: function(data, textStatus) {
-                $('#comments_full_' + idx + ' .comments-list').append(data);
-                $('#comment-form-' + idx + ' textarea').val('');
-                $('#comment-form-' + idx + ' .warning').attr('style', 'display:none');
-            },  
-            error: function (XMLHttpRequest, textStatus, errorThrown) {  
-                $('#comment-form-' + idx + ' form').replaceWith('Your comment could not be posted.');  
-            }  
-        }); 
+    	
+    	    $('#comment-form-' + idx + ' form').ajaxStart(function(){
+   				$("#comment-form-" + idx + ' input.submit').attr('opacity', '0.2');
+			});
+        	
+        	$.ajax({  
+        	    type: "POST",  
+        	    data: $('#comment-form-' + idx + ' form').serialize(),  
+        	    url: "{% comment_form_target %}",  
+        	    cache: false,  
+        	    dataType: "html",  
+        	    success: function(data, textStatus) {
+        	        $('#comments_full_' + idx + ' .comments-list').append(data);
+        	        $('#comment-form-' + idx + ' textarea').val('');
+        	        $('#comment-form-' + idx + ' .warning').attr('style', 'display:none');
+        	    },  
+        	    error: function (XMLHttpRequest, textStatus, errorThrown) {  
+        	        $('#comment-form-' + idx + ' form').replaceWith('Your comment could not be posted.');  
+        	    }  
+       		}); 
+    	    
+			$('#comment-form-' + idx + ' form').ajaxStop(function(){
+   				$("#comment-form-" + idx + ' input.submit').attr('opacity', '1');
+			});
+    	
     	}
         return false;
     });  
@@ -50,6 +60,8 @@ $.getJSON("/{{ city.slug }}/feed/", {xhr: "true", page: page},
   	pageNum++;
   });
 }
+
+
 
 var pageNum = {{ objects.next_page_number }}
 $("#pagination").click(function () { 

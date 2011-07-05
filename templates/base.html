@@ -120,6 +120,27 @@
 {% block extrajs %}{% endblock %}
 <script type="text/javascript">
 
+
+$("textarea").focus(function() {
+    if( $(this).text() == "Add something" ) {
+        $(this).text("");
+    }
+
+});
+
+
+$("textarea").blur(function() {
+
+    if( $(this).text() == "" ) {
+        $(this).text("Add something");
+    }
+
+});
+
+
+
+
+
 jQuery(function() {
 	$('#current-city').click(function() {
 		if ($("div#otherplaces").is(":hidden")) {

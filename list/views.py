@@ -84,6 +84,9 @@ def news_feed(request, slug):
         form = InfoAddForm(request.POST)
         if form.is_valid():
             content = form.cleaned_data['content']
+            if content == "Add something" or content == "":
+                HttpResponseRedirect('/')
+                
             contact_details = form.cleaned_data['contact_details']
             date = form.cleaned_data['date']
             location = form.cleaned_data['location']
@@ -185,6 +188,8 @@ def post(request, slug):
         form = InfoAddForm(request.POST)
         if form.is_valid():
             content = form.cleaned_data['content']
+            if content == "Add something":
+                return HttpResponseRedirect('/')
                         
             # create the new piece of info
             new = NewInfo.objects.create(
