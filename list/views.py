@@ -187,10 +187,10 @@ def post(request, slug):
             content = form.cleaned_data['content']
                         
             # create the new piece of info
-            new = Info.objects.create(
+            new = NewInfo.objects.create(
                                       content=content,
-                                      added_by=laowai,
-                                      city=form.cleaned_data['city']
+                                      owner=laowai,
+                                      city=city,
                                       )
             
             new.save()

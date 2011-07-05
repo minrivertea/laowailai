@@ -7,36 +7,7 @@
 	<h3>Add something!</h3>
 	<form action="{% url post city.slug %}" method="post">
 		<textarea id="id_content" rows="10" cols="40" name="content"></textarea>
-		
-		<div id="form-extras">
-			<div class="form-left">
-			
-				{% if laowai %}
-				logged in as {{ laowai.name }} ({{ laowai.email }})
-				{% else %}
-				<h4>Your information (required)</h4>
-					<input id="id_email" type="text" name="email" value="Your email" onclick="clearInput(this)" maxlength="200" />
-					
-					<input id="id_name" onclick="clearInput(this)" type="text" name="name" maxlength="200" value="Your name" /></p>
-					<p class="small">* Your email address will never be made public. If you want to add contact details, use the field on the right!</p>
-				{% endif %}
 				
-				
-			</div>
-			
-			<div class="form-right">
-				<h4>Add some more details (optional)</h4>
-				<input id="id_contact_details" type="text" onclick="clearInput(this)" name="contact_details" maxlength="200" value="Your contact details?"/>
-				<input id="id_location" type="text" onclick="clearInput(this)" name="location" maxlength="200" value="A location for this piece of news?" />
-				<input id="id_url" type="text" name="url" onclick="clearInput(this)" maxlength="200" value="A related URL?" />
-				<br/><br/>
-				<h4>Add a date (for events)</h4>
-					{{ infoform.date }}
-			</div>
-		<br clear="all"/>
-		
-		</div>
-		
 		<input type="submit" value="Submit" class="submit" />
 
 	</form>
