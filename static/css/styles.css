@@ -1,3 +1,9 @@
+html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}
+
+
+caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:text-top;}sub{vertical-align:text-bottom;}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}input,textarea,select{*font-size:100%;}legend{color:#000;}del,ins{text-decoration:none;}
+
+
 html {
   border: none;
   margin: none;
@@ -9,7 +15,7 @@ body {
   font-family: Arial, sans-serif;	
   /*background-color: #96d7ec;*/
   background-color: #bddfe3;
-  margin: 10px 0 0;
+  margin: 0;
   padding: 0;
 }
 
@@ -43,8 +49,8 @@ div#container {
   margin: 0 auto;
   width: 960px;
   -moz-border-radius: 0px 0px 20px 20px;
-  padding-bottom: 50px;
-  margin-top: 30px;
+  padding: 30px 0 50px;
+  margin-top: 0px;
   margin-bottom: 50px;
 }
 
@@ -1062,7 +1068,8 @@ div#top {
 }
 
 div#top h1 {
-  float:left;	
+  float:left;
+  font-size: 32px;	
 }
 
 div#top .signup {
@@ -1224,7 +1231,8 @@ p.description {
   border-bottom: 3px dotted #e1e1e1;
   float: left;
   width: 560px;
-  margin-top: 0px;
+  margin: 0px 0 10px 0;
+  font-size: 13px;
 }
 
 div#left div#search {
