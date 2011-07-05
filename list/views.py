@@ -63,11 +63,13 @@ def news_feed(request, slug):
     
     if request.GET.get('xhr') and page > 1:
         infos = paginator.page(int(request.GET.get('page')))
+        laowai = request.user.get_profile()
         objects_list = []
         for info in infos.object_list:
             objects_list.append(render_to_string('list/snippets/feed_li.html', {
                     'object': info,
-            }))
+                    'laowai': laowai,
+            }, context_instance=RequestContext(request)))
 
         json =  simplejson.dumps(objects_list, cls=DjangoJSONEncoder)
         return HttpResponse(json, mimetype='application/json')
@@ -590,7 +592,7 @@ def ajax_comment(request):
         from django.contrib.comments.models import Comment
         comment = get_object_or_404(Comment, pk=request.GET.get('c'))
         comment_html = render_to_string('snippets/comment.html', {'comment': comment})
-        return HttpResponse(comment_html, mimetype='application/json')
+        return HttpResponse(comment_html, mimetype='text/html')
     else:
        return False
 
