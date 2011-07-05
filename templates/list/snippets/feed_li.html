@@ -24,7 +24,7 @@
 			</p>
 				
 			<div class="meta">
-				{% if object.date_added %}Posted {{ object.date_added|timesince }} ago |{% endif %} 	
+				{% if object.date %}Posted {{ object.date|timesince }} ago |{% endif %} 	
 					{% include "list/snippets/social.html" %}
 			</div>
 		</div>
