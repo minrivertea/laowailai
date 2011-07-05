@@ -135,7 +135,7 @@ def laowai(request, id):
     this_laowai = get_object_or_404(Laowai, id=id)
     
     
-    objects_list = Info.objects.filter(added_by=this_laowai).order_by('-date_added')
+    objects_list = NewInfo.objects.filter(added_by=this_laowai).order_by('-date_added')
     paginator = Paginator(objects_list, 3) # Show 3 infos per page
     
     try:
