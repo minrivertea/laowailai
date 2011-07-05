@@ -52,8 +52,7 @@ def index(request, slug=None):
 def news_feed(request, slug):
     city = get_object_or_404(City, slug=slug) 
     objects_list = NewInfo.objects.filter(city=city).order_by('-date')    
-    print objects_list
-    paginator = Paginator(objects_list, 8) # Show 10 infos per page
+    paginator = Paginator(objects_list, 10) # Show 10 infos per page
     
     # this is where we load some ajax stuff
     try:
@@ -67,7 +66,7 @@ def news_feed(request, slug):
         objects_list = []
         for info in infos.object_list:
             objects_list.append(render_to_string('list/snippets/feed_li.html', {
-                    'info': info,
+                    'object': info,
             }))
 
         json =  simplejson.dumps(objects_list, cls=DjangoJSONEncoder)
@@ -107,7 +106,7 @@ def news_feed(request, slug):
                 url = ""
             
             # create the new piece of info
-            new = Info.objects.create(
+            new = NewInfo.objects.create(
                                       content=content,
                                       contact_details=contact_details,
                                       location=location,
