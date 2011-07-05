@@ -115,7 +115,7 @@ def places(request, slug, category=None, qs=None, parameters={}):
 def place(request, slug, id):
     city = get_object_or_404(City, slug=slug)
     
-    place = get_object_or_404(Place, pk=id)
+    place = get_object_or_404(NewPlace, pk=id)
     
     try:
         laowai = get_object_or_404(Laowai, user=request.user)
@@ -160,7 +160,7 @@ def add_place(request, slug):
             }
                    
             
-            place = Place.objects.create(**creation_args)
+            place = NewPlace.objects.create(**creation_args)
             redirect_url = reverse('places', args=[city.slug])
             return HttpResponseRedirect(redirect_url)
     
@@ -210,7 +210,7 @@ def add_photo(request, slug, id):
 
 @login_required
 def edit_location(request, id):
-    place = get_object_or_404(Place, pk=id)
+    place = get_object_or_404(NewPlace, pk=id)
     
     # just double check that someone isn't trying to edit a place with an existing location
     if place.longitude or place.latitude:
@@ -234,7 +234,7 @@ def edit_location(request, id):
 
 @login_required
 def add_rating(request, place, value):
-    place = get_object_or_404(Place, pk=place)
+    place = get_object_or_404(NewPlace, pk=place)
     place.rating_count += 1
     place.rating_total += int(value)
     place.save()
@@ -253,7 +253,7 @@ def add_rating(request, place, value):
 
 def get_place_by_slug(request, city, slug):
     city = get_object_or_404(City, slug=city)
-    place = get_object_or_404(Place, slug=slug)
+    place = get_object_or_404(NewPlace, slug=slug)
     request.session['CURRENTCITY'] = city.id
     
     url = reverse('place', args=[place.id])
