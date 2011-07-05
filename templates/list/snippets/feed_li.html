@@ -6,9 +6,9 @@
 	<a href="#" id="object_{{ object.id }}"></a>
 		<div class="avatar">
 		   	<a title="{{ object.owner }}" href="{% url laowai object.owner.id %}">
-		   	{% if object.photo %}
-		   		{% thumbnail object.photo "60x60" crop="center" as im %}
-	    			<img class="avatar" title="{{ object.added_by.name }}" alt="a picture of {{ object.added_by.name }}" src="{{ im.url }}">
+		   	{% if object.owner.photo %}
+		   		{% thumbnail object.owner.photo "60x60" crop="center" as im %}
+	    			<img class="avatar" title="{{ object.owner.name }}" alt="a picture of {{ object.owner.name }}" src="{{ im.url }}">
 	    		{% endthumbnail %}
 	    	{% else %}
 			   	<img class="avatar" title="{{ object.owner }}" alt="" src="/images/avatar_60.jpg">
