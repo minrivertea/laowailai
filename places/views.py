@@ -63,12 +63,12 @@ def places(request, slug, category=None, qs=None, parameters={}):
             new_list = []
             if request.GET.get('category'):
                 new_list.append(render_to_string('places/snippets/place-list.html', {
-                    'places': places.filter(category=request.GET.get('category')).order_by('-date_added'),
+                    'places': places.filter(category=request.GET.get('category')).order_by('-date'),
                 }
                 ))
             else:
                 new_list.append(render_to_string('places/snippets/place-list.html', 
-                    {'places': places.order_by('-date_added')}
+                    {'places': places.order_by('-date')}
                 ))
             json =  simplejson.dumps(new_list, cls=DjangoJSONEncoder)
             return HttpResponse(json, mimetype='application/json')
@@ -90,14 +90,14 @@ def places(request, slug, category=None, qs=None, parameters={}):
     if request.GET.get('category'):
         places = places.filter(
             category=request.GET.get('category'),
-            city=city).order_by('-date_added').order_by('?')
+            city=city).order_by('-date').order_by('?')
         selected = request.GET.get('category')
     
     # if there's a filter, filter the results
     if request.GET.get('filter'):
         selected = request.GET.get('filter')
         if request.GET.get('filter') == "recent":
-            places = places.order_by('-date_added')[:10] 
+            places = places.order_by('-date')[:10] 
         elif request.GET.get('filter') == 'highest':
             places_list = []
             for place in places:

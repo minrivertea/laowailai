@@ -167,8 +167,8 @@ div#current-city {
     float: left;
     margin: 22px 0 0 50px;
     padding: 4px 10px 2px 0;
-    text-align: right;
-    width: auto;
+    text-align: left;
+    width: 200px;
 }
 
 div#current-city:hover {
@@ -183,7 +183,8 @@ div#current-city p {
   margin: 0;
   font-size: 11px;	
   color: #d6ebed;
-  float: right
+  float: left;
+  margin-left: 10px;
 }
 
 div#current-city p.city {
