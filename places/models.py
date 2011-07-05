@@ -37,6 +37,39 @@ class NewPlace(CommonInfo):
     rating_total = models.IntegerField(default="0")
     category = models.CharField(max_length=200, choices=CATEGORY_CHOICES)
 
+    def __unicode__(self):
+        return self.name
+    
+    def get_average_rating(self):
+        if self.rating_count > 0:
+            average = (self.rating_total/self.rating_count)
+        else:
+            average = "0"
+        return average
+        
+    def get_current_rating(self):
+        if self.rating_count > 0:
+            current_rating = self.get_average_rating() * 18
+        else:
+            current_rating = 0
+        return current_rating  
+    
+    def canonical_url(self):
+        return "http://www.laowailai.com/places/%s/%s" % (self.city.slug, self.slug)
+    
+    def has_map(self):
+        if self.longitude == None or self.latitude == None:
+            return False
+        else:
+            return True
+    
+    def get_absolute_url(self):
+        return "/places/%s/" % self.pk  
+        
+    def get_photos(self):
+        from laowailai.list.models import Photo
+        photos = Photo.objects.filter(related_place=self.id)
+        return photos   
 
 class Place(models.Model):
     name = models.CharField(max_length=200)
