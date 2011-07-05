@@ -1,8 +1,12 @@
 div#container {
   margin-left: 50px;
-  width: 1030px;
+  width: 100px;
 }
 
 div#left {
   width: 600px;	
+}
+
+div#navigation {
+  margin-right: 30px;	
 }
