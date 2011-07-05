@@ -10,3 +10,20 @@ div#left {
 div#navigation {
   margin-right: 30px;	
 }
+
+
+div#iemessage {
+	background-color: #14565E;
+	height: 35px;
+	color: #fff;
+	text-align: center;
+}
+
+div#iemessage p {
+  color: #fff;
+  padding-top: 5px;	
+}
+
+div#iemessage a {
+  color: #F67B7B;	
+}

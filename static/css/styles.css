@@ -673,7 +673,7 @@ div#feed div.meta {
 
 div#feed div.meta img {
   position: relative;
-  top: 6px;	
+  top: 3px;	
   left: 0px;
   margin-bottom: 3px;
   margin-right: 5px;
@@ -848,11 +848,10 @@ div#flatpage-content h4 {
 /* comments styles */
 
 div#feed div.comments {
-  font-size: 13px;
-  background-color:#E2F1F3;
-  padding: 10px;	
-  width: 380px;
-  margin-top: 2px;
+    background-color: #E2F1F3;
+    font-size: 13px;
+    margin-top: 10px;
+    width: 380px;
 }
 
 div.comments {
@@ -948,10 +947,10 @@ div.comment-content p {
   margin: 0;	
 }
 
-p.register-reminder {
+div#feed p.register-reminder {
     float: right;
     position: relative;
-    top: 15px;
+    top: 5px;
     height: 30px;
 }
 
