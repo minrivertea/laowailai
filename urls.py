@@ -48,7 +48,7 @@ urlpatterns += patterns('',
     url(r'^laowai/(\w+)/$', laowai, name="laowai"),
     url(r'^like/$', like, name="like"),
     url(r'^like/(\w+)$', like, name="like"),
-
+    (r'^notifications/', include('notification.urls')),
     url(r'^tell-a-friend/$', tell_a_friend, name="tell_a_friend"),
     url(r'^(?P<slug>[\w-]+)/', include('laowailai.cities.urls')),
 )

@@ -2,17 +2,21 @@
 
 <div id="header">
 	    	<div id="logo">
-		    	<a title="LaoWaiLai (Fuzhou) Home" alt="home" href="/">
+		    	<a title="LaoWaiLai (Fuzhou) Home" alt="home" href="/{% if city %}{{ city.slug }}/{% endif %}">
 		    		<img src="/images/logo.png"/>
 		    		<span>LaoWaiLai Fuzhou</span>
 		    	</a>
 		    </div>
-	    	<div id="site-introduction">News, events and info for the well connected <em>lǎo wài</em> in China.<br/>
-	    	</div>
 	    	
-	    		    			
+	    	<div id="current-city">
+	    		{% if city %}
+				<p>Currently browsing: <a id="changecity" href="{% url cities %}"><span class="bold">{{ city }}</span></a></p>
+			    {% endif %}
+			</div>	  			
 
+		
 	    	{% if user.is_authenticated %}
+	    	<!--
 	    	<div id="account">
 	    		<div class="photo">
 	    		<a title="Click to view your profile" href="{% url laowai laowai.id %}">
@@ -27,9 +31,7 @@
 	    		</div>
 	    		
 	    		<div class="info">
-	    			<p class="name"><a title="Click to view your profile" href="{% url laowai laowai.id %}">{{ user.email }}</a>	
-	    				
-	    			</p>
+	    			<p class="name"><a title="Click to view your profile" href="{% url laowai laowai.id %}">{{ user.email }}</a></p>
 	    			<p>
 
 	    			</p>
@@ -51,6 +53,7 @@
 	  
 
 	    	</div>
+	    	-->
 	    	{% else %}
 	    			<div id="nav">
 	    				<div class="signup-button">

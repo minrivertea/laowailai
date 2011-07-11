@@ -6,6 +6,7 @@ from django.db.models.signals import pre_save, post_save
 from django.contrib.comments.models import Comment
 from django.contrib.comments.signals import comment_was_posted
 from django.template.loader import render_to_string
+from django.core.urlresolvers import reverse
 
     
 from laowailai.list.signals import new_laowai, new_subscriber #comment_notifier
@@ -114,7 +115,9 @@ class NewInfo(CommonInfo):
         return likers
     
     def get_absolute_url(self):
-        return "http://www.laowailai.com/posts/%s/" % self.id        
+        url = "/%s/feed/posts/%s/" % (self.city.slug, self.pk)
+        # url = reverse('a_post', args=[(self.city.slug, self.pk)])
+        return url      
     
         
 class Info(models.Model):

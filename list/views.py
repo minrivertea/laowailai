@@ -63,7 +63,10 @@ def news_feed(request, slug):
     
     if request.GET.get('xhr') and page > 1:
         infos = paginator.page(int(request.GET.get('page')))
-        laowai = request.user.get_profile()
+        if request.user.is_authenticated():
+            laowai = request.user.get_profile()
+        else:
+            laowai = None
         objects_list = []
         for info in infos.object_list:
             objects_list.append(render_to_string('list/snippets/feed_li.html', {
@@ -216,8 +219,9 @@ def post(request, slug):
     
     return render(request, 'list/post.html', locals())
             
-def a_post(request, number):
-    info = get_object_or_404(Info, id=number)
+def a_post(request, slug=None, number=None):
+    city = get_object_or_404(City, slug=slug)
+    object = get_object_or_404(NewInfo, id=number)
     return render(request, 'list/a_post.html', locals())
 
 
@@ -591,7 +595,18 @@ def ajax_comment(request):
     if request.GET.get('c'):
         from django.contrib.comments.models import Comment
         comment = get_object_or_404(Comment, pk=request.GET.get('c'))
+        
+        # create a notification first
+        from notification import models as notification
+        object = get_object_or_404(NewInfo, pk=comment.object_pk)
+        if not object.owner.user == comment.user:
+            notification.send([object.owner.user], "comment_posted", sender=comment.user,
+                object_pk=comment.object_pk, content_type=comment.content_type)
+        
+    
+        # send back the comment as AJAX response
         comment_html = render_to_string('snippets/comment.html', {'comment': comment})
+        
         return HttpResponse(comment_html, mimetype='text/html')
     else:
        return False
@@ -603,11 +618,8 @@ def whats_next(request):
 
 @login_required
 def set_city(request, slug):
-    laowai = request.user.get_profile()
-    city = get_object_or_404(City, slug=slug)
-    laowai.city = city
-    laowai.save()
-       
-    url = request.META.get('HTTP_REFERER','/')
+    city = get_object_or_404(City, slug=slug) 
+    url = reverse('city', args=[city.slug])
     return HttpResponseRedirect(url)
+
 

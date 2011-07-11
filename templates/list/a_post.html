@@ -4,20 +4,50 @@
 {% block metadescription %}The best place to share news and events for foreigners in Fuzhou, China.{% endblock %}
 {% block pagetitle %}Post by {{ post.added_by }}{% endblock %}
 
+{% block extrajs %}
+<script type="application/javascript">
+$('#comments_full_{{ object.id }}').css('display', 'block');
+</script>
+{% endblock %}
+
+{% block extracss %}
+<style type="text/css">
+div#feed.large p {
+  font-size: 20px;	
+}
+
+div#feed.large div.post {
+  width: 490px;	
+}
+
+div#feed.large ul {
+  margin-top: 10px;	
+}
+
+div#feed.large ul li {
+  border-bottom: none;	
+  width: 565px;
+}
+
+div#feed.large p.content {
+  font-family: Georgia, serif;	
+}
+
+
+div#feed.large div.comments p {
+  font-size: 13px;	
+}
+</style>
+{% endblock %}
+
 {% block content %}
+
 	
-	
-	
-	<div id="feed">
+	<div id="feed" class="large">
 		<ul>
-		  <li class="first">
-	    {% include "snippets/feed_li.html" %}
-	      </li>
+	    {% include "list/snippets/feed_li.html" %}
 	    </ul>
 	</div>
-
-
-
 
 
 {% endblock %}

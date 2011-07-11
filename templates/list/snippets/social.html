@@ -16,31 +16,7 @@
 	<span class="show-comments" title="Click to view all comments" href="" onclick="toggle_visibility({{ object.id }});">
 		<strong>{{ comment_count }} comment{{ comment_count|pluralize }}</strong>
 	</span>
-{% endifequal %} | 
-					    
-					    
-{% if laowai %}
-   {% if laowai in object.get_likers %}
-		{% ifequal object.get_like_count 1 %}
-				You like this
-		{% else %}
-				You and {{ object.get_like_count|add:"-1" }} other 
-				{{ object.get_like_count|pluralize:"person,people" }} like{{ object.get_like_count|add:-1|pluralize:",s" }} this
-		{% endifequal %}
-	{% else %}
-  		<span id="like_{{ object.id }}" class="like">
-		    {% ifequal object.get_like_count 0 %}
-		    	<a>Like</a>
-		    {% else %}
-				{{ object.get_like_count }} {{ object.get_like_count|pluralize:"person,people" }} 
-				like{{ object.get_like_count|pluralize:"s," }} this
-				- <a>Like</a>
-			{% endifequal %}
-		</span>
-	{% endif %}
-{% else %}
-	{{ object.get_like_count }} {{ object.get_like_count|pluralize:"person,people" }} like{{ object.get_like_count|pluralize:"s," }} this
-{% endif %}									
+{% endifequal %}								
 						
 					
 {% get_comment_list for object as comment_list %}
@@ -61,7 +37,7 @@
 							        <img src="{{ im.url }}">
 						        {% endthumbnail %}
 						    {% else %}
-						    	<img src="/images/avatar_30.png">
+						    	<img src="/images/avatar_30.jpg">
 						    {% endif %}
 						</div>
 					{% get_comment_form for object as form %}	

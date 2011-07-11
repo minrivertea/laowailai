@@ -166,13 +166,11 @@ div#site-introduction {
 }
 
 div#current-city {
-    background-color: #14565E;
     border-radius: 5px 5px 0 0;
-    float: left;
-    margin: 22px 0 0 50px;
+    float: right;
+    margin: 0px 0 0 0px;
     padding: 4px 10px 2px 0;
     text-align: left;
-    width: 200px;
 }
 
 div#current-city:hover {
@@ -180,13 +178,13 @@ div#current-city:hover {
 }
 
 div#current-city p a {
-  color: #fff;	
+  color: #333;	
 }
 
 div#current-city p {
   margin: 0;
-  font-size: 11px;	
-  color: #d6ebed;
+  font-size: 12px;	
+  color: #333;
   float: left;
   margin-left: 10px;
 }
@@ -204,7 +202,7 @@ div#current-city p.city {
 }
 
 div#current-city span.bold {
-  color: #fff;	
+  color: #333;	
 }
 
 div#navigation {
@@ -314,6 +312,41 @@ div#navigation a.selected:hover {
   background-color: #fff;	
 }
 
+#profile {
+    background-color: #f1f1f1;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 15px 0 0 50px;
+    padding: 8px 15px;
+}
+
+#profile:hover {
+  background-color: #fff;	
+}
+
+#profile a.notifications {
+    background-color: #C1C1C1;
+    border-radius: 3px 3px 3px 3px;
+    margin-left: 5px;
+    padding: 2px 8px;
+    color: #666;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+
+
+#profile a.notifications.active {
+  background-color: #cc1f1f;
+  color: #fff;	
+}
+
+#profile a.notifications:hover {
+  background-color: #ff4f7d;
+}
 
 
 div#message {
@@ -331,7 +364,7 @@ div#message p {
 
 
 div#left {
-    -moz-border-radius: 10px 10px 10px 10px;
+    border-radius: 10px 10px 10px 10px;
     background-color: #FFFFFF;
     float: left;
     margin-left: 20px;
@@ -716,6 +749,8 @@ h1 {
 h2 {
     color: #C24046;
     float: left;
+    font-size: 25px;
+    margin-bottom: 15px;
     margin-top: 0;
     width: 100%;
 }

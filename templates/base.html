@@ -73,20 +73,19 @@
 		{% endif %}
 		
 		<!-- the main section of the page --!>
-		
-			    <div id="current-city">
-			    	<img src="/images/expand.png" style="float: left; margin-left: 10px; position:relative;top: 1px;">
-					<p><a id="changecity" href="#">Currently browsing: <span class="bold">{{ city }}</span></a></p>
-			    
-			    	<div id="otherplaces" style="display:none;">
-			    		<ul>
-			    			<li><a href="/beijing/">Beijing</a></li>
-			    			<li><a href="/fuzhou/">Fuzhou</a></li>
-			    			<li><a href="/shanghai/">Shanghai</a></li>
-			    			<li><a href="/guangzhou/">Guangzhou</a></li>
-			    		</ul>
-			    	</div>
-			    </div>	
+
+		{% if user.is_authenticated %}
+		<div id="profile">
+			<a title="Click to view your profile" href="{% url laowai laowai.id %}">{{ user.email }}</a>
+			<a class="notifications{% if notifications %} active{% endif %}" href="{% url notification_notices %}">
+			{% if notifications %}
+				{{ notifications.count }}
+			{% else %}
+				0
+			{% endif %}
+			</a>
+		</div>
+		{% endif %}
 
 		<div id="navigation">
 				{% if city %}
@@ -137,19 +136,6 @@ $("textarea").blur(function() {
 
 });
 
-
-
-
-
-jQuery(function() {
-	$('#current-city').click(function() {
-		if ($("div#otherplaces").is(":hidden")) {
-			$("div#otherplaces").slideDown("slow");
-		} else {
-			$("div#otherplaces").slideUp("slow");
-		}
-	});
-});
 
 </script>
 

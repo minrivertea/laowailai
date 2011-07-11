@@ -93,6 +93,7 @@ INSTALLED_APPS = (
     'registration',
     'sorl.thumbnail',
     'south',
+    'notification',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

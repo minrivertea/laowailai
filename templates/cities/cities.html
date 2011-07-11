@@ -52,21 +52,17 @@ p.note {
 
 {% block content %}
 <div id="top">
-<h1>Set your home town in China</h1>
+<h1>Choose a city to browse</h1>
 </div>
 
-<p class="description"><em>Choose a city as your 'hometown' in China - this will be saved, and your feed will show updates from that town. Of course, you can still browse other cities.</em></p>
+<p class="description"><em>You can browse news and places from other cities by clicking on a city below - this won't change your 'hometown' setting, so feel free to browse around.</em></p>
 
 <div id="cities">
 <ul>
 {% for city in cities %}
 
   <li>
-    {% ifequal laowai.city city %}
-    <strong>{{ city.name }} ({{ city.chinese_name }})</strong>
-    {% else %}
   	<a class="" href="{% url set_city city.slug %}">{{ city.name }} ({{ city.chinese_name }})</a>
-  	{% endifequal %}
   </li>
 
 {% endfor %}
