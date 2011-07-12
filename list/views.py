@@ -147,6 +147,18 @@ def news_feed(request, slug):
         objects.append(place)
     
     objects_list = sorted(objects, reverse=True, key=lambda thing: thing.date)
+    
+    places_count = 0
+    for object in objects_list: 
+        try:
+            if object.location:  
+                places_count += 1
+                if places_count >= 1:
+                    objects_list.remove(object)
+        except:
+            places_count = 0
+            
+            
     paginator = Paginator(objects_list, 10) # Show 10 infos per page
     
     # this is where we load some ajax stuff
