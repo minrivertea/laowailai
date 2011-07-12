@@ -150,14 +150,20 @@ def news_feed(request, slug):
     
     places_count = 0
     for object in objects_list: 
-        try:
-            if object.location:  
-                places_count += 1
-                if places_count >= 1:
-                    objects_list.remove(object)
-        except:
-            places_count = 0
-            
+        # if there's no places before, ignore it
+        if places_count == "0":
+            pass
+        else:
+            # if it finds a place, remove it
+            try:
+                object.location
+                objects_list.remove(object)
+            # if it finds an info, it's OK, back to square 1
+            except:
+                # reset the place count
+                places_count = 0
+                
+          
             
     paginator = Paginator(objects_list, 10) # Show 10 infos per page
     
