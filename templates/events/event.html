@@ -15,7 +15,7 @@
 
 <div class="event">
 	<h2>{{ event.title }}</h2>
-	<p class="added-by-metadata">{{ event.start_date|date:"d M Y" }} | <em>Added by <a href="{% url laowai event.added_by.id %}">{{ event.added_by.name }}</a></em></p>
+	<p class="added-by-metadata">{{ event.start_date|date:"d M Y" }} | <em>Added by <a href="{% url laowai event.owner.id %}">{{ event.owner.name }}</a></em></p>
 	<p>{{ event.description }}</p>
 
 

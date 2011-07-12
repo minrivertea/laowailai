@@ -9,7 +9,7 @@ import smtplib
 
 # stuff from my app
 from laowailai.list.models import Laowai
-from laowailai.events.models import Event
+from laowailai.events.models import NewEvent
 from laowailai.events.forms import AddEventForm
 from laowailai.cities.models import City
 
@@ -34,13 +34,13 @@ def render(request, template, context_dict=None, **kwargs):
 
 def event(request, slug, id):
     city = get_object_or_404(City, slug=slug)
-    event = get_object_or_404(Event, pk=id)
+    event = get_object_or_404(NewEvent, pk=id)
     
     return render(request, "events/event.html", locals())
     
 def events(request, slug):
     city = get_object_or_404(City, slug=slug)
-    events = Event.objects.filter(city=city).order_by('-start_date')
+    events = NewEvent.objects.filter(city=city).order_by('-start_date')
 
     return render(request, "events/events.html", locals())
 
@@ -64,14 +64,14 @@ def add_event(request, slug):
                         'description': form.cleaned_data['description'],
                         'start_date': date,
                         'location': form.cleaned_data['location'],
-                        'added_by': laowai,
+                        'owner': laowai,
                         'city': form.cleaned_data['city'],
                         'longitude': longitude,
                         'latitude': latitude,
             }
                      
             print creation_args
-            event = Event.objects.create(**creation_args)
+            event = NewEvent.objects.create(**creation_args)
             return render(request, "events/event.html", locals())
     
     else:

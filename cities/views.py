@@ -10,7 +10,7 @@ import smtplib
 # stuff from my app
 from laowailai.list.models import Laowai
 from laowailai.cities.models import City
-from laowailai.events.models import Event
+from laowailai.events.models import NewEvent
 
 # django stuff
 from django.http import Http404, HttpResponse, HttpResponseRedirect

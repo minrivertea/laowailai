@@ -52,7 +52,7 @@ div#events ul li p {
 {% for event in events %}
 <li>
 	<h3><a href="{% url event city.slug event.id %}">{{ event.title }}</a></h3>
-	<p>{{ event.start_date }} to {{ event.end_date }} | <em>Added by <a href="{% url laowai event.added_by.id %}">{{ event.added_by.name }}</a></em></p>
+	<p>{{ event.start_date }} to {{ event.end_date }} | <em>Added by <a href="{% url laowai event.owner.id %}">{{ event.owner.name }}</a></em></p>
 
 </li>
 {% endfor %}
