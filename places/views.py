@@ -114,7 +114,6 @@ def places(request, slug, category=None, qs=None, parameters={}):
 
 def place(request, slug, id):
     city = get_object_or_404(City, slug=slug)
-    
     place = get_object_or_404(NewPlace, pk=id)
     
     try:
@@ -130,6 +129,7 @@ def place(request, slug, id):
         current_rating = int(place.get_average_rating()) * 25
     else:
         current_rating = 0
+        
     return render(request, "places/place.html", locals())
 
 @login_required
@@ -152,7 +152,7 @@ def add_place(request, slug):
                         'description': form.cleaned_data['description'],
                         'location': form.cleaned_data['location'],
                         'city': form.cleaned_data['city'],
-                        'added_by': laowai,
+                        'owner': laowai,
                         'slug': slug,
                         'category': form.cleaned_data['category'],
                         'longitude': form.cleaned_data['longitude'],

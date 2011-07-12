@@ -1,17 +1,18 @@
 {% load comments %}
 {% load thumbnail %}
 
+
 <li id="object_{{ object.id }}" class="{% if forloop.first and forloop.last %}first only{% else %}{% if forloop.first %}first{% else %}{% if forloop.last %}last{% endif %}{% endif %}{% endif %}">	
 
 	<a href="#" id="object_{{ object.id }}"></a>
 		<div class="avatar">
 		   	<a title="{{ object.owner }}" href="{% url laowai object.owner.id %}">
 		   	{% if object.owner.photo %}
-		   		{% thumbnail object.owner.photo "60x60" crop="center" as im %}
+		   		{% thumbnail object.owner.photo "40x40" crop="center" as im %}
 	    			<img class="avatar" title="{{ object.owner.name }}" alt="a picture of {{ object.owner.name }}" src="{{ im.url }}">
 	    		{% endthumbnail %}
 	    	{% else %}
-			   	<img class="avatar" title="{{ object.owner }}" alt="" src="/images/avatar_60.jpg">
+			   	<img class="avatar" title="{{ object.owner }}" alt="" src="/images/avatar_30.jpg">
 			{% endif %}
 			</a>
 		</div>
@@ -20,7 +21,20 @@
 			<p class="content">
 				<span class="author">
 					<a title="View {{ object.owner }}'s profile" href="{% url laowai object.owner.id %}">{{ object.owner }}</a>
-				</span> {{ object.content|urlize }}
+				</span> 
+				{% if object.location %}
+				    just added a new place in {{ object.city }} - 
+					<a href="{% url place object.city.slug object.id %}"><span class="placename">{{ object.name }}</span></a>
+					<br/>
+					<span id="placeinfo">
+						<img src="/images/fake_map_small.png" style="float: left; margin-right: 10px;"/>
+						<em>{{ object.description|truncatewords:20 }}</em><br/>
+						{{ object.location }}
+					</span>
+				{% else %}
+
+				{{ object.content|urlize }}
+				{% endif %}
 			</p>
 				
 			<div class="meta"> 	

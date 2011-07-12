@@ -1,6 +1,10 @@
 
 {% load comments %}
 {% load thumbnail %}
+
+<div id="add-form">
+{% include "list/snippets/add-form.html" %}
+</div>
 <ul>
 	{% for object in objects.object_list %}		
 		{% include "list/snippets/feed_li.html" %}

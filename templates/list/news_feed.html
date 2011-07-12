@@ -82,6 +82,22 @@ $("#loading").ajaxStop(function(){
    $(this).hide();
    $('#pagination').show();
  });
+ 
+ 
+$("#id_content").focus(function() {
+	$(this).animate({"height": "85px",}, "fast" );
+	$("#button-block").slideDown("fast");
+  return false;
+});
+
+$("#cancel").click(function() {
+	  $(this).animate({"height": "20px",}, "fast" );
+	  $("#button-block").slideUp("fast");
+	  $("#button-block").css('display', 'none');
+    return false;
+});
+  
+
 
       
 $(document).ready(function() { 
@@ -127,6 +143,85 @@ div#pagination:hover {
   background-color: #e1e1e1;
   color: #F67B7B;	
 }
+
+div#add-form {
+    float: left;
+    width: 530px;
+}
+
+div#add-form textarea {
+  width: 540px;
+  height: 20px;
+  padding: 10px;
+  font-size: 13px;
+  color: #666;
+  line-height: 1.4em;
+  border: 1px solid #e1e1e1;
+  margin-bottom: 0px;	
+}
+
+div#add-form textarea:focus {
+  border: 1px solid #999;	
+}
+
+div#add-form input.submit-button {
+  margin: 10px 18px 0 0;	
+}
+
+div#add-form form {
+    background-color: #F6F6F6;
+    float: left;
+    margin: 0 0 30px -30px;
+    padding: 15px 30px;
+    width: 580px;
+}
+
+div#add-form h4 {
+  margin: 0 0 5px 0;
+  color: #666;	
+  font-size: 0.8em;
+}
+
+div#add-form div.form-left h4 {
+  color: black;	
+}
+
+
+div#add-form label {
+  margin: 0;
+  color: #666;
+  font-weight: normal;
+  font-size: 0.9em;
+}
+
+div#add-form p.small {
+  font-size: 0.7em;
+  margin: 0;
+  padding: 0;	
+}
+
+#button-block {
+  display: none;	
+}
+
+div#add-form div.options p {
+  float: left;
+  font-weight: bold;
+  padding: 0 20px;
+  position: relative;
+  top: 5px;	
+}
+
+div#add-form div.options p.selected {
+    background-color: #F6F6F6;
+    padding: 5px 20px 2px;
+    top: 0px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+
+
 </style>
 {% endblock %}
 
@@ -149,17 +244,4 @@ div#pagination:hover {
 
 
 
-{% endblock %}
-
-{% block extra-content %}
-	    {% if user.is_authenticated %}
-			<div id="add-form">
-			<img class="arrow" src="/images/arrow.png"/>
-				{% include "list/snippets/add-form.html" %}
-			</div>
-		{% else %}
-			<div id="add-form">
-			<h4>You need to <a title="Signup to add posts to the mailing list and add comments" href="{% url registration_register %}">signup</a> to add your own news</h4>
-			</div>
-		{% endif %}
 {% endblock %}

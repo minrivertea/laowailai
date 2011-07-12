@@ -1,6 +1,7 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
 import django.views.static
+from django.views.generic.simple import direct_to_template
 
 from list.feeds import LatestEntriesFeed
 from list.views import index, ajax_comment, tell_a_friend, laowai, upload_profile_photo, add_a_bio, like, whats_next, profile
@@ -34,6 +35,7 @@ urlpatterns = patterns(
 
 urlpatterns += patterns('',
     url(r'^/?$', index, name="home_page"),
+    (r'^error_test/$', direct_to_template, {'template': '500.html'}),
     url(r'^whats-next/$', whats_next, name="whats_next"),
     url(r'^comments/posted/$', ajax_comment, name="ajax_comment"),
     
@@ -53,4 +55,5 @@ urlpatterns += patterns('',
     (r'^notifications/', include('notification.urls')),
     url(r'^tell-a-friend/$', tell_a_friend, name="tell_a_friend"),
     url(r'^(?P<slug>[\w-]+)/', include('laowailai.cities.urls')),
+    
 )

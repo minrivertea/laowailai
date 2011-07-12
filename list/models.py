@@ -7,6 +7,9 @@ from django.contrib.comments.models import Comment
 from django.contrib.comments.signals import comment_was_posted
 from django.template.loader import render_to_string
 from django.core.urlresolvers import reverse
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes import generic
+from django.utils.translation import ugettext_lazy as _
 
     
 from laowailai.list.signals import new_laowai, new_subscriber #comment_notifier
@@ -155,15 +158,22 @@ class Suggestion(models.Model):
 
 
 class Photo(models.Model):
-    from laowailai.events.models import Event
-    related_event = models.ForeignKey(Event, blank=True, null=True)
-    related_info = models.ForeignKey(Info, blank=True, null=True)
+    #from laowailai.events.models import Event
+    #related_event = models.ForeignKey(Event, blank=True, null=True)
+    #related_info = models.ForeignKey(Info, blank=True, null=True)
     
-    from laowailai.places.models import Place
-    related_place = models.ForeignKey(Place, blank=True, null=True)
-    photo = models.ImageField(upload_to="photos/photos")
-    owner = models.ForeignKey(Laowai, related_name="random_photo")
-    date_added = models.DateTimeField(default=datetime.now())
+    #from laowailai.places.models import Place
+    #related_place = models.ForeignKey(Place, blank=True, null=True)
+    #photo = models.ImageField(upload_to="photos/photos")
+    #owner = models.ForeignKey(Laowai, related_name="random_photo")
+    #date_added = models.DateTimeField(default=datetime.now())
+    
+    # a photo might relate to anything, so this is a generic relationship to other items
+    content_type   = models.ForeignKey(ContentType,
+        verbose_name=_('content type'),
+        related_name="content_type_set_for_%(class)s")
+    object_pk      = models.TextField(_('object ID'))
+    content_object = generic.GenericForeignKey(ct_field="content_type", fk_field="object_pk")
     
     def __unicode__(self):
         return self.owner.name

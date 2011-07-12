@@ -367,7 +367,7 @@ div#left {
     width: 580px;
 }
 
-div#left img.arrow, div#add-form img.arrow {
+div#left img.arrow  {
   position: relative;
   left: -54px;	
   top: 40px;
@@ -399,92 +399,6 @@ div#left textarea {
     margin-bottom: 20px;
 }
 
-
-div#add-form {
-    -moz-border-radius: 10px 10px 10px 10px;
-    background-color: #FFFFFF;
-    float: right;
-    margin: 30px 20px 0 40px;
-    padding: 30px 30px 30px 30px;
-    width: 540px;
-}
-
-div#add-form textarea {
-  width: 520px;
-  font-family: Georgia, serif;
-  padding: 10px;
-  font-size: 1em;
-  color: #666;
-  line-height: 1.4em;
-  border: 1px solid #e1e1e1;	
-}
-
-div#add-form textarea:focus {
-  border: 1px solid #999;
-  background-color: #f9f9f9;	
-}
-
-div#add-form div#form-extras {
-  display: ;	
-}
-
-div#add-form div.form-left {
-  width: 220px;
-  float: left;	
-  padding-right: 30px;
-  border-right: 1px solid #e1e1e1;
-  margin: 20px 20px 0 0;
-}
-
-div#add-form div.form-left input {
-  width: 220px;	
-  margin-top: 5px;
-  padding-left: 5px;
-  color: #666;
-}
-
-div#add-form div.form-right {
-  width: 250px;
-  float: left;	
-  margin: 20px 0px 0 0;
-  display: none;
-}
-
-div#add-form div.form-right input {
-  width: 220px;	
-  margin-top: 5px;
-  padding-left: 5px;
-  color: #666;
-}
-
-div#add-form form {
-  margin-top: 0px;
-  padding: 0;	
-}
-
-div#add-form h4 {
-  margin: 0 0 5px 0;
-  color: #666;	
-  font-size: 0.8em;
-}
-
-div#add-form div.form-left h4 {
-  color: black;	
-}
-
-
-div#add-form label {
-  margin: 0;
-  color: #666;
-  font-weight: normal;
-  font-size: 0.9em;
-}
-
-div#add-form p.small {
-  font-size: 0.7em;
-  margin: 0;
-  padding: 0;	
-}
 
 div#latest {
   background-color: #fff;
@@ -683,6 +597,15 @@ div#feed div.post {
 
 div#feed span.author {
   font-weight: bold;	
+}
+
+div#feed span.placename {
+	font-weight: bold;	
+}
+
+div#feed span#placeinfo {
+  float: left;
+  margin-top: 5px;	
 }
 
 div#feed p.url {

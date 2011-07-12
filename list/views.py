@@ -11,7 +11,7 @@ import smtplib
 from models import *
 from forms import InfoAddForm, UnsubscribeForm, SubscriberAddForm, ProfilePhotoUploadForm, TellAFriendForm, AddBioForm, SuggestionForm
 from laowailai.cities.models import City
-from laowailai.places.models import Place
+from laowailai.places.models import Place, NewPlace
 
 # django stuff
 from django.http import Http404, HttpResponse, HttpResponseRedirect
@@ -139,7 +139,14 @@ def index(request, slug=None):
 # news feed for a particular city
 def news_feed(request, slug):
     city = get_object_or_404(City, slug=slug) 
-    objects_list = NewInfo.objects.filter(city=city).order_by('-date')    
+    objects = []
+    for info in NewInfo.objects.filter(city=city):
+        objects.append(info)
+    
+    for place in NewPlace.objects.filter(city=city):
+        objects.append(place)
+    
+    objects_list = sorted(objects, reverse=True, key=lambda thing: thing.date)
     paginator = Paginator(objects_list, 10) # Show 10 infos per page
     
     # this is where we load some ajax stuff
@@ -690,6 +697,9 @@ def ajax_comment(request):
     if request.GET.get('c'):
         from django.contrib.comments.models import Comment
         comment = get_object_or_404(Comment, pk=request.GET.get('c'))
+        
+        # what kind of object is it? A place, a photo, an info?
+        print comment.content_type
         
         # create a notification first
         from notification import models as notification

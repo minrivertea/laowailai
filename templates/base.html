@@ -122,17 +122,16 @@
 
 
 $("textarea").focus(function() {
-    if( $(this).text() == "Add something" ) {
+    if( $(this).text() == "Write something on the wall..." ) {
         $(this).text("");
     }
 
 });
 
-
 $("textarea").blur(function() {
 
     if( $(this).text() == "" ) {
-        $(this).text("Add something");
+        $(this).text("Write something on the wall...");
     }
 
 });

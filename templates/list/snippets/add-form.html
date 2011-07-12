@@ -1,17 +1,22 @@
+
 <form action="{% url post city.slug %}" method="POST">
 	
-	<textarea id="id_content" rows="10" cols="40" name="content" class="clearMeFocus">Add something</textarea>
+  	<textarea id="id_content" rows="1" cols="10" name="content" class="clearMeFocus">Write something on the wall...</textarea>
 	
 	{% if form.errors %}
 	    {{ form.errors }}
 	{% endif %}
+	
 	<div style="display:none;">
 		<label for="id_city">City:</label> 
 		<select name="city" id="id_city">
 			<option selected="selected" value="{{ city.id }}">{{ city }}</option>
 		</select>
 	</div>
-		
-	<input type="submit" value="" class="submit-button" />
+	
 
+	
+	<div id="button-block">
+		<input type="submit" value="" class="submit-button" />
+	</div>
 </form>
