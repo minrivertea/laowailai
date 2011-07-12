@@ -139,41 +139,43 @@ def index(request, slug=None):
 # news feed for a particular city
 def news_feed(request, slug):
     city = get_object_or_404(City, slug=slug) 
-    objects = []
+    first_pass = []
     for info in NewInfo.objects.filter(city=city):
-        objects.append(info)
+        first_pass.append(info)
     
     for place in NewPlace.objects.filter(city=city):
-        objects.append(place)
+        first_pass.append(place)
     
-    objects_list = sorted(objects, reverse=True, key=lambda thing: thing.date)
     
-    places_count = 0
-    for object in objects_list: 
-        # if there's no places before, ignore it
-        if places_count == "0":
-            pass
-        else:
-            # if it finds a place, remove it
-            try:
-                object.location
-                objects_list.remove(object)
-            # if it finds an info, it's OK, back to square 1
-            except:
-                # reset the place count
-                places_count = 0
-                
-          
-            
+    objects_list = sorted(first_pass, reverse=True, key=lambda thing: thing.date)
+    
+    # run through the list and find the same-type items close togther
+    doubles = []
+    for x in objects_list:
+        try:
+            if hasattr(x, 'slug'):
+                if place_count >= 1:
+                    doubles.append(x)
+                else:
+                    place_count += 1
+            else:
+                place_count = 0
+        except:
+            place_count = 0
+    # now remove the close-together items from the list - we don't
+    # want to have 10 'place' items clogging up the news feed
+    for object in doubles:
+        objects_list.remove(object)     
+    
+    # start the pagination stuff  
     paginator = Paginator(objects_list, 10) # Show 10 infos per page
-    
-    # this is where we load some ajax stuff
     try:
         page = int(request.GET.get('page', '1'))
-
     except ValueError:
         page = 1
     
+    
+    # this is ajax for the 'load more news' function
     if request.GET.get('xhr') and page > 1:
         infos = paginator.page(int(request.GET.get('page')))
         if request.user.is_authenticated():
