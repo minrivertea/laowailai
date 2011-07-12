@@ -19,6 +19,70 @@ $('#set-city').click(function () {
 {% block extracss %}
 <style type="text/css">
 
+div#left p {
+  float: left;	
+}
+
+div.box {
+    background-color: #F1F1F1;
+    float: left;
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    width: 530px;
+    border-radius: 10px;
+    height: 140px;
+}
+
+div.box div.num {
+    color: #999999;
+    float: left;
+    font-size: 70px;
+    font-weight: bold;
+    margin-right: 10px;
+    text-align: center;
+    width: 50px;
+}
+
+div.box h3 {
+   margin-top: 11px;
+   color: #666;	
+}
+
+div.box p {
+  font-size: 11px;
+  color: #666;	
+}
+
+div.box div#cities {
+  width: 450px;
+  margin-top: 10px;	
+}
+
+div.box form {
+  float: left;
+  width: 450px;	
+  margin-top: 10px;
+}
+
+div#left div.box input.save-photo-button {
+  margin-top: 0;	
+}
+
+div.box div#cities a {
+  background-color: #fff;	
+}
+
+div.box div#cities a.selected {
+  background-color: #226e13;
+  color: #fff;	
+}
+
+div.box img.profile-photo {
+  float: left;
+  border: 5px solid #fff;
+  margin-top: 10px;	
+}
+
 div#people div.person {
   float: left;
   width: 80px;
@@ -82,59 +146,69 @@ div#city-list a {
     padding: 0;
 }
 
-
+h2 {
+  margin: 10px 0 20px 0;
+  font-weight: bold;
+  font-size: 20px;	
+}
 </style>
 {% endblock %}
 
 {% block content %}
 <div id="top">	
-<h1>Welcome to {{ sitename }}</h1>
+<h1>Welcome {{ request.user.get_profile.name }}!</h1>
 </div>
 
-<p class="description">You've successfully registered and you can start posting and browsing right away.</p>
+<p class="description"><em>Registration was successful - you're now a member of {{ sitename }}! You can start browsing news, events and places from cities in China, and posting your own information.</em></p>
 
-<ul class="explanation">
-<li class="first{% if laowai.city %} done{% endif %}">
-
-	{% if laowai.city %}
-	<h3>Your city is {{ laowai.city }}</h3>
-	<p>Any city in China that you live in, or want to know more about<br/>
+{% with request.user.get_profile as laowai %}
+	{% if laowai.city or laowai.photo %}
+	    {% if not laowai.city or not laowai.photo %}
+		<h2>Your profile is 50% complete!</h2>
+		{% else %}
+		<h2>Your profile is 100% complete!</h2>
+		<p style="margin: -20px 0 20px;font-size: 13px; font-weight: bold;"><a href="{% url profile %}">Go to your profile page &raquo;</a></p>
+		{% endif %}
 	{% else %}
-	<h3>Choose a city</h3>
-	<p>Any city in China that you live in, or want to know more about<br/>
-		<a id="set-city" href="#">Choose your city &raquo;</a>
-			<div id="city-list" style="display:none;">
-			{% for city in cities %}
-			<a href="{% url set_city city.slug %}">{{ city.name }} ({{ city.chinese_name }})</a><br/>
-			{% endfor %}
-			</div>
-	{% endif %}
-			</p>
-</li>
-<li class="{% if laowai.photo %} done{% endif %}">
-	{% if laowai.photo %}
-	<h3>Photo added!</h3>
-	<p>Great! The world can see your beautiful face now.</p>
-	{% else %}
-	<h3>Add your photo</h3>
-	<p>Everyone looks better with a nice profile picture.<br/>
-	<a href="{% url upload_profile_photo %}">Add a profile photo &raquo;</a>
-	</p>
-	{% endif %}
-</li>
-<li class="last">
-	<h3>Start browsing</h3>
-	<p>Check out places, information and news from your city<br/>
-	{% if laowai.city %}
-		<a href="{% url city laowai.city.slug %}">Browse {{ laowai.city }} &raquo;</a></p>
-	{% else %}
-		Choose a city first!</p>
+		<h2>Your profile is 0% complete</h2>
 	{% endif %}
 
-</li>
-</ul>
 
+<div class="box">
+	<div class="num">1</div>
+	{% if not laowai.photo %}
+		<h3>Add your profile photo</h3>
+		<form action="{% url upload_profile_photo %}" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="next" value="/whats-next/" />
+		<input type="file" name="photo" id="id_photo" />
+		<input type="submit" value="" class="save-photo-button"/>
+		</form>
+	{% else %}
+		<h3>Photo added - nice work!</h3>
+		{% thumbnail laowai.photo "80x80" crop="center" as im %}
+			<img class="profile-photo" src="{{ im.url }}">
+		{% endthumbnail %}
+	{% endif %}
+</div>
 
+<div class="box">
+	<div class="num">2</div>
+	{% if not laowai.city %}
+		<h3>Where do you live in China?</h3>
+	{% else %}
+		<h3>Your home city is {{ laowai.city.name }}</h3>
+	{% endif %}
+	<p><em>This will be your 'home' city in China</em></p>
+	<div id="cities">
+		{% for city in all_cities %}
+			<a {% ifequal city laowai.city %}class="selected"{% endifequal %} href="{% url set_city city.slug %}">{{ city.name }}</a>
+		{% endfor %}
+	</div>
+</div>
+
+<p style="float: right; font-size: 12px; font-weight: bold; margin-right: 20px;"><a href="{% url profile %}">I don't care, take me to my profile page now &raquo;</a></p>
+
+{% endwith %}
 
 
 {% endblock %}

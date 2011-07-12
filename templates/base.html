@@ -75,8 +75,9 @@
 		<!-- the main section of the page --!>
 
 		{% if user.is_authenticated %}
-		<div id="profile">
-			<a title="Click to view your profile" href="{% url laowai laowai.id %}">{{ user.email }}</a>
+		
+		<div id="profile" class="{% if 'profile' in request.path %}selected{% endif %}">
+			<a title="Click to view your profile" href="{% url profile %}">Your profile</a>
 			<a class="notifications{% if notifications %} active{% endif %}" href="{% url notification_notices %}">
 			{% if notifications %}
 				{{ notifications.count }}
@@ -91,7 +92,7 @@
 				{% if city %}
 					<a class="events {% if 'events' in request.path %}selected{% endif %}" href="{% url events city.slug %}">Events</a>
 					<a class="places {% if 'places' in request.path %}selected{% endif %}" href="{% url places city.slug %}">Places</a>
-					<a class="people {% if 'people' in request.path %}selected{% endif %}" href="{% url people city.slug %}">People</a>
+					<a class="people {% if 'people' in request.path or 'laowai' in request.path %}selected{% endif %}" href="{% url people city.slug %}">People</a>
 					<a class="questions {% if 'questions' in request.path %}selected{% endif %}" href="{% url questions city.slug %}">How-to</a>
 					<a class="news {% if 'feed' in request.path %}selected{% endif %}" href="{% url news_feed city.slug%}">News</a>
 				{% endif %}

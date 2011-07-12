@@ -36,16 +36,104 @@ def render(request, template, context_dict=None, **kwargs):
                               **kwargs
     )
 
-def index(request, slug=None):  
-    if not request.user.is_authenticated():
-        cities = City.objects.all()
-        return render(request, "list/index.html", locals()) 
+def index(request, slug=None):
+    
+    if request.user.is_authenticated():   
+        if request.user.get_profile().city:   
+            city = get_object_or_404(City, slug=request.user.get_profile().city.slug)
+            url = reverse('city', args=[city.slug])
+            return HttpResponseRedirect(url)
+        else:
+            url = reverse('profile')
+            return HttpResponseRedirect(url)
+    else:  
+        return render(request, "list/index.html", locals())
+        
+    
+    #objects_list = NewInfo.objects.filter(city=city).order_by('-date')    
+    paginator = Paginator(objects_list, 10) # Show 10 infos per page
+    
+    # this is where we load some ajax stuff
+    try:
+        page = int(request.GET.get('page', '1'))
+
+    except ValueError:
+        page = 1
+    
+    if request.GET.get('xhr') and page > 1:
+        infos = paginator.page(int(request.GET.get('page')))
+        if request.user.is_authenticated():
+            laowai = request.user.get_profile()
+        else:
+            laowai = None
+        objects_list = []
+        for info in infos.object_list:
+            objects_list.append(render_to_string('list/snippets/feed_li.html', {
+                    'object': info,
+                    'laowai': laowai,
+            }, context_instance=RequestContext(request)))
+
+        json =  simplejson.dumps(objects_list, cls=DjangoJSONEncoder)
+        return HttpResponse(json, mimetype='application/json')
+        
+
+    # If page request (9999) is out of range, deliver last page of results.
+    try:
+        objects = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        objects = paginator.page(paginator.num_pages)
+        
+    if request.method == 'POST':
+        form = InfoAddForm(request.POST)
+        if form.is_valid():
+            content = form.cleaned_data['content']
+            if content == "Add something" or content == "":
+                HttpResponseRedirect('/')
+                
+            contact_details = form.cleaned_data['contact_details']
+            date = form.cleaned_data['date']
+            location = form.cleaned_data['location']
+            url = form.cleaned_data['related_url']
+            
+            # find or create the user
+            try:
+                laowai = get_object_or_404(Laowai, user=request.user)
+            except:
+                return HttpResponseRedirect('/not-authorised/')
+            
+            # ignore the extra inputs if they are just the default values
+            if contact_details == "Your contact details?":
+                contact_details = ""
+            if location == "A location for this piece of news?":
+                location = ""
+            if url == "A related URL?":
+                url = ""
+            
+            # create the new piece of info
+            new = NewInfo.objects.create(
+                                      content=content,
+                                      contact_details=contact_details,
+                                      location=location,
+                                      date=date,
+                                      related_url=url,
+                                      added_by=laowai,
+                                      )
+            
+            new.save()
+            url = request.META.get('HTTP_REFERER','/')
+            return HttpResponseRedirect(url)
+         
+        
+        else:
+            if form.non_field_errors():
+                non_field_errors = form.non_field_errors()
+            else:
+                errors = form.errors
+        
+    
     else:
-        laowai = request.user.get_profile()
-        url = reverse('news_feed', args=[laowai.city.slug])
-        return HttpResponseRedirect(url)
-    url = reverse('news_feed', args=[city.slug])
-    return HttpResponseRedirect(url) 
+        infoform = InfoAddForm()
+    return render(request, "list/index.html", locals()) 
 
 
 # news feed for a particular city
@@ -137,11 +225,20 @@ def news_feed(request, slug):
     
     return render(request, "list/news_feed.html", locals())
 
+@login_required
+def profile(request):
+    laowai = request.user.get_profile()
+    
+    return render(request, "list/profile.html", locals())
 
 def laowai(request, id):
     this_laowai = get_object_or_404(Laowai, id=id)
-    
-    
+
+    if request.user.is_authenticated():
+        if request.user.get_profile() == this_laowai:
+            url = reverse('profile')
+            return HttpResponseRedirect(url)
+
     objects_list = NewInfo.objects.filter(owner=this_laowai).order_by('-date')
     paginator = Paginator(objects_list, 3) # Show 3 infos per page
     
@@ -159,7 +256,6 @@ def laowai(request, id):
     # check if the user is authenticated - if they are, we have a city and laowai
     if request.user.is_authenticated():
         laowai = request.user.get_profile()
-        city = laowai.city
         if this_laowai == laowai:
             pass
     
@@ -180,7 +276,6 @@ def laowai(request, id):
         this_laowai.save()
         
     # gather up the list of infos for this laowai.    
-    
 
     return render(request, 'list/laowai.html', locals())
 
@@ -234,7 +329,7 @@ def add_a_bio(request):
             this_laowai.bio = form.cleaned_data['bio']
             this_laowai.save()
             
-            url = reverse('laowai', args=[this_laowai.id])
+            url = reverse('profile')
             return HttpResponseRedirect(url)
 
     
@@ -613,13 +708,16 @@ def ajax_comment(request):
 
 @login_required
 def whats_next(request):
-    cities = City.objects.all()
+    form = ProfilePhotoUploadForm()
     return render(request, "list/whats_next.html", locals())
 
 @login_required
 def set_city(request, slug):
     city = get_object_or_404(City, slug=slug) 
-    url = reverse('city', args=[city.slug])
+    laowai = request.user.get_profile()
+    laowai.city = city
+    laowai.save()
+    url = request.META.get('HTTP_REFERER','/')
     return HttpResponseRedirect(url)
 
 

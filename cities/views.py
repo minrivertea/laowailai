@@ -41,8 +41,12 @@ def city(request, slug):
     url = reverse("news_feed", args=[city.slug])
     return HttpResponseRedirect(url)
 
-def mark_city(request, slug):
-    city = get_object_or_404(City, slug=slug) 
+def mark_city(request, id):
+    city = get_object_or_404(City, pk=id) 
+    laowai = request.user.get_profile()
+    laowai.cities.add(city)
+    laowai.city = city
+    laowai.save()
     url = reverse('city', args=[city.slug])
     return HttpResponseRedirect(url)
     

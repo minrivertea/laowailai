@@ -9,9 +9,11 @@ def common(request):
     context = {}
     context['sitename'] = settings.SITE_NAME
     context['ga_is_on'] = settings.GA_IS_ON
+    context['all_cities'] = City.objects.all()
     if request.user.is_authenticated():
         context['notifications'] = Notice.objects.filter(recipient=request.user, unseen=True)
-    
+        if request.user.get_profile().city:
+            context['city'] = request.user.get_profile().city
     return context
     
 def get_laowai(request):

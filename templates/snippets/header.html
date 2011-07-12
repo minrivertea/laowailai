@@ -2,17 +2,16 @@
 
 <div id="header">
 	    	<div id="logo">
-		    	<a title="LaoWaiLai (Fuzhou) Home" alt="home" href="/{% if city %}{{ city.slug }}/{% endif %}">
+		    	<a title="LaoWaiLai (Fuzhou) Home" alt="home" href="/">
 		    		<img src="/images/logo.png"/>
 		    		<span>LaoWaiLai Fuzhou</span>
 		    	</a>
 		    </div>
-	    	
-	    	<div id="current-city">
-	    		{% if city %}
-				<p>Currently browsing: <a id="changecity" href="{% url cities %}"><span class="bold">{{ city }}</span></a></p>
-			    {% endif %}
-			</div>	  			
+		    
+		    <div id="site-introduction">
+		    <em>News, events and info for the well connected laowai in China</em>
+		    </div>
+	
 
 		
 	    	{% if user.is_authenticated %}

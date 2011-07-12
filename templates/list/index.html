@@ -61,13 +61,20 @@ ul.explanation li p {
   margin: 5px 0 0 0;	
 }
 
-ul#cities {
-    float: left;
-    font-size: 14px;
-    line-height: 1.6em;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+p.description {
+  margin-bottom: 30px;	
+}
+
+div#cities {
+  width: 360px;
+  padding-bottom: 20px;	
+}
+
+div#cities h3 {
+  float: left;
+  margin-right: 10px;
+  position: relative;
+  top: 2px;	
 }
 
 </style>
@@ -75,56 +82,49 @@ ul#cities {
 
 {% block content %}
 
-<div id="top">
-<h1>Welcome to {{ sitename }}</h1>
-</div>
-
-<p class="description"><em>This site is for foreigners living or working in China. It's a place to exchange knowledge about places to go, and life in China. <a href="/about/">Find out more &raquo;</a></em></p>
-
-{% if city %}
-<ul class="explanation">
-<li class="first">
-	<h3>Choose a city</h3>
-	<p>Any city in China that you live in, or want to know more about<br/>
-	<a href="">Choose your city &raquo;</a>
-	</p>
-</li>
-<li>
-	<h3>Browse</h3>
-	<p>Find places to eat, drink, visit or shop, or do something.<br/>
-	{% ifequal current_city.slug "china" %}{% else %}<a href="{% url places city.slug %}">Find places &raquo;</a>{% endifequal %}
-	</p>
-</li>
-<li class="last">
-	<h3>Contribute</h3>
-	<p>Add your own places, ratings, comments or news.<br/>
-	<a href="{% url registration_register %}">Signup to join in &raquo;</a></p>
-</li>
-</ul>
-
-{% else %}
-
-<ul class="explanation">
-<li class="first">
-	<h3>Choose a city<br/>
-	<span class="small"><em>Pick a city in China that you want to know more about</em></span>
-	</h3>
-</li>
-</ul>
-
-<ul id="cities">
-{% for city in cities %}
-<li><a href="{% url city city.slug %}">{{ city }} ({{ city.chinese_name }})</a></li>
-{% endfor %}
-</ul>
-{% endif %}
+{% if request.user.is_authenticated %}
+	<div id="top">
+		<h1>Set your city in China</h1>
+	</div>
 	
+	<p class="description"><em>You need to choose a city as your 'home' city in China. Click on one of the cities below, and remember you can always browse other cities.</em></p>
 	
+	<div id="cities">
+		{% for city in laowai.cities.all %}
+		<a href="{% url mark_city city.id %}">{{ city.name }}</a>
+		{% endfor %}
+	</div>
+	
+
 	<div id="feed">
 		{% include "list/snippets/feed.html" %}
 	</div>
 
+{% else %}	
+	<div id="top">
+		<h1>Welcome to {{ sitename }}</h1>
+	</div>
 
+	<p class="description"><em>
+	This site is for foreigners living or working in China. 
+	It's a place to exchange knowledge about places to go, and life in China. <a href="/about/">Find out more &raquo;</a></em>
+	</p>
+
+	<ul class="explanation">
+		<li class="first">
+			<h3>Browse a city<br/>
+			<span class="small"><em>Pick a city in China that you want to know more about</em></span>
+			</h3>	
+		</li>
+	</ul>
+		
+		<div id="cities">
+		{% for city in all_cities %}
+			<a href="{% url city city.slug %}">{{ city }} ({{ city.chinese_name }})</a>
+		{% endfor %}
+		</div>
+
+{% endif %}
 
 
 

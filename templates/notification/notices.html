@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block pagetitle %}Your notifications{% endblock %}
+
+{% block extracss %}
+<style type="text/css">
+ul#notices {
+  margin-left: 20px;
+  font-size: 14px;
+  line-height: 1.6em;	
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div id="top">
+<h1>Your notifications ({{ notifications.count }})</h1>
+</div>
+
+<ul id="notices">
+{% for notice in notices %}
+  {% with notice.sender.get_profile as laowai %}
+	<li>
+		{% if notice.unseen %}<strong>{% endif %}
+		<a href="{% url laowai laowai.id %}">{{ notice.sender.get_profile|capfirst }}</a> posted something on <a href="{% url notification_notice notice.id %}">your post</a>
+		{% if notice.unseen %}</strong>{% endif %}
+
+</li>
+  {% endwith %}
+{% endfor %}
+</ul>
+
+
+{% endblock %}

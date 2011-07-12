@@ -165,44 +165,24 @@ div#site-introduction {
     text-align: right;
 }
 
-div#current-city {
-    border-radius: 5px 5px 0 0;
-    float: right;
-    margin: 0px 0 0 0px;
-    padding: 4px 10px 2px 0;
-    text-align: left;
+div#cities {
+  margin-bottom: 20px;
+  float: left;	
 }
 
-div#current-city:hover {
-  cursor: pointer;	
-}
-
-div#current-city p a {
-  color: #333;	
-}
-
-div#current-city p {
-  margin: 0;
-  font-size: 12px;	
-  color: #333;
+div#cities a {
+  background-color: #f1f1f1;
+  border: 1px solid #e1e1e1;
+  padding: 5px 10px;
+  border-radius: 7px;
   float: left;
-  margin-left: 10px;
+  margin-right: 8px;
+  font-size: 11px;
+  font-weight: bold;	
 }
 
-div#current-city p.city {
-    color: #388C96;
-    float: right;
-    font-size: 30px;
-    font-weight: bold;
-    margin-left: 10px;
-    position: relative;
-    text-shadow: 0 1px 1px #FFFFFF;
-    top: -5px;
-    width: auto;
-}
-
-div#current-city span.bold {
-  color: #333;	
+div#cities h3 {
+  margin-bottom: 15px;	
 }
 
 div#navigation {
@@ -312,7 +292,7 @@ div#navigation a.selected:hover {
   background-color: #fff;	
 }
 
-#profile {
+#home {
     background-color: #f1f1f1;
     border-top-left-radius: 7px;
     border-top-right-radius: 7px;
@@ -320,7 +300,22 @@ div#navigation a.selected:hover {
     font-size: 12px;
     font-weight: bold;
     margin: 15px 0 0 50px;
+    padding: 8px 15px;	
+}
+
+#profile {
+    background-color: #f1f1f1;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 15px 0 0 40px;
     padding: 8px 15px;
+}
+
+#profile.selected {
+  background-color: #fff;	
 }
 
 #profile:hover {
@@ -844,6 +839,24 @@ div#left input.save-profile-button:active {
   background: url('/images/save-profile-button.png') no-repeat bottom left;	
 }
 
+div#left input.save-photo-button {
+  background: url('/images/save-photo-button.png') no-repeat top left;
+  border: medium none;
+  height: 33px;
+  margin: 10px 0 10px 0px;
+  width: 142px;
+  float: left;  
+}
+
+div#left input.save-photo-button:hover {
+  cursor: pointer;
+  background: url('/images/save-photo-button.png') no-repeat center left;	
+}
+
+div#left input.save-photo-button:active {
+  cursor: pointer;
+  background: url('/images/save-photo-button.png') no-repeat bottom left;	
+}
 
 
 label {

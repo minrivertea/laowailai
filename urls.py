@@ -3,7 +3,7 @@ from django.conf import settings
 import django.views.static
 
 from list.feeds import LatestEntriesFeed
-from list.views import index, ajax_comment, tell_a_friend, laowai, upload_profile_photo, add_a_bio, like, whats_next
+from list.views import index, ajax_comment, tell_a_friend, laowai, upload_profile_photo, add_a_bio, like, whats_next, profile
 from cities.views import cities, mark_city
 
 # Uncomment the next two lines to enable the admin:
@@ -36,11 +36,13 @@ urlpatterns += patterns('',
     url(r'^/?$', index, name="home_page"),
     url(r'^whats-next/$', whats_next, name="whats_next"),
     url(r'^comments/posted/$', ajax_comment, name="ajax_comment"),
+    
     # other apps URLS
     (r'^comments/', include('django.contrib.comments.urls')), 
     (r'^admin/', include(admin.site.urls)),
     (r'^accounts/', include('registration.backends.default.urls')),
     (r'^latest/feed/$', LatestEntriesFeed()),
+    url(r'^profile/$', profile, name="profile"),
     url(r'^cities/$', cities, name="cities"),
     url(r'^mark_city/(\w+)/$', mark_city, name="mark_city"),
     url(r'^upload_profile_photo/$', upload_profile_photo, name="upload_profile_photo"),

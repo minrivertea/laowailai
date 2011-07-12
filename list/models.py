@@ -28,6 +28,7 @@ class Laowai(models.Model):
     name = models.CharField(max_length=200, blank=True)
     bio = models.TextField(blank=True)
     city = models.ForeignKey(City, blank=True, null=True)
+    cities = models.ManyToManyField(City, blank=True, null=True, related_name="watched_cities")
     date_joined = models.DateTimeField('date added', default=datetime.now)
     subscribe = models.BooleanField(default=True)
     photo = models.ImageField(blank=True, upload_to='photos/profiles/')
