@@ -334,6 +334,12 @@ div#photos {
   margin-bottom: 20px;
 }
 
+div#photos img {
+  float: left;
+  margin-right: 10px;
+  border-radius: 5px;	
+}
+
 div#photos a.add-one {
   width: 560px;
   float: left;
@@ -414,12 +420,14 @@ div#photos a.add-one {
 <div id="photos">
 {% if place.get_photos %}
 {% for photo in place.get_photos %}
-	{% thumbnail photo.photo "80x80" crop="center" as im %}
+	{% thumbnail photo.image "80x80" crop="center" as im %}
 		<img src="{{ im.url }}">
 	{% endthumbnail %}
 {% endfor %}
+{% else %}
+<p>There are no photos of this place yet!</p>
 {% endif %}
-<a class="add-one" href="{% url add_photo_to_place place.city.slug place.id %}">Add a photo of {{ place }} &raquo;</a><br/>
+<a class="add-one" href="{% url add_photo_to_place place.city.slug place.id %}">Add a photo of {{ place }} &raquo;</a>
 </div>
 
 

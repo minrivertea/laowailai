@@ -68,7 +68,7 @@ class NewPlace(CommonInfo):
         
     def get_photos(self):
         from laowailai.list.models import Photo
-        photos = Photo.objects.filter(content_type=self.content_type, object_pk=self.id)
+        photos = Photo.objects.filter(object_pk=self.id)
         return photos   
 
 class Place(models.Model):

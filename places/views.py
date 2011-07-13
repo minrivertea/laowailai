@@ -28,6 +28,7 @@ from django.core.context_processors import csrf
 from django.core.urlresolvers import reverse
 from django.utils import simplejson
 from django.core import serializers
+from django.contrib.contenttypes.models import ContentType
 
 from django.core.serializers.json import DjangoJSONEncoder
 
@@ -184,7 +185,7 @@ def add_photo(request, slug, id):
             format = format.lower().replace('jpeg', 'jpg')
             filename = md5.new(image_content).hexdigest() + '.' + format
             # Save the image
-            path = os.path.join(settings.MEDIA_ROOT, 'photos/photos', filename)
+            path = os.path.join(settings.MEDIA_ROOT, 'photos/images', filename)
             # check that the dir of the path exists
             dirname = os.path.dirname(path)
             if not os.path.isdir(dirname):
@@ -194,9 +195,14 @@ def add_photo(request, slug, id):
                     raise IOError, "Unable to create the directory %s" % dirname
             open(path, 'w').write(image_content)
             
+            # get the content type stuff for the generic relationship
+            place_type = ContentType.objects.get(app_label="places", model="place")
+            
+            
             Photo.objects.create(
-                photo = 'photos/photos/%s' % filename,
-                related_place = place,
+                image = 'photos/photos/%s' % filename,
+                content_type = place_type,
+                object_pk = place.id,
                 owner = laowai,
             )
 
