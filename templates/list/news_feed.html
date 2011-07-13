@@ -35,10 +35,10 @@ function bindPostCommentHandler(idx) {
     });  
 } 
 
-function toggle_visibility(id) {
+
+function showComments(id) {
   bindPostCommentHandler(id);
-  var e = document.getElementById("comments_full_" + id);
-  if (e.style.height == "100%") {	
+  if ($('#comments_full' + id) == "100%") {	
   }
   else {
     $("#comments_full_" + id).animate({
