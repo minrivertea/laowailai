@@ -38,8 +38,8 @@ function bindPostCommentHandler(idx) {
 
 function showComments(id) {
   	bindPostCommentHandler(id);
-    $("#comments_full_" + id).toggle();
-    $(".show_comments" + id).removeAttr("onclick");	
+    $("div#comments_full_" + id).toggle();
+    $("span.show_comments" + id).removeAttr("onclick");	
 }
 
 
