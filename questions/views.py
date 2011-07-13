@@ -10,7 +10,7 @@ import re
 
 # stuff from my app
 from laowailai.list.models import Laowai
-from laowailai.questions.models import Question, Answer, Vote
+from laowailai.questions.models import NewQuestion, Answer, Vote
 from laowailai.questions.forms import AddQuestionForm, AddAnswerForm, SearchForm
 from laowailai.questions.data import find_questions
 from laowailai.slugify import get_slugify
@@ -46,14 +46,14 @@ def questions(request, slug, qs=None, parameters={}):
     else:
         search_form = SearchForm()
         
-    questions = Question.objects.filter(is_published=True, city=city)
+    questions = NewQuestion.objects.filter(is_published=True, city=city)
 
     return render(request, "questions/questions.html", locals())
 
 
 def question(request, slug, questionslug):
     city = get_object_or_404(City, slug=slug)
-    question = get_object_or_404(Question, slug=questionslug)
+    question = get_object_or_404(NewQuestion, slug=questionslug)
     if not question.is_published:
         return Http404()
     
@@ -88,7 +88,7 @@ def add_question(request, slug):
         if form.is_valid():
             laowai = request.user.get_profile()
             slug = get_slugify(form.cleaned_data['question'])
-            while(Question.objects.filter(slug__iexact=slug).count()):
+            while(NewQuestion.objects.filter(slug__iexact=slug).count()):
                 current_number_suffix_match = re.search("\d+$", slug)
                 current_number_suffix = current_number_suffix_match and current_number_suffix_match.group() or 0
                 next = str(int(current_number_suffix) +1)
@@ -96,15 +96,16 @@ def add_question(request, slug):
             creation_args = {
                         'question': form.cleaned_data['question'],
                         'description': form.cleaned_data['description'],
-                        'added_by': laowai,
+                        'owner': laowai,
                         'slug': slug,
                         'city': form.cleaned_data['city'],
             }
                      
             
-            question = Question.objects.create(**creation_args)
+            question = NewQuestion.objects.create(**creation_args)
             
-            return HttpResponseRedirect('/questions/')
+            url = reverse('question', args=[question.city.slug, question.slug])
+            return HttpResponseRedirect(url)
     else:
         form = AddQuestionForm()
     
@@ -112,7 +113,7 @@ def add_question(request, slug):
 
 @login_required
 def add_answer(request, slug, questionslug):
-    question = get_object_or_404(Question, slug=questionslug)
+    question = get_object_or_404(NewQuestion, slug=questionslug)
     if request.method == 'POST':
         form = AddAnswerForm(request.POST)
         if form.is_valid():

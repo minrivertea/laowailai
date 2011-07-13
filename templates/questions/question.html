@@ -136,12 +136,12 @@ div.add-answer-button a:active {
 	{% if request.user.is_authenticated %}
 	<div class="add-question-button"><a href="{% url add_question city.slug %}"><span>Add a question</span></a></div>
 	{% else %}
-	<p class="signup"><a href="{% url registration_register %}"><strong>Signup</strong></a> or <a href="/accounts/login/"><strong>login</strong></a> to add a question</p>
+	<p class="signup"><a href="{% url registration_register %}"><strong>Signup</strong></a> or <a href="{% url auth_login %}"><strong>login</strong></a> to add a question</p>
 	{% endif %}
 <h1>How to: {{ city }}</h1>
 </div>
 <h2>{{ question.question }}</h2>
-<p class="added-by-metadata">Added by <a href="{% url laowai question.added_by.id %}">{{ question.added_by.name }}</a> {{ question.date_added|timesince }} ago</p>
+<p class="added-by-metadata">Added by <a href="{% url laowai question.owner.id %}">{{ question.owner.name }}</a> {{ question.date|timesince }} ago</p>
 <p class="description"><em>{{ question.description }}</em></p>
 
 
@@ -170,7 +170,7 @@ div.add-answer-button a:active {
 		</div>
   <div class="left">
     {% thumbnail thing.answer.added_by.photo "60x60" crop="center" as im %}
-  	<img src="{{ im.url }}"/>
+  		<img src="{{ im.url }}"/>
   	{% endthumbnail %}
 	</div>
 	<div class="right">
