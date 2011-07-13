@@ -37,13 +37,9 @@ function bindPostCommentHandler(idx) {
 
 
 function showComments(id) {
-  if ($('#comments_full' + id) == "100%") {	
-  }
-  else {
   	bindPostCommentHandler(id);
-    $("#comments_full_" + id).css('display', 'block');
+    $("#comments_full_" + id).toggle();
     $("#show_comments" + id).removeAttr("onclick");	
-  } 
 }
 
 
