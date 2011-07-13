@@ -9,7 +9,7 @@ urlpatterns = patterns('',
     url(r'^(\w+)/edit-location/$', views.edit_location, name="edit_location"),
     url(r'^(?P<id>[\w-]+)/add_photo/$', views.add_photo, name="add_photo_to_place"),
     url(r'^(?P<id>[\w-]+)/$', views.place, name="place"),
-    url(r'^(\w+)/(\w+)/$', views.add_rating, name="add_rating"),
+    url(r'^(?P<place>[\w-]+)/rate/$', views.add_rating, name="add_rating"),
     url(r'^(?P<slug>[\w-]+)/$', views.get_place_by_slug, name="get_place_by_slug"),
 )
 

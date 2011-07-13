@@ -9,12 +9,12 @@ from django.template.loader import render_to_string
 
 from laowailai.list.models import Laowai
 from laowailai.cities.models import City
-from laowailai.places.models import Place
+from laowailai.places.models import NewPlace
 
 
 
 class Rating(models.Model):
-    rated_object = models.ForeignKey(Place)
+    rated_object = models.ForeignKey(NewPlace)
     rated_by = models.ForeignKey(Laowai)
     rating_score = models.IntegerField()
     date_rated = models.DateTimeField(default=datetime.now())

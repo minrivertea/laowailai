@@ -233,23 +233,29 @@ def edit_location(request, id):
     return render(request, "places/forms/edit_location.html", locals())    
 
 @login_required
-def add_rating(request, place, value):
-    place = get_object_or_404(NewPlace, pk=place)
-    place.rating_count += 1
-    place.rating_total += int(value)
-    place.save()
+def add_rating(request, slug, place):
+    city = get_object_or_404(City, slug=slug)
+    place = get_object_or_404(NewPlace, slug=place)
     
-    laowai = get_object_or_404(Laowai, user=request.user)
-    rating = Rating.objects.create(
-        rated_object = place,
-        rated_by = laowai,
-        rating_score = value,
-    )
+    if request.GET.get('rating'):
+        value = request.GET.get('rating')
+                
+        place.rating_count += 1
+        place.rating_total += int(value)
+        place.save()
     
-    rating.save()
-    
+        laowai = request.user.get_profile()
+        rating = Rating.objects.create(
+            rated_object = place,
+            rated_by = laowai,
+            rating_score = value,
+        )
+        rating.save()
+
     url = request.META.get('HTTP_REFERER','/')
     return HttpResponseRedirect(url)
+
+     
 
 def get_place_by_slug(request, city, slug):
     city = get_object_or_404(City, slug=city)
