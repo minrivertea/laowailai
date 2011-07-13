@@ -200,7 +200,7 @@ def add_photo(request, slug, id):
             
             
             Photo.objects.create(
-                image = 'photos/photos/%s' % filename,
+                image = 'photos/images/%s' % filename,
                 content_type = place_type,
                 object_pk = place.id,
                 owner = laowai,
