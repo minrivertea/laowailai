@@ -41,15 +41,11 @@ function showComments(id) {
   if ($('#comments_full' + id) == "100%") {	
   }
   else {
-    $("#comments_full_" + id).animate({
-          height: "100%",
-        }, 100, function() {
-          $("#comments_full_" + id).fadeIn('100');
-          $("#show_comments" + id).removeAttr("onclick")	
-        } 
-    );
-  }
+    $("#comments_full_" + id).css('display', 'block');
+    $("#show_comments" + id).removeAttr("onclick");	
+  } 
 }
+
 
 function bindLikeHandler(idx) {
    $('#like_'+ idx).click(function() {
