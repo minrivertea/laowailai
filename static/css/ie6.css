@@ -17,7 +17,13 @@ div#header {
 }
 
 div#navigation {
-  margin-right: 70px
+  margin-right: 30px
+}
+
+div.add-place-button a:hover {
+  cursor: pointer;
+  opacity: 0.8;
+  background: url("/images/add-place-button.png") no-repeat scroll left top transparent;	
 }
 
 
