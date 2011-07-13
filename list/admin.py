@@ -10,6 +10,7 @@ admin.site.register(NewInfo, NewInfoAdmin)
 admin.site.register(Laowai)
 admin.site.register(Subscriber)
 admin.site.register(Suggestion)
+admin.site.register(Photo)
 
 
 

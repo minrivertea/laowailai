@@ -154,20 +154,9 @@ class Suggestion(models.Model):
     def __unicode__(self):
         return self.title
 
-#comment_was_posted.connect(comment_notifier, sender=Comment)
 
-
-class Photo(models.Model):
-    #from laowailai.events.models import Event
-    #related_event = models.ForeignKey(Event, blank=True, null=True)
-    #related_info = models.ForeignKey(Info, blank=True, null=True)
-    
-    #from laowailai.places.models import Place
-    #related_place = models.ForeignKey(Place, blank=True, null=True)
-    #photo = models.ImageField(upload_to="photos/photos")
-    #owner = models.ForeignKey(Laowai, related_name="random_photo")
-    #date_added = models.DateTimeField(default=datetime.now())
-    
+class Photo(CommonInfo):
+    image = models.ImageField(upload_to="photos/images/")
     # a photo might relate to anything, so this is a generic relationship to other items
     content_type   = models.ForeignKey(ContentType,
         verbose_name=_('content type'),
