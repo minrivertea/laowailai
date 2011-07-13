@@ -34,7 +34,8 @@ class NewQuestion(CommonInfo):
     def answers_count(self):
         answers = Answer.objects.filter(question=self)
         return answers.count() 
-    
+
+# deprecated, can delete this when I get the time... 
 class Question(models.Model):
     question = models.CharField(max_length=200)
     description = models.TextField(blank=True, null=True)
