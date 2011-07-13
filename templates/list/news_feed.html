@@ -39,18 +39,9 @@ function bindPostCommentHandler(idx) {
 function showComments(id) {
   	bindPostCommentHandler(id);
     $("#comments_full_" + id).toggle();
-    $("#show_comments" + id).removeAttr("onclick");	
+    $(".show_comments" + id).removeAttr("onclick");	
 }
 
-
-function bindLikeHandler(idx) {
-   $('#like_'+ idx).click(function() {
-        $.getJSON("/like/", {xhr: "true", info: idx, laowai: '{{ laowai.id }}',},
-          function(data) {
-            $('#like_'+ idx).replaceWith(data);
-        });	
-   });
-}
 
 function nextPage(page) {
 $.getJSON("/{{ city.slug }}/feed/", {xhr: "true", page: page},
@@ -106,10 +97,9 @@ $("#cancel").click(function() {
   
       
 $(document).ready(function() { 
-	{% for info in objects.object_list %} 
-   	     bindLikeHandler({{ info.id }});
-	{% endfor %}  
+ 
 });  
+
 </script>  
 {% endblock %}
 
