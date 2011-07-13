@@ -60,18 +60,18 @@
 
 	<div id="container">
 	    
-	    <!-- The header area --!>
+	    <!-- The header area -->
 	    {% include "snippets/header.html" %}
 
 	
 		{% if message %}
-		<!-- a message --!>
+		<!-- a message -->
 			<div id="message">
 				<p>{{ message|safe }}</p>
 			</div>
 		{% endif %}
 		
-		<!-- the main section of the page --!>
+		<!-- the main section of the page -->
 
 		{% if user.is_authenticated %}
 		
@@ -104,12 +104,12 @@
 	    
 
 	    
-	    <!-- any extra content for the page --!>
+	    <!-- any extra content for the page -->
 	    {% block extra-content %}{% endblock %}
 
 		<br clear="all"/>
 		
-		<!-- The footer --!>
+		<!-- The footer -->
 		{% include "snippets/footer.html" %}
 
     
