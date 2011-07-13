@@ -2,7 +2,7 @@
 {% load thumbnail %}
 
 {% block metadescription %}A list of foreigners living in {{ city }}, China{% endblock %}
-{% block pagetitle %}Home{% endblock %}
+{% block pagetitle %}Members in {{ city }}{% endblock %}
 
 
 {% block extracss %}
@@ -14,6 +14,7 @@ div#people div.person {
   margin: 0 10px 10px 0;	
 }
 
+
 </style>
 {% endblock %}
 
@@ -24,7 +25,7 @@ div#people div.person {
 
 <div id="people">
 {% for person in people %}
-	<div class="person">
+	<div class="person{% if forloop.counter <= 6 %} highlight{% endif %}">
 		<a href="{% url laowai person.id %}">
 		{% if person.has_photo %}
 		    {% thumbnail person.photo "80x80" crop="center" as im %}

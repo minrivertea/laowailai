@@ -171,7 +171,7 @@ def add_place(request, slug):
 
 @login_required
 def add_photo(request, slug, id):
-    place = get_object_or_404(Place, pk=id)
+    place = get_object_or_404(NewPlace, pk=id)
     city = place.city
     laowai = request.user.get_profile()
     if request.method == 'POST':

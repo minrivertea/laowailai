@@ -606,6 +606,7 @@ div#feed span.placename {
 div#feed span#placeinfo {
   float: left;
   margin-top: 5px;	
+  width: 400px;
 }
 
 div#feed p.url {

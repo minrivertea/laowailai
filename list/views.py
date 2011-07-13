@@ -709,7 +709,7 @@ def people(request, slug):
         laowai = None
     
     city = get_object_or_404(City, slug=slug)       
-    people = Laowai.objects.filter(city=city)        
+    people = Laowai.objects.filter(city=city).order_by('-date_joined')        
     return render(request, "list/people.html", locals())
 
 
