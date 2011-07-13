@@ -73,6 +73,21 @@ $("#pagination").click(function () {
 	nextPage(pageNum); 
 });
 
+$("textarea").focus(function() {
+    if( $(this).text() == "Write something on the wall..." ) {
+        $(this).text("");
+    }
+
+});
+
+$("textarea").blur(function() {
+
+    if( $(this).text() == "" ) {
+        $(this).text("Write something on the wall...");
+    }
+
+});
+
 $("#loading").ajaxStart(function(){
    $('#pagination').hide();
    $(this).show();
@@ -97,8 +112,6 @@ $("#cancel").click(function() {
     return false;
 });
   
-
-
       
 $(document).ready(function() { 
 	{% for info in objects.object_list %} 

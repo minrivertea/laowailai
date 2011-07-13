@@ -118,26 +118,7 @@
     </div>
 
 {% block extrajs %}{% endblock %}
-<script type="text/javascript">
 
-
-$("textarea").focus(function() {
-    if( $(this).text() == "Write something on the wall..." ) {
-        $(this).text("");
-    }
-
-});
-
-$("textarea").blur(function() {
-
-    if( $(this).text() == "" ) {
-        $(this).text("Write something on the wall...");
-    }
-
-});
-
-
-</script>
 
 </body>
 
