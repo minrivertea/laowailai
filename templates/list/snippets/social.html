@@ -5,7 +5,7 @@
 
 {% ifequal comment_count 0 %}
 	{% if laowai %}
-		<span class="show-comments" title="Add the first comment" href="#comments_{{ object.id }}" onclick="toggle_visibility({{ object.id }});">
+		<span class="show-comments" title="Add the first comment" onclick="showComments({{ object.id }});">
 			<strong>Add the first comment</strong>
 		</span>
 	{% else %}
@@ -13,7 +13,7 @@
 	{% endif %}
 	
 {% else %}
-	<span class="show-comments" title="Click to view all comments" href="" onclick="toggle_visibility({{ object.id }});">
+	<span class="show-comments" title="Click to view all comments" onclick="showComments({{ object.id }});">
 		<strong>{{ comment_count }} comment{{ comment_count|pluralize }}</strong>
 	</span>
 {% endifequal %}								
