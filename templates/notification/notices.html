@@ -18,6 +18,7 @@ ul#notices {
 <h1>Your notifications ({{ notifications.count }})</h1>
 </div>
 
+{% if notices %}
 <ul id="notices">
 {% for notice in notices %}
   {% with notice.sender.get_profile as laowai %}
@@ -30,6 +31,10 @@ ul#notices {
   {% endwith %}
 {% endfor %}
 </ul>
+
+{% else %}
+<p class="description"><em>You don't have any notifications yet (nobody has commented on your posts)</em></p>
+{% endif %}
 
 
 {% endblock %}

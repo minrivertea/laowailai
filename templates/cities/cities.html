@@ -62,7 +62,7 @@ p.note {
 {% for city in cities %}
 
   <li>
-  	<a class="" href="{% url set_city city.slug %}">{{ city.name }} ({{ city.chinese_name }})</a>
+  	<a class="" href="{% url city city.slug %}">{{ city.name }} ({{ city.chinese_name }})</a>
   </li>
 
 {% endfor %}

@@ -165,6 +165,18 @@ div#site-introduction {
     text-align: right;
 }
 
+div#browse-cities {
+  text-align: right;
+  float: left;
+  width: 280px;
+  margin: 20px 30px 0 0;
+  font-size: 14px;	
+}
+
+div#browse-cities a {
+  font-size: 12px;	
+}
+
 div#cities {
   margin-bottom: 20px;
   float: left;	

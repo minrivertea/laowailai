@@ -11,6 +11,5 @@ urlpatterns = patterns('',
     (r'^feed/', include('laowailai.list.urls')),
     (r'^events/', include('laowailai.events.urls')),
     (r'^questions/', include('laowailai.questions.urls')),
-    url(r'^mark_city/(\w+)/$', views.mark_city, name="mark_city"),
 )
 
