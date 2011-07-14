@@ -592,7 +592,7 @@ div#feed div.avatar {
 
 div#feed div.post {
     float: left;
-    width: 450px;
+    width: 480px;
 }
 
 div#feed div.post div.related_photo {
@@ -611,7 +611,7 @@ div#feed span.placename {
 div#feed span#placeinfo {
   float: left;
   margin-top: 5px;	
-  width: 400px;
+  width: 480px;
 }
 
 div#feed p.url {

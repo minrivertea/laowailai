@@ -142,23 +142,17 @@ def index(request, slug=None):
 # news feed for a particular city
 def news_feed(request, slug):
     city = get_object_or_404(City, slug=slug) 
+    
     first_pass = []
-    for info in NewInfo.objects.filter(city=city):
-        first_pass.append(info)
+    first_pass.extend(list(NewInfo.objects.filter(city=city)))
+    first_pass.extend(list(NewPlace.objects.filter(city=city)))
+    first_pass.extend(list(Photo.objects.filter(city=city, object_pk="")))
     
-    for place in NewPlace.objects.filter(city=city):
-        first_pass.append(place)
-        
-    for photo in Photo.objects.all():
-        if photo.content_type == None:
-            first_pass.append(photo)
-    
-    
-    objects_list = sorted(first_pass, reverse=True, key=lambda thing: thing.date)
+    second_pass = sorted(first_pass, reverse=True, key=lambda thing: thing.date)
     
     # run through the list and find the same-type items close togther
     doubles = []
-    for x in objects_list:
+    for x in second_pass:
         try:
             if hasattr(x, 'slug'):
                 if place_count >= 1:
@@ -169,10 +163,12 @@ def news_feed(request, slug):
                 place_count = 0
         except:
             place_count = 0
+            
+            
     # now remove the close-together items from the list - we don't
     # want to have 10 'place' items clogging up the news feed
-    for object in doubles:
-        objects_list.remove(object)     
+    objects_list = []
+    [objects_list.append(x) for x in second_pass if x not in doubles]    
     
     # start the pagination stuff  
     paginator = Paginator(objects_list, 10) # Show 10 infos per page
