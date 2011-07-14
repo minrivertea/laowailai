@@ -1,10 +1,12 @@
 
-<form action="{% url post city.slug %}" method="POST">
+<form enctype="multipart/form-data" action="{% url post city.slug %}" method="POST">
 	
   	<textarea id="id_content" rows="1" cols="10" name="content" class="clearMeFocus">Write something on the wall...</textarea>
 	
-	{% if form.errors %}
-	    {{ form.errors }}
+	{% if infoform.errors %}
+	   {% for error in infoform.errors %}
+	    {{ error }}
+	   {% endfor %}
 	{% endif %}
 	
 	<div style="display:none;">
@@ -14,6 +16,13 @@
 		</select>
 	</div>
 	
+	<div id="image-question">
+		<img src="/images/add-photo.png"/> <span>Add a photo?</span>
+	</div>
+	
+	<div id="image-field" style="display:none;">
+		<p><label for="id_image">Select an image from your computer:</label> <input type="file" name="image" id="id_image" /></p>
+	</div>
 
 	
 	<div id="button-block">

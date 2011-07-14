@@ -32,8 +32,22 @@
 						{{ object.location }}
 					</span>
 				{% else %}
-
-				{{ object.content|urlize }}
+					{% if object.image %}
+						just added a new photo<br/>
+						{% thumbnail object.image "x150" crop="center" as im %}
+							<img src="{{ im.url }}"/>
+						{% endthumbnail %}
+						
+					{% else %} 
+						{{ object.content|urlize }}
+						{% if object.get_related_photo %}
+							<div class="related_photo">
+							{% thumbnail object.get_related_photo.image "x150" crop="center" as im %}
+								<img src="{{ im.url }}"/>
+							{% endthumbnail %}
+							</div>
+						{% endif %}
+					{% endif %}
 				{% endif %}
 			</p>
 				

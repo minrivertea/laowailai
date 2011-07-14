@@ -2,9 +2,14 @@
 {% load comments %}
 {% load thumbnail %}
 
+
+{% if request.user.is_authenticated %}
 <div id="add-form">
 {% include "list/snippets/add-form.html" %}
 </div>
+{% endif %}
+
+
 <ul>
 	{% for object in objects.object_list %}		
 		{% include "list/snippets/feed_li.html" %}

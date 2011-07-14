@@ -12,14 +12,10 @@ class SubscriberAddForm(forms.Form):
 
           
 class InfoAddForm(forms.Form):
-    content = forms.CharField(required=True, widget=forms.Textarea)
+    content = forms.CharField(required=False, widget=forms.Textarea)
     city = forms.ModelChoiceField(queryset=City.objects.all())
-
-
-class AnonAddForm(InfoAddForm):
-    email = forms.CharField(max_length=200)
-    name = forms.CharField(max_length=200)
-
+    image = forms.ImageField(required=False)
+    
         
 class UnsubscribeForm(forms.Form):
     email = forms.EmailField(required=True)  

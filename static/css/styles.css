@@ -595,6 +595,11 @@ div#feed div.post {
     width: 450px;
 }
 
+div#feed div.post div.related_photo {
+  float: left;	
+  margin-top: 10px;
+}
+
 div#feed span.author {
   font-weight: bold;	
 }

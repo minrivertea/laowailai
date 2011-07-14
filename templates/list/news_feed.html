@@ -94,6 +94,12 @@ $("#cancel").click(function() {
 	  $("#button-block").css('display', 'none');
     return false;
 });
+
+$('#image-question').click(function() {
+	$(this).toggle();
+	$("#button-block").slideDown("fast");
+	$('#image-field').toggle();
+});
   
       
 $(document).ready(function() { 
@@ -215,7 +221,35 @@ div#add-form div.options p.selected {
     border-top-right-radius: 5px;
 }
 
+div#add-form div#image-question {
+  font-size: 12px;
+  font-weight: bold;
+  float: left;
+  margin-top: 10px;
+  color: #2D7886;	
+}
 
+div#add-form div#image-question:hover {
+  cursor: pointer;
+  color: #F67B7B;	
+}
+
+div#add-form div#image-question span {
+  position: relative;
+  top: -7px;	
+}
+
+div#add-form div#image-question img {
+  margin-right: 5px;
+}
+
+div#add-form div#image-field {
+   font-size: 12px;
+   font-weight: bold;
+   margin-top: 10px;
+   float: left;
+   width: 310px;	
+}
 
 </style>
 {% endblock %}

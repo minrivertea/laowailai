@@ -10,6 +10,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.utils.translation import ugettext_lazy as _
+from django.shortcuts import get_object_or_404
 
     
 from laowailai.list.signals import new_laowai, new_subscriber #comment_notifier
@@ -99,7 +100,7 @@ class CommonInfo(models.Model):
 
 
 class NewInfo(CommonInfo):
-    content = models.TextField()
+    content = models.TextField(blank=True, null=True)
     
     def __unicode__(self):
         return self.content
@@ -121,7 +122,12 @@ class NewInfo(CommonInfo):
     def get_absolute_url(self):
         url = "/%s/feed/posts/%s/" % (self.city.slug, self.pk)
         # url = reverse('a_post', args=[(self.city.slug, self.pk)])
-        return url      
+        return url  
+    
+    def get_related_photo(self):
+        self_type = ContentType.objects.get(app_label="list", model="newinfo")
+        photo = Photo.objects.get(content_type=self_type, object_pk=self.id)
+        return photo    
     
         
 class Info(models.Model):
@@ -160,8 +166,8 @@ class Photo(CommonInfo):
     # a photo might relate to anything, so this is a generic relationship to other items
     content_type   = models.ForeignKey(ContentType,
         verbose_name=_('content type'),
-        related_name="content_type_set_for_%(class)s")
-    object_pk      = models.TextField(_('object ID'))
+        related_name="content_type_set_for_%(class)s", blank=True, null=True)
+    object_pk      = models.TextField(_('object ID'), blank=True, null=True)
     content_object = generic.GenericForeignKey(ct_field="content_type", fk_field="object_pk")
     
     def __unicode__(self):

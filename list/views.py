@@ -9,7 +9,7 @@ import smtplib
 
 # stuff from my app
 from models import *
-from forms import InfoAddForm, UnsubscribeForm, SubscriberAddForm, ProfilePhotoUploadForm, TellAFriendForm, AddBioForm, SuggestionForm
+from forms import *
 from laowailai.cities.models import City
 from laowailai.places.models import Place, NewPlace
 
@@ -82,7 +82,8 @@ def index(request, slug=None):
         objects = paginator.page(page)
     except (EmptyPage, InvalidPage):
         objects = paginator.page(paginator.num_pages)
-        
+    
+    # here we are going to save the 'info' if someone posts something
     if request.method == 'POST':
         form = InfoAddForm(request.POST)
         if form.is_valid():
@@ -133,6 +134,8 @@ def index(request, slug=None):
     
     else:
         infoform = InfoAddForm()
+        photoform = PhotoInfoAddForm()
+        
     return render(request, "list/index.html", locals()) 
 
 
@@ -145,6 +148,10 @@ def news_feed(request, slug):
     
     for place in NewPlace.objects.filter(city=city):
         first_pass.append(place)
+        
+    for photo in Photo.objects.all():
+        if photo.content_type == None:
+            first_pass.append(photo)
     
     
     objects_list = sorted(first_pass, reverse=True, key=lambda thing: thing.date)
@@ -255,76 +262,93 @@ def news_feed(request, slug):
 @login_required
 def profile(request):
     laowai = request.user.get_profile()
-    
     return render(request, "list/profile.html", locals())
 
+
+
 def laowai(request, id):
-    this_laowai = get_object_or_404(Laowai, id=id)
+    this_laowai = get_object_or_404(Laowai, pk=id)
 
     if request.user.is_authenticated():
         if request.user.get_profile() == this_laowai:
             url = reverse('profile')
             return HttpResponseRedirect(url)
-
-    objects_list = NewInfo.objects.filter(owner=this_laowai).order_by('-date')
-    paginator = Paginator(objects_list, 3) # Show 3 infos per page
     
-    try:
-        page = int(request.GET.get('page', '1'))
-    except ValueError:
-        page = 1
+    city = this_laowai.city
     
-    # If page request (9999) is out of range, deliver last page of results.
-    try:
-        objects = paginator.page(page)
-    except (EmptyPage, InvalidPage):
-        objects = paginator.page(paginator.num_pages)
-    
-    # check if the user is authenticated - if they are, we have a city and laowai
-    if request.user.is_authenticated():
-        laowai = request.user.get_profile()
-        if this_laowai == laowai:
-            pass
-    
-    # if not, there's no laowai, and the city belongs to the this_laowai
+    if this_laowai.profile_views == None:
+        this_laowai.profile_views = 1
     else:
-        laowai = None
-        city = this_laowai.city
-    
-    # if you're viewing your own profile, nothing. Otherwise, increment the profile views count    
-    if laowai and this_laowai == laowai:
-        pass
-    else:
-        if this_laowai.profile_views == None:
-            this_laowai.profile_views = 1
-        else:
-            this_laowai.profile_views += 1
-            
+        this_laowai.profile_views += 1        
         this_laowai.save()
         
     # gather up the list of infos for this laowai.    
-
     return render(request, 'list/laowai.html', locals())
+
 
 @login_required
 def post(request, slug):
     city = get_object_or_404(City, slug=slug) 
     laowai = request.user.get_profile()
     if request.method == 'POST':
-        form = InfoAddForm(request.POST)
+        form = InfoAddForm(request.POST, request.FILES)
         if form.is_valid():
-            content = form.cleaned_data['content']
-            if content == "Add something":
-                return HttpResponseRedirect('/')
-                        
-            # create the new piece of info
-            new = NewInfo.objects.create(
-                                      content=content,
-                                      owner=laowai,
-                                      city=city,
-                                      )
             
-            new.save()
+            if not form.cleaned_data['content'] and not request.FILES['image'] \
+            or form.cleaned_data['content'] == "Write something on the wall...":
+                url = reverse('city', args=[city.slug])
+                return HttpResponseRedirect(url)
+            
+            
+            try:
+                # Figure out what type of image it is
+                photo = request.FILES['image']
+                image_content = photo.read()
+                image = Image.open(StringIO(image_content))
+                format = image.format
+                format = format.lower().replace('jpeg', 'jpg')
+                filename = md5.new(image_content).hexdigest() + '.' + format
+                # Save the image
+                path = os.path.join(settings.MEDIA_ROOT, 'photos/images', filename)
+                # check that the dir of the path exists
+                dirname = os.path.dirname(path)
+                if not os.path.isdir(dirname):
+                    try:
+                        os.mkdir(dirname)
+                    except IOError:
+                        raise IOError, "Unable to create the directory %s" % dirname
+            
+                open(path, 'w').write(image_content)
+                
+                # create a Photo object first
+                new_photo = Photo.objects.create(
+                    image = 'photos/images/%s' % filename,
+                    city = city,
+                    owner = laowai,
+                )
+                
+                # now see if there's a post with the photo
+                if form.cleaned_data['content']:
+                    if not form.cleaned_data['content'] == "Write something on the wall...":
+                        new_info = NewInfo.objects.create(
+                            content = form.cleaned_data['content'],
+                            city = city,
+                            owner = laowai,
+                        )
+                        
+                        # update the new_photo with relationship to this new_info
+                        info_type = ContentType.objects.get(app_label="list", model="newinfo")
+                        new_photo.content_type = info_type
+                        new_photo.object_pk = new_info.id
+                        new_photo.save()
+                
+            # if it's just a message, no photo, then just create an info.
+            except:
+                new_info = NewInfo.objects.create(
+                    content = form.cleaned_data['content'],
+                    city = city,
+                    owner = laowai,
+                )
             
             url = reverse('news_feed', args=[city.slug])
             return HttpResponseRedirect(url)
@@ -608,10 +632,12 @@ def like(request, item=None):
 # GROUP : PROFILE UPDATE STUFF
 
 def upload_profile_photo(request, next=None):
+    laowai = request.user.get_profile()
+    
     if request.method == 'POST':
         form = ProfilePhotoUploadForm(request.POST, request.FILES)
         if form.is_valid():
-            laowai = get_object_or_404(Laowai, user=request.user)
+            
             # Figure out what type of image it is
             photo = request.FILES['photo']
             image_content = photo.read()

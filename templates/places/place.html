@@ -427,7 +427,9 @@ div#photos a.add-one {
 {% else %}
 <p>There are no photos of this place yet!</p>
 {% endif %}
+{% if request.user.is_authenticated %}
 <a class="add-one" href="{% url add_photo_to_place place.city.slug place.id %}">Add a photo of {{ place }} &raquo;</a>
+{% endif %}
 </div>
 
 

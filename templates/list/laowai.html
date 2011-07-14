@@ -142,17 +142,13 @@ div#cities h3 {
 	{% endifequal %}
 	</div>
 	
-	<h1>{% ifequal this_laowai laowai %}{{ laowai.name }}{% else %}All posts by {{ this_laowai.name }}{% endifequal %}</h1>
+	<h1>All posts by {{ this_laowai.name }}</h1>
 
 	<p class="description">
 	{% if this_laowai.bio %}
 			<em>{{ this_laowai.bio|urlize }}</em><br/>
 	{% else %}
-	    {% ifequal this_laowai laowai %}
-	    	<a href="{% url add_a_bio %}">Add an introduction to yourself</a>
-	    {% else %}
-	    	<em>{{ this_laowai.name }} hasn't added an introduction yet</em>
-		{% endifequal %}	
+	    	<em>{{ this_laowai.name }} hasn't added an introduction yet</em>	
 	{% endif %}
 	</p>
 	
