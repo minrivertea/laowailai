@@ -11,8 +11,8 @@
 function bindPostCommentHandler(idx) {   
 	var thisObject = $('#comment-form-' + idx + ' form'); 
     thisObject.submit(function() {
-    	if ($('#comment-form-' + idx + ' form textarea').val() == '') {
-    		this.Object.prepend('<p class="warning" style="color:red; display:block;"><em>You must type something</em></p>');
+    	if ($('textarea#id_comment_' + idx).val() == '') {
+    		$(this).append('<p class="warning" style="color:red; display:block; float:right;position:relative;top:10px;"><em>You must type something!</em></p>');
     	}
     	else {
         	$.ajax({  

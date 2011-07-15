@@ -7,7 +7,7 @@
 		{{ form.timestamp }}
 		{{ form.security_hash }}
 										
-        <textarea id="id_comment" rows="3" cols="40" name="comment"></textarea>
+        <textarea id="id_comment_{{ object.id }}" rows="3" cols="40" name="comment"></textarea>
 	
 		<p style="display:none;">
 			<input id="id_name" type="text" name="name" maxlength="50" value="{{ laowai.name }}" />
@@ -19,7 +19,6 @@
 	    								
 	   	<p style="display:none;">
 	   		<input type="text" name="url" id="id_url" value="{{ laowai.get_absolute_url }}" />
-	   		<label for="id_url">URL</label>
 		</p>
 	 
 	   	<p style="display:none;">
