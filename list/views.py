@@ -772,4 +772,17 @@ def set_city(request, slug):
     url = request.META.get('HTTP_REFERER','/')
     return HttpResponseRedirect(url)
 
+@login_required
+def delete_a_post(request, slug, id):
+    laowai = request.user.get_profile()
+    city = get_object_or_404(City, slug=slug)
+    info = get_object_or_404(NewInfo, pk=id)
+    
+    # IMPORTANT!!
+    if not laowai == info.owner:
+        return HttpResponseRedirect('/naughty/')
 
+    info.delete()
+    
+    url = request.META.get('HTTP_REFERER','/')
+    return HttpResponseRedirect(url)

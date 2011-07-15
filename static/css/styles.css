@@ -189,7 +189,7 @@ div#cities a {
     float: left;
     font-size: 12px;
     font-weight: bold;
-    margin-right: 8px;
+    margin: 0 10px 10px 0;
     padding: 10px 15px;
 }
 
@@ -604,7 +604,8 @@ div#feed div.avatar {
 
 div#feed div.post {
     float: left;
-    width: 480px;
+    width: 460px;
+    display:block;
 }
 
 div#feed div.post div.related_photo {
@@ -1072,7 +1073,7 @@ div#top .signup {
     float: right;
     font-size: 11px;
     position: relative;
-    top: 5px;
+    top: 18px;
 }
 
 div.add-event-button {

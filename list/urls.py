@@ -6,6 +6,7 @@ from laowailai.list import views
 urlpatterns = patterns('',
 
     url(r'^$', views.news_feed, name="news_feed"),
+    url(r'^posts/(?P<id>\w+)/delete/$', views.delete_a_post, name="delete_a_post"),
     url(r'^posts/(?P<number>\w+)/$', views.a_post, name="a_post"),
     url(r'^posts/add$', views.post, name="post"),
     url(r'^set-city/$', views.set_city, name="set_city"),
