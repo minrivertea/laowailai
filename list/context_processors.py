@@ -2,6 +2,7 @@ from django.conf import settings
 from laowailai.list.models import Laowai, Info, Subscriber
 from django.shortcuts import get_object_or_404
 from laowailai.cities.models import City
+from laowailai.places.models import NewPlace
 from notification.models import Notice
 
 def common(request):
@@ -28,9 +29,9 @@ def get_latest_users(request):
     return {'latest_users': latest}
 
 def get_stats(request):
-    subscribers = Subscriber.objects.all()
-    signups = Laowai.objects.all()
-    return {'subscribers': subscribers, 'signups': signups}
+    signups = Laowai.objects.count()
+    places = NewPlace.objects.count()
+    return {'places': places, 'signups': signups}
     
     
     
