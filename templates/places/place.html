@@ -14,6 +14,13 @@
 {% endblock %} 
 
 {% block extrajs %}
+
+{% if place.get_photos %}
+<script type="text/javascript" src="/js/lightbox/prototype.js"></script>
+<script type="text/javascript" src="/js/lightbox/scriptaculous.js?load=effects,builder"></script>
+<script type="text/javascript" src="/js/lightbox/lightbox.js"></script>
+{% endif %}
+
 {% if place.has_map %}
 <script type="text/javascript">
 
@@ -109,7 +116,7 @@ $(document).ready(function() {
 {% block extracss %}
 
 <link rel="stylesheet" href="/css/print.css" type="text/css" media="print" />
-
+{% if place.get_photos %}<link rel="stylesheet" href="/css/lightbox.css" type="text/css" media="screen" />{% endif %}
 <style type="text/css">
 div#infobar {
   height: 50px;
@@ -344,6 +351,7 @@ div#photos a.add-one {
   width: 560px;
   float: left;
   font-size: 11px;	
+  margin-top: 10px;
 }
 
 
@@ -420,9 +428,15 @@ div#photos a.add-one {
 <div id="photos">
 {% if place.get_photos %}
 {% for photo in place.get_photos %}
-	{% thumbnail photo.image "80x80" crop="center" as im %}
-		<img src="{{ im.url }}">
+	
+	{% thumbnail photo.image "800" crop="center" as im_large %}
+	<a href="{{ im_large.url }}" rel="lightbox[photo]" title="{{ product.image_2_caption }}">
+		{% thumbnail photo.image "80x80" crop="center" as im %}
+			<img alt="" title="" src="{{ im.url }}"/></a>
+		{% endthumbnail %}
+	</a>
 	{% endthumbnail %}
+	
 {% endfor %}
 {% else %}
 <p>There are no photos of this place yet!</p>

@@ -55,7 +55,7 @@ p.note {
 <h1>Choose a city to browse</h1>
 </div>
 
-<p class="description"><em>You can browse news and places from other cities by clicking on a city below - this won't change your 'hometown' setting, so feel free to browse around.</em></p>
+<p class="description"><em>You can browse news and places from other cities by clicking on a city below{% if request.user.is_authenticated %} - this won't change your 'hometown' setting, so feel free to browse around.{% endif %}</em></p>
 
 <div id="cities">
 <ul>
@@ -67,6 +67,9 @@ p.note {
 
 {% endfor %}
 </ul>
+
+
+<p class="note"><strong>Please note!</strong> This site is in a beta stage, so we do not have many cities setup yet. If you want your city to be registered, tell us by emailing mail@laowailai.com</p>
 </div>
 
 
