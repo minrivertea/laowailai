@@ -183,14 +183,14 @@ div#cities {
 }
 
 div#cities a {
-  background-color: #f1f1f1;
-  border: 1px solid #e1e1e1;
-  padding: 5px 10px;
-  border-radius: 7px;
-  float: left;
-  margin-right: 8px;
-  font-size: 11px;
-  font-weight: bold;	
+    background-color: #F1F1F1;
+    border: 1px solid #E1E1E1;
+    border-radius: 7px 7px 7px 7px;
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    margin-right: 8px;
+    padding: 10px 15px;
 }
 
 div#cities h3 {
@@ -743,25 +743,28 @@ span.account {
 
 
 div#left input.submit, div#add-form input.submit-button {
-    background-color: #BDDFE3;
-    border-color: #A1CFD4;
-    border-radius: 0 0 0 0;
-    border-style: solid;
-    border-width: 1px;
-    color: #14565E;
+    background-color: #3C838B;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 2px 2px 2px 2px;
+    color: #fff;
     cursor: pointer;
-    float: right;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: bold;
-    margin-right: 10px;
+    line-height: 27px;
+    margin: 11px 6px;
+    min-width: 54px;
+    padding: 0 8px;
+    text-align: center;
+    float: right;
+    width: 100px;
     padding: 5px 10px;
-    width: 120px;
 }
 
 div#left input.submit:hover, div#add-form input.submit-button:hover {
-  cursor: pointer;
-  background-color: #d9eef0;
-  text-shadow: 0 1px 0 #fff;	
+    background-color: #bfdfe3;
+    border: 1px solid #5da4ac;
+    box-shadow: 0 1px 1px #d1d1d1;
+    color: #3C838B;
 }
 
 div#left input.submit:active, div#add-form input.submit-button:active {
