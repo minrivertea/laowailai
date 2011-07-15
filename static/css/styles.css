@@ -743,22 +743,29 @@ span.account {
 
 
 div#left input.submit, div#add-form input.submit-button {
-  background: url('/images/post-comment-button.png') no-repeat top left;
-  border: medium none;
-  height: 33px;
-  margin: 10px 10px 10px 0px;
-  width: 142px;
-  float: right;  
+    background-color: #BDDFE3;
+    border-color: #A1CFD4;
+    border-radius: 0 0 0 0;
+    border-style: solid;
+    border-width: 1px;
+    color: #14565E;
+    cursor: pointer;
+    float: right;
+    font-size: 12px;
+    font-weight: bold;
+    margin-right: 10px;
+    padding: 5px 10px;
+    width: 120px;
 }
 
 div#left input.submit:hover, div#add-form input.submit-button:hover {
   cursor: pointer;
-  background: url('/images/post-comment-button.png') no-repeat center left;	
+  background-color: #d9eef0;
+  text-shadow: 0 1px 0 #fff;	
 }
 
 div#left input.submit:active, div#add-form input.submit-button:active {
-  cursor: pointer;
-  background: url('/images/post-comment-button.png') no-repeat bottom left;	
+  cursor: pointer;	
 }
 
 div#left input.save-profile-button {

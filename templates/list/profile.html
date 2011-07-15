@@ -67,6 +67,17 @@ $("#loading").ajaxStop(function(){
    $(this).hide();
    $('#pagination').show();
  });
+ 
+$('a#change').click(function() {
+	if ($(this).text() == 'Cancel') 
+	{
+		$(this).text('Change your city');
+	}
+	else {
+		$(this).text('Cancel');
+	}
+	$('#choose-new').toggle();
+});
 
       
 $(document).ready(function() { 
@@ -106,7 +117,7 @@ div#cities {
   width: 560px;	
 }
 
-div#cities a {
+div#cities a.city {
   background-color: #f1f1f1;
   border: 1px solid #e1e1e1;
   padding: 5px 10px;
@@ -117,8 +128,26 @@ div#cities a {
   font-weight: bold;	
 }
 
+div#cities a#change {
+  background-color: #fff;
+  padding: 5px 0 0 0 ;
+  border: none;	
+  font-weight: normal;
+}
+
 div#cities h3 {
   margin-bottom: 15px;	
+}
+
+div#cities div#choose-new {
+  float: left;
+  margin-top: 20px;
+  width: 560px;	
+}
+
+div#cities div#choose-new p {
+  font-size: 11px;
+  margin: 0px 0 10px 0px;	
 }
 
 div#stats {
@@ -195,7 +224,14 @@ div#stats ul {
 	{% else %}
 		<div id="cities">
 		<h3>Your home city is:</h3>
-			<a href="{% url set_city city.slug %}">{{ laowai.city.name }}</a>
+			<a class="city" href="{% url set_city city.slug %}">{{ laowai.city.name }}</a> 
+			<a href="#" id="change">&laquo; Change your city</a>
+			<div id="choose-new" style="display:none;">
+				<p><em>Click a new city to change</em></p>
+				{% for city in all_cities %}
+					<a href="{% url set_city city.slug %}">{{ city.name }}</a>
+				{% endfor %}
+			</div>
 		</div>
 	{% endif %}
 	
