@@ -8,16 +8,16 @@ html {
   border: none;
   margin: none;
   padding: none;
-  background-color: #BDDFE3;	
+  background-color: #dfecf1;	
 }
 
 body {
   font-weight: 0.9em;
   font-family: Arial, sans-serif;	
-  /*background-color: #96d7ec;*/
-  background-color: #bddfe3;
+  background-color: #d4e8f0;
   margin: 0;
   padding: 0;
+  background: url('/images/backtest.png') no-repeat top left #dfecf1;
 }
 
 /* links */
@@ -63,7 +63,7 @@ div#header {
 div#logo {
     float: left;
     height: 40px;
-    margin: 85px 0 10px 0;
+    margin: 145px 0 10px 0;
     position: relative;
     width: 288px;
     overflow: hidden;
