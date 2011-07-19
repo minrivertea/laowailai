@@ -2,10 +2,11 @@
 {% load thumbnail %}
 {% load comments %}
 
-{% block metadescription %}The best place to share news and events for foreigners in {{ current_city }}, China.{% endblock %}
+{% block metadescription %}News, events and places to go for foreigners living or travelling in {{ city.name }}.{% endblock %}
 {% block pagetitle %}News from {{ city }}{% endblock %}
 
 {% block extrajs %}
+
 <script type="text/javascript" charset="utf-8">  
 
 function bindPostCommentHandler(idx) {   
@@ -103,14 +104,20 @@ $('#image-question').click(function() {
   
       
 $(document).ready(function() { 
- 
+	$("a.image").fancybox();
 });  
 
 </script>  
+
+<script type="application/javascript" src="/js/lightbox/jquery.fancybox-1.3.4.pack.js"></script>
 {% endblock %}
 
 
 {% block extracss %}
+
+
+<link rel="stylesheet" href="/css/jquery.fancybox-1.3.4.css" />
+
 <style type="text/css">
 div#introduction {
   height: 300px;
@@ -127,8 +134,21 @@ span.like:hover {
 }
 
 div#pagination {
-    background-color: #F1F1F1;
-    border: 2px dotted #e1e1e1;
+    background-color: #E6E6E6;
+    
+    /* Firefox 3.6+ */ 
+    background: -moz-linear-gradient(100% 100% 90deg, #e6e6e6, #f1f1f1); 
+    
+    /* Safari 4-5, Chrome 1-9 */ /* -webkit-gradient(<type>, <point> [, <radius>]?, <point> [, <radius>]? [, <stop>]*) */ 
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f1f1f1), to(#e6e6e6)); 
+    
+    /* Safari 5.1+, Chrome 10+ */ 
+    background: -webkit-linear-gradient(#e6e6e6, #f1f1f1); 
+    
+    /* Opera 11.10+ */ background: -o-linear-gradient(#e6e6e6, #f1f1f1);   
+    
+    border: 1px solid #d1d1d1;
+    border-radius: 2px 2px 2px 2px;
     color: #2D7886;
     float: left;
     font-size: 12px;

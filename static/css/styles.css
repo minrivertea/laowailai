@@ -749,27 +749,40 @@ span.account {
 
 
 div#left input.submit, div#add-form input.submit-button {
-    background-color: #3C838B;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 2px 2px 2px 2px;
-    color: #fff;
+    background-color: #E6E6E6;
+    
+    /* Firefox 3.6+ */ 
+    background: -moz-linear-gradient(100% 100% 90deg, #e6e6e6, #f1f1f1); 
+    
+    /* Safari 4-5, Chrome 1-9 */ /* -webkit-gradient(<type>, <point> [, <radius>]?, <point> [, <radius>]? [, <stop>]*) */ 
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f1f1f1), to(#e6e6e6)); 
+    
+    /* Safari 5.1+, Chrome 10+ */ 
+    background: -webkit-linear-gradient(#e6e6e6, #f1f1f1); 
+    
+    /* Opera 11.10+ */ background: -o-linear-gradient(#e6e6e6, #f1f1f1);   
+
+    border-color: #F1F1F1 #C1C1C1 #C1C1C1 #F1F1F1;
+    border-radius: 4px 4px 4px 4px;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 1px -1px #666, 0 -1px 0 #666;
     cursor: pointer;
+    float: right;
     font-size: 11px;
     font-weight: bold;
     line-height: 27px;
-    margin: 11px 6px;
+    margin-right: 10px;
     min-width: 54px;
-    padding: 0 8px;
-    text-align: center;
-    float: right;
-    width: 100px;
     padding: 5px 10px;
+    text-align: center;
+    width: 100px;
+
 }
 
 div#left input.submit:hover, div#add-form input.submit-button:hover {
-    background-color: #bfdfe3;
-    border: 1px solid #5da4ac;
-    box-shadow: 0 1px 1px #d1d1d1;
+    border: 1px solid #c1c1c1;
+    box-shadow: 0 1px 1px #999;
     color: #3C838B;
 }
 

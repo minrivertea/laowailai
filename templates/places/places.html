@@ -191,40 +191,67 @@ div#filters li a span {
 }
 
 div#filters li.eat a {
-  background: url('/images/eat_small.png') no-repeat top left;
+  background: url('/images/categories_small.png') no-repeat -128px 0;
 }
 
 div#filters li.drink a {
-  background: url('/images/drink_small.png') no-repeat top left;
+  background: url('/images/categories_small.png') no-repeat -160px 0;
 }
 
 div#filters li.do a {
-  background: url('/images/do_small.png') no-repeat top left;
+  background: url('/images/categories_small.png') no-repeat -96px 0;
 }
 
 div#filters li.see a {
-  background: url('/images/see_small.png') no-repeat top left;
+  background: url('/images/categories_small.png') no-repeat -64px 0;
 }
 
 div#filters li.buy a {
-  background: url('/images/buy_small.png') no-repeat top left;
+  background: url('/images/categories_small.png') no-repeat -32px 0;
 }
 
-div#filters li a:hover {
-  background-position: center left;	
-  cursor: pointer;
+div#filters li.eat a:hover {
+  background-position: -128px center;
+}
+
+div#filters li.drink a:hover {
+  background-position: -160px center;
+}
+
+div#filters li.do a:hover {
+  background-position: -96px center;
+}
+
+div#filters li.see a:hover {
+  background-position: -64px center;
+}
+
+div#filters li.buy a:hover {
+  background-position: -32px center;
+}
+
+div#filters li.eat a:active, div#filters li.eat a.selected {
+  background-position: -128px bottom;
+}
+
+div#filters li.drink a:active, div#filters li.drink a.selected {
+  background-position: -160px bottom;
+}
+
+div#filters li.do a:active, div#filters li.do a.selected {
+  background-position: -96px bottom;
+}
+
+div#filters li.see a:active, div#filters li.see a.selected {
+  background-position: -64px bottom;
+}
+
+div#filters li.buy a:active, div#filters li.buy a.selected {
+  background-position: -32px bottom;
 }
 
 div#filters li a:hover span {
   color: #666;	
-}
-
-div#filters li a:active {
-  background-position: bottom left;	
-}
-
-div#filters li a.selected {
-  background-position: bottom left;	
 }
 
 div#filters li a.selected span {

@@ -39,18 +39,26 @@
 					{% if object.image %}
 						just added a new photo<br/>
 						
-							{% thumbnail object.image "x150" crop="center" as im %}
-								<img alt="" title="" src="{{ im.url }}"/></a>
-							{% endthumbnail %}
+						{% thumbnail object.image "x600" crop="center" as im_large %}
+							<a class="image" href="{{ im_large.url }}">
+								{% thumbnail object.image "x150" crop="center" as im %}
+									<img alt="" title="" src="{{ im.url }}"/>
+								{% endthumbnail %}
+							</a>
+						{% endthumbnail %}
 						
 					{% else %} 
 						{{ object.content|urlize }}
 						{% if object.get_related_photo %}
 							<div class="related_photo">
 
-							{% thumbnail object.get_related_photo.image "x150" crop="center" as im %}
-								<img alt="" title="" src="{{ im.url }}"/></a>
-							{% endthumbnail %}
+						{% thumbnail object.get_related_photo.image "x600" crop="center" as im_large %}
+							<a class="image" href="{{ im_large.url }}">
+								{% thumbnail object.get_related_photo.image "x150" crop="center" as im %}
+									<img alt="" title="" src="{{ im.url }}"/>
+								{% endthumbnail %}
+							</a>
+						{% endthumbnail %}
 
 							</div>
 						{% endif %}
