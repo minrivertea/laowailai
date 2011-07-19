@@ -1,0 +1,16 @@
+{% load thumbnail %}
+
+  {% for thing in entries %}
+  
+  
+  <div class="entry{% if forloop.last %} last{% endif %}">
+  		<h3>
+  		<a alt="{{ thing.title }}" title="{{ thing.title }}" href="{% url blog_entry thing.slug %}">{{ thing.title }}</a>
+  		</h3>
+  		<span class="entry-meta">{{ thing.date_added|date:"d M Y" }}</span>
+  		<p>{{ thing.content|safe }}</p>
+  		
+  		</p>
+  </div>
+
+  {% endfor %}

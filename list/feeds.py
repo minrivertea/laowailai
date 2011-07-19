@@ -1,13 +1,13 @@
 from django.contrib.syndication.views import Feed
-from list.models import Info
+from places.models import NewPlace
 
 class LatestEntriesFeed(Feed):
-    title = "LaoWaiLai Fuzhou Latest"
+    title = "Latest places in China from www.laowailai.com"
     link = "http://www.laowailai.com"
-    description = "Latest news and posts about Fuzhou from LaoWaiLai.com"
+    description = "Latest places in China from LaoWaiLai.com"
 
     def items(self):
-        return Info.objects.order_by('-date_added')[:10]
+        return NewPlace.objects.order_by('-date_added')[:10]
 
     def item_title(self, item):
         return "new post by %s" % item.added_by.name

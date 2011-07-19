@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block meta-description %}Chris West's blog about photography and Fuzhou, China - my home{% endblock %}
+{% block title %}Home{% endblock %}
+
+{% block banner %}
+
+{% endblock %}
+
+{% block right %} {% include "snippets/right.html" %} {% endblock %}
+
+{% block content %}
+<br/>
+<p class="see-more"><em>(these are blog post numbers 11-20)</em></p>
+{% include "snippets/entry-list.html" %}
+<a class="see-more" href="{% url even_more %}">See even more blog entries...</a>
+
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% load i18n %}
+
+	<div id="header">
+		  
+	  <div id="header-elements">
+	    <h1 class="fontface"><a href="{% url home %}">westiseast</a></h1>
+	    <div id="site-explanation">{% trans "Photography and thoughts from China (by Chris West)" %}</div>
+	    
+	  
+	  </div>
+	  
+
+	  
+
+	  
+	</div>
+	
+	  <div id="nav-links">
+	    <a alt="home" title="westiseast.co.uk" href="{% url home %}">{% trans "Home" %}</a>
+	  	<a alt="About" title="Read about me and this website" href="{% url about %}">{% trans "About" %}</></a>
+	  	<a alt="Portfolio" title="View all my photography and portfolio" href="{% url all_photos %}">{% trans "Photography" %}</a>
+	  	<a alt="RSS feed" title="Get the RSS feed of all latest posts" href="/feeds/latest/">RSS <img class="rss" src="/static/images/rss.gif" title="RSS" alt="RSS"/></a>
+	  </div>

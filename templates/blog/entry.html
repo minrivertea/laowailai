@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+{% load comments %}
+
+{% block metadescription %}{{ entry.summary|safe }}{% endblock %}
+{% block pagetitle %}{{ entry.title }}{% endblock %}
+
+
+{% block extrajs %}
+<script type="text/javascript">
+
+function bindPostCommentHandler() { 
+	$('#comment-form form').submit(function() {
+	   	if ($('#comment-form textarea').val() == '') {
+	   		$(this).append('<p class="warning" style="color:red; display:block; float:right;position:relative;top:10px;"><em>You must type something!</em></	p>');
+	   	}
+	   	else {
+	       	$.ajax({  
+	       	    type: "POST",  
+	       	    data: $('#comment-form form').serialize(),  
+	       	    url: "/comments/post/",  
+	       	    cache: false,  
+	       	    dataType: "html",  
+	       	    success: function(data, textStatus) {
+	       	        $('#comments-list').append(data);
+	       	        $('#comment-form textarea').val('');
+	       	        $('#comment-form .warning').attr('style', 'display:none');
+	       	    },  
+	       	    error: function (XMLHttpRequest, textStatus, errorThrown) {  
+	      	        $('#comment-form form').replaceWith('Your comment could not be posted.');  
+	       	    }  
+	       	}); 
+	   	}
+	    return false;
+	});  
+}
+
+$(document).ready(function() { 
+    bindPostCommentHandler();
+});
+ 
+</script>
+{% endblock %}
+
+{% block extracss %}
+<link rel="stylesheet" href="/css/blog.css"/>
+<style type="text/css">
+div#comments {
+    background-color: #E2F1F3;
+    float: left;
+    margin-top: 40px;
+    padding: 20px;
+    width: 440px;
+}
+
+div#comments h3 {
+  font-size: 15px;
+  color: #333;	
+}
+
+div.a-comment {
+  width: 400px;
+  font-size: 10px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #fff;
+}
+
+div.comment-content p {
+  font-size: 12px;	
+}
+
+div#comment-form {
+  float: left;
+  width: 430px;	
+}
+
+div#comment-form label {
+    float: right;
+    margin-right: 10px;
+    position: relative;
+    top: 7px;
+    width: 115px;
+    font-size: 11px;
+}
+
+div#comment-form input, div#comment-form textarea {
+  width: 280px;	
+  margin-bottom: 0;
+  padding: 7px;
+  color: #666;
+  font-size:12px;
+  border: none;
+}
+
+{% if request.user.is_authenticated %}
+div#left div#comment-form textarea {
+    border: medium none;
+    margin-bottom: 10px;
+    padding: 7px;
+    width: 410px;
+}
+{% else %}
+div#left div#comment-form textarea {
+  width: 280px;
+  padding: 7px;	
+  border: none;
+}
+{% endif %}
+
+div#comment-form p {
+  line-height: 1em;
+  margin: 0 0 10px 0;	
+}
+
+input.submit-preview {
+  display: none;	
+}
+
+div#comment-form input.submit-post {
+  float: left;	
+  color: #333;
+}
+
+</style>
+{% endblock %}
+
+
+{% block content %}
+<div id="top">
+<h1>the {{ sitename }} blog</h1>
+</div>
+
+<h2>{{ entry.title }}</h2>
+
+<div class="entry">
+
+	<span class="entry-meta">{{ entry.date_added|date:"d M Y" }}</span>
+	
+	<p>{{ entry.content|safe }}</p>
+
+			
+	<div id="comments">
+		{% get_comment_list for entry as comment_list %}
+			{% if comment_list %}
+				{% get_comment_count for entry as comment_count %}
+				<h3>Comments on this post ({{ comment_count }})</h3>
+				<div id="comments-list">
+					{% include 'snippets/comment-list.html' %}
+				</div>
+				{% endif %}
+				<div id="comment-form">
+				<h3>Add your comment</h3>
+					<div id="form">
+					{% if request.user.is_authenticated %}
+						{% get_comment_form for entry as form %}
+						{% include "snippets/comment-form.html" %}
+					{% else %}
+						{% render_comment_form for entry %}
+					{% endif %}
+					</div>
+				</div>
+			</div>
+			
+		</div>
+
+
+{% endblock %}
+
+

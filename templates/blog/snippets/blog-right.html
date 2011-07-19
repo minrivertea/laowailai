@@ -1,0 +1,25 @@
+{% load thumbnail %}
+{% load django_static %}
+
+	<a title="Follow our tea tweets on Twitter" href="http://twitter.com/minrivertea"><img class="tweets" src="{% staticfile '/images/tweets.png' %}"></a>
+	<p><a href="http://twitter.com/minrivertea" class="twitter-follow-button" data-show-count="false">Follow @minrivertea</a>
+<script src="http://platform.twitter.com/widgets.js" type="text/javascript"></script>
+	</p>
+	
+	
+	<div class="info">	
+	<h3>We sell teas to suit your tastes</h3>
+	{% for other in teas %}
+ 		<p class="mail">
+ 			<a href="{% url tea_view other.slug %}"><span class="link"></span></a>
+			{% thumbnail other.image "80x55" crop="center" as im%}
+ 				<img class="mail-icon" src="{{ im.url }}" />
+			{% endthumbnail %}
+ 			<a class="title" href="{% url tea_view other.slug %}" title="{{ other.name }} - another one of our great Chinese teas">{{ other.name }}</a>
+ 			<br/>{{ other.super_short_description }}<br/>
+ 			<strong>from £{{ other.get_lowest_price.price }}</strong>
+ 		</p>
+ 	{% endfor %}
+	</div>
+	
+

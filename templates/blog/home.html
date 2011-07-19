@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block pagetitle %}the {{ sitename }} blog{% endblock %}
+{% block metadescription %}{% endblock %}
+
+
+{% block extracss %}
+<link rel="stylesheet" href="/css/blog.css"/>
+<style type="text/css">
+
+
+</style>
+{% endblock %}
+
+
+
+
+{% block content %}
+
+<div id="top">
+<h1>the {{ sitename }} blog</h1>
+</div>
+
+ 		<div class="entry-list">
+			{% include "blog/snippets/entry-list.html" %}
+		</div>
+
+	
+</div>
+
+
+{% endblock %}

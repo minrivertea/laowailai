@@ -1,0 +1,21 @@
+div.entry {
+  float: left;
+  width: 560px;	
+}
+
+div.entry h3 {
+  font-size: 22px;
+  margin-bottom: 10px;	
+}
+
+span.entry-meta {
+  font-size: 11px;
+  color: #999;
+  margin-bottom: 10px;	
+}
+
+div.entry p {
+    font-size: 14px;
+    line-height: 1.8em;
+    margin-top: 10px;
+}

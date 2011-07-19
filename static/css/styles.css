@@ -748,7 +748,7 @@ span.account {
 /* form buttons and fields */
 
 
-div#left input.submit, div#add-form input.submit-button {
+div#left input.submit, div#add-form input.submit-button, div#comment-form input.submit-post {
     background-color: #E6E6E6;
     
     /* Firefox 3.6+ */ 

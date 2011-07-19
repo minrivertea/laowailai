@@ -1,0 +1,16 @@
+
+{% load i18n %}
+
+ <h4>{% trans "Other hot stuff this week" %}</h4>
+ 
+
+ 
+ <ul>
+ 
+ {% for shit in cool_shit %}
+   <img src="/media/images/{{ shit.type }}.png"><li><a href="{{ shit.link }}">{{ shit.title }}</a><br/>{{ shit.description }}<br/><a class="link" href="{{ shit.link }}">{{ shit.link }}</a><br clear="all"/></li>
+ 
+ 
+ {% endfor %}
+
+ </ul>
