@@ -19,3 +19,11 @@ div.entry p {
     line-height: 1.8em;
     margin-top: 10px;
 }
+
+div.entry ul {
+    color: #666666;
+    font-size: 14px;
+    line-height: 1.6em;
+    list-style-type: square;
+    margin: 20px 0 20px 40px;
+}
