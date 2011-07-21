@@ -35,6 +35,7 @@ urlpatterns = patterns(
 
 urlpatterns += patterns('',
     url(r'^/?$', index, name="home_page"),
+    
     (r'^error_test/$', direct_to_template, {'template': '500.html'}),
     url(r'^whats-next/$', whats_next, name="whats_next"),
     url(r'^comments/posted/$', ajax_comment, name="ajax_comment"),

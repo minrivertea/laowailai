@@ -171,15 +171,33 @@ div#site-introduction {
 }
 
 div#browse-cities {
-  text-align: right;
-  float: left;
-  width: 280px;
-  margin: 20px 30px 0 0;
-  font-size: 14px;	
+    float: right;
+    margin: 20px 5px 0 0;
+    text-align: left;
 }
 
-div#browse-cities a {
-  font-size: 12px;	
+div#browse-cities p {
+    float: right;
+    font-size: 11px;
+    margin-top: 5px;
+    padding-left: 5px;
+    width: 208px;
+}
+
+div#header div#browse-cities a {
+    background: url("/images/browse.png") no-repeat scroll left top transparent;
+    color: #FFFFFF;
+    float: right;
+    font-size: 16px;
+    font-weight: bold;
+    height: 28px;
+    letter-spacing: -0.5px;
+    padding: 8px 0 0 27px;
+    width: 207px;
+}
+
+div#header div#browse-cities a:hover {
+  text-decoration: underline;	
 }
 
 div#cities {

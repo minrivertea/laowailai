@@ -14,10 +14,10 @@
 		    
 		    
 		    <div id="browse-cities">
-		    {% if city %}
-		    	<p>You're in <strong>{{ city.name }}</strong></p>
-		    {% endif %}
 		    	<a href="{% url cities %}">Browse cities in China &raquo;</a>
+		    {% if city %}
+		    	<p>You're now browsing <strong>{{ city.name }}</strong></p>
+		    {% endif %}
 			</div>
 
 
