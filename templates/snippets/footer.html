@@ -1,4 +1,6 @@
 	<div id="footer">
+	<g:plusone></g:plusone>
+	
 	{% if request.user.is_authenticated %}
 		<a href="{% url auth_logout %}">Logout</a> - 
 	{% endif %}
@@ -7,4 +9,5 @@
 	<a href="{% url blog_home %}">Our Blog</a> - 
 	<a title="Tell a friend about LaoWaiLai.com" href="{% url tell_a_friend %}">Tell a friend!</a> - 
 	© Copyright LaoWaiLai 2011
+    
     </div>

@@ -26,6 +26,11 @@
 	<script src="/js/jquery.min.js" type="text/javascript"></script>
 	{% endif %}
 	
+	<!-- Place this tag in your head or just before your close body tag -->
+<script type="text/javascript" src="https://apis.google.com/js/plusone.js">
+  {lang: 'en-GB'}
+</script>
+	
 	
     {% block mapscripts %}{% endblock %}
 	
@@ -99,7 +104,9 @@
 	  	
 	  	<div id="left">
 	    	{% block content %}{% endblock %}
+	    	
 	    </div>
+	    
 	    
 
 	    
