@@ -6,7 +6,7 @@ from django.db.models import Q
 from django.conf import settings
 
 # app
-from laowailai.places.models import Place
+from laowailai.places.models import NewPlace
 from laowailai.places.split_search import split_search
 
 STOPWORDS = (
@@ -39,7 +39,7 @@ def find_places(q=None, skip_photoless=False, city=None,
     string_attributes = ('size_uk','designer', 'label', 'material', 'colour', 'title')
     
     if qs is None:
-        qs = Place.objects.filter(city=city)
+        qs = NewPlace.objects.filter(city=city)
 
     if q is not None:
             
