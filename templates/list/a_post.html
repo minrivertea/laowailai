@@ -2,11 +2,52 @@
 {% load thumbnail %}
 
 {% block metadescription %}The best place to share news and events for foreigners in Fuzhou, China.{% endblock %}
-{% block pagetitle %}Post by {{ post.added_by }}{% endblock %}
+{% block pagetitle %}Post by {{ object.owner }}{% endblock %}
 
 {% block extrajs %}
 <script type="application/javascript">
 $('#comments_full_{{ object.id }}').css('display', 'block');
+
+
+function bindPostCommentHandler(idx) {   
+	var thisObject = $('#comment-form-' + idx + ' form'); 
+    thisObject.submit(function() {
+    	if ($('textarea#id_comment_' + idx).val() == '') {
+    		$(this).append('<p class="warning" style="color:red; display:block; float:right;position:relative;top:10px;"><em>You must type something!</em></p>');
+    	}
+    	else {
+        	$.ajax({  
+        	    type: "POST",  
+        	    data: $('#comment-form-' + idx + ' form').serialize(),  
+        	    url: "/comments/post/",  
+        	    cache: false,  
+        	    dataType: "html",  
+        	    success: function(data, textStatus) {
+        	        $('#comments_full_' + idx + ' .comments-list').append(data);
+        	        $('#comment-form-' + idx + ' textarea').val('');
+        	        $('#comment-form-' + idx + ' .warning').attr('style', 'display:none');
+        	    },  
+        	    error: function (XMLHttpRequest, textStatus, errorThrown) {  
+        	        thisObject.replaceWith('Your comment could not be posted.');  
+        	    }  
+        	}); 
+        	$().ajaxStart(function(){
+   				$('.submit').css('opacity', '0.4');
+ 			});
+ 			$().ajaxStop(function(){
+   				$('.submit').css('opacity', '1');
+ 			});
+ 			
+    	}
+        return false;
+    });  
+} 
+
+$(document).ready(function() { 
+	bindPostCommentHandler({{ object.id }});
+});  
+
+
 </script>
 {% endblock %}
 

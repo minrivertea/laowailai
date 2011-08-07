@@ -739,10 +739,7 @@ def ajax_comment(request):
     if request.GET.get('c'):
         from django.contrib.comments.models import Comment
         comment = get_object_or_404(Comment, pk=request.GET.get('c'))
-        
-        # what kind of object is it? A place, a photo, an info?
-        print comment.content_type
-        
+                
         # create a notification first
         from notification import models as notification
         object = get_object_or_404(NewInfo, pk=comment.object_pk)

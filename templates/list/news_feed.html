@@ -31,6 +31,13 @@ function bindPostCommentHandler(idx) {
         	        thisObject.replaceWith('Your comment could not be posted.');  
         	    }  
         	}); 
+        	
+        	$().ajaxStart(function(){
+   				$('.submit').css('opacity', '0.4');
+ 			});
+ 			$().ajaxStop(function(){
+   				$('.submit').css('opacity', '1');
+ 			});
     	}
         return false;
     });  

@@ -23,6 +23,16 @@ div#left input.login-button:active {
   cursor: pointer;	
 }
 
+p.red {
+    background-color: pink;
+    color: red;
+    float: left;
+    margin-bottom: 10px;
+    padding: 10px 15px;
+    width: 530px;
+    border-radius: 5px;
+}
+
 </style>
 {% endblock %}
 
@@ -35,7 +45,7 @@ div#left input.login-button:active {
 <p class="description">Login to {{ sitename }} - if you haven't got an account, <a href="{% url registration_register %}">register here</a>.</p>
 
 {% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
+<p class="red">Your username and password didn't match. Please try again.</p>
 {% endif %}
 
 <form method="post" action="{% url django.contrib.auth.views.login %}">

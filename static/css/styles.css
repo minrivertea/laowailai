@@ -469,7 +469,6 @@ div#footer div.image-top {
 div#footer ul {
   width: 850px;
   float: left;
-
   margin-left: 30px;
   padding-left: 0;	
 }
@@ -1294,7 +1293,7 @@ div#left div#search input.search-button {
   background: url('/images/search-button.png') no-repeat top left;
   border: medium none;
   height: 33px;
-  margin: 0px 0 10px 0px;
+  margin: 10px 0 10px 0px;
   width: 142px;
   float: left;
 }

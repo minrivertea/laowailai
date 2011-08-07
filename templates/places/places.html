@@ -5,6 +5,7 @@
 {% block pagetitle %}Places in {{ city }}{% endblock %}
 
 {% block extrajs %}
+<script type="text/javascript" src="/js/jquery.autoSuggest.js"></script>
 <script type="text/javascript">
 
 function filter(type) {
@@ -39,10 +40,27 @@ $("#loading").ajaxStop(function(){
    $(this).hide();
  });
 
+
+
+$(document).ready(function(){
+var data = {items: [
+   	{% for p in all_places %}{name: "{{ p.placename }}", value: "{{ p.placename }}"},{% endfor %}
+]};
+  $("input[type=text]").autoSuggest(data.items, {
+  		selectedItemProp: "name", 
+  		selectedValuesProp: "value", 
+  		searchObjProps: "name", 
+  		asHtmlID: "q",
+  		selectionLimit: 1,
+  	});
+});
+
+
 </script>
 {% endblock %}
 
 {% block extracss %}
+<link rel="stylesheet" type="text/css" href="/css/autoSuggest.css">
 <style type="text/css">
 
 
@@ -265,6 +283,19 @@ a.small {
 span#most_recent:hover, span#highest_rated:hover {
   cursor: pointer;
   color: #F67B7B;	
+}
+
+div#left div#search input {	
+  float: none;
+  margin: 0;
+  padding: 0;
+  height: auto;
+  border: none;
+  width: auto;
+}
+
+div#left div#search input.search-button {
+  margin-top: 0px;	
 }
 
 

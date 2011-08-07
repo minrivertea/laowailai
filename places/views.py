@@ -44,11 +44,14 @@ def render(request, template, context_dict=None, **kwargs):
 def places(request, slug, category=None, qs=None, parameters={}):
     
     city = get_object_or_404(City, slug=slug)
-    if city.slug == "china":
-        places = NewPlace.objects.all()
-    else:
-        places = NewPlace.objects.filter(city=city).order_by('?')
+    places = NewPlace.objects.filter(city=city).order_by('?')
     
+    all_places = []
+    for place in places:
+        all_places.append(dict(
+            placename=place.name,
+        ))
+
     # if there's a search query
     if request.GET.get('q'):
         search_form = SearchForm(initial=request.GET)
