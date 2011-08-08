@@ -115,6 +115,7 @@ TEMPLATE_DIRS = (
 )
 
 SITE_NAME = "Laowailai.com"
+SITE_EMAIL = "mail@laowailai.com"
 
 GA_IS_ON = True
 

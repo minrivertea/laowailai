@@ -1,13 +1,10 @@
-Hey {{ name }},
+Hey {{ laowai.name }},
 
 Thanks for signing up, and welcome to LaoWaiLai.com!
 
 You can now post comments, news and add or review places on the site. If you haven't already, make sure you add a little bio and profile photo:
 
  - http://www.laowailai.com{{ url }}
- 
-If you've got some news or something to post, you can use this URL - http://www.laowailai.com/posts/add/
-
 
 Great to have you on the site!
 

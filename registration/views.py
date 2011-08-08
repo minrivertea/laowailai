@@ -7,10 +7,11 @@ Views which allow users to create and activate accounts.
 from django.shortcuts import redirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.contrib.auth import authenticate, login
 from django.core.urlresolvers import reverse
+from django.conf import settings
 
 
 import datetime
@@ -203,19 +204,24 @@ def register(request, backend, success_url=None, form_class=RegistrationFormNoUs
             url = reverse('laowai', args=[new_laowai.id])
 
             # custom - send the user an email welcoming them
-            body = render_to_string('list/emails/welcome_laowai.txt', {
-                    'email_address': new_laowai.user.email,   
-                    'name': new_laowai.name,  
+            subject = "Welcome to laowailai.com"
+            to_email = new_laowai.user.email
+            from_email = settings.SITE_EMAIL
+            
+            text_content = render_to_string('list/emails/welcome_laowai.txt', {
+                    'laowai': new_laowai,  
                     'url': url,                                            
                     })
-                
-            send_mail(
-                          'Welcome to LaoWaiLai!', 
-                          body, 
-                          'chris@laowailai.com',
-                          [new_laowai.user.email], 
-                          fail_silently=False,
-            )
+                    
+            html_content = render_to_string('emails/html/html_welcome_email.html', {
+                'laowai': new_laowai,
+                'url': url,	
+                'subject': subject,
+            })
+            
+            msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
 
             success_url = reverse('whats_next')
 
