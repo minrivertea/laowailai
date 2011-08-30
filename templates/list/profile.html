@@ -93,12 +93,18 @@ $(document).ready(function() {
 
 
 {% block extracss %}
+
+
 <style type="text/css">
 p.description {
   border-bottom: none;
   margin: 0;
   float: left;
   width: 430px;	
+}
+
+div#top {
+  border-bottom: none;	
 }
 
 div#top div#photo {
@@ -113,13 +119,83 @@ div#top div#photo p {
   margin: 0;	
 }
 
+#tabbox-nav {
+  font-size: 12px;
+  font-weight: bold;
+  float: left;
+  margin: 0 0 0px 0;	
+}
+
+#tabbox-nav a {
+  margin-right: 0px;
+  float: left;	
+  padding: 10px 15px;
+}
+
+#tabbox-nav a.selected {
+  background-color: #DFECF1;
+  border-radius: 5px 5px 0 0;
+}
+
+#tabbox {
+  float: left;
+  width: 540px;
+  padding: 10px 15px;
+  border: 3px solid #DFECF1;
+  border-width: 15px 0px 0px;
+  background-color: #fff;
+  position: relative;	
+}
+
+#tabbox .box {
+  float: left;
+  top: 0;
+  left: 0;
+  width: 540px;
+  padding: 10px 0px;	
+  background-color: #fff;
+  font-size: 13px;
+}
+
+#tabbox .box .row {
+  width: 100%;
+  float: left;	
+}
+
+#tabbox .box .left {
+  width: 100px;
+  float: left;
+  border-right: 1px solid #e1e1e1;	
+  padding: 0;
+  margin: 0 20px 0 0;
+  min-height: 30px;
+}
+
+#tabbox .box .left h4 {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+#tabbox .box .right {
+  float: left;
+  width: 400px;	
+}
+
+
+
 div#cities {
   width: 560px;	
 }
 
+div#cities a {
+  background: none;
+  box-shadow: none;
+  padding: 0;
+}
+
 div#cities a#change {
-  background-color: #fff;
-  padding: 10px 0 0 0 ;
+  background: none;
+  box-shadow: none;
   border: none;	
   font-weight: normal;
 }
@@ -132,6 +208,12 @@ div#cities div#choose-new {
   float: left;
   margin-top: 20px;
   width: 560px;	
+}
+
+div#cities div#choose-new a {
+  background: none;
+  box-shadow: none;
+  padding: 0;	
 }
 
 div#cities div#choose-new p {
@@ -154,6 +236,7 @@ div#stats ul {
   line-height: 1.6em;
   color: #666;	
 }
+
 </style>
 {% endblock %}
 
@@ -170,23 +253,9 @@ div#stats ul {
 	{% endif %}
 	
 	
-	<p>
-		<a href="{% url upload_profile_photo %}">&raquo; 
-		{% if laowai.photo %}
-			Change photo
-		{% else %}
-			Add a photo
-		{% endif %}
-		</a>
-	</p>
+
 	
-	<p>
-		{% if laowai.bio %}
-			<a href="{% url add_a_bio %}">&raquo; Edit your bio</a>
-	{% else %}
-	    	<a href="{% url add_a_bio %}">&raquo; Add a bio</a>	
-	{% endif %}
-	</p>
+
 
 	</div>
 	
@@ -198,43 +267,123 @@ div#stats ul {
 	
 </div>
 
-	{% if not laowai.city %}
-		<div id="cities" class="serious">
-		<img src="/images/warning.png" style="float: left; margin-right: 10px; position: relative;top:-2px;"/>
-		
-		<h3 style="color: red;">You need to choose a city (otherwise, there's nothing to show you)<br/>
-		<span style="color: #666;font-size: 11px; font-weight: normal; position:relative;top:5px;"><em>If you don't live in China, just choose a city you're interested in.</em></span>
-		</h3>
-		
-		{% for city in all_cities %}
-			<a {% ifequal city laowai.city %}class="selected"{% endifequal %} href="{% url set_city city.slug %}">{{ city.name }}</a>
-		{% endfor %}
+
+<div id="tabbox-nav">
+	<a href="" class="">Your posts</a>
+	<a href="" class="selected">Settings</a>
+	<a href="">Notifications</a>
+	<a href="">Your stats</a>
+</div>
+
+<div id="tabbox">
+	<div id="settings" class="box">
+	  <div class="row">
+		<div class="left">
+			<h4>Your bio</h4>
 		</div>
-	{% else %}
-		<div id="cities">
-		<h3>Your home city is:</h3>
-			<a class="city" href="{% url set_city city.slug %}">{{ laowai.city.name }}</a> 
-			<a href="#" id="change">&laquo; Change your city</a>
-			<div id="choose-new" style="display:none;">
-				<p><em>Click a new city to change</em></p>
-				{% for city in all_cities %}
-					<a href="{% url set_city city.slug %}">{{ city.name }}</a>
-				{% endfor %}
+		<div class="right">
+		   	<p>
+			{% if laowai.bio %}
+				<a href="{% url add_a_bio %}">&raquo; Edit your bio</a>
+			{% else %}
+		    	<a href="{% url add_a_bio %}">&raquo; Add a bio</a>	
+			{% endif %}
+			</p>
+		</div>
+	  </div>
+	  
+	  <div class="row">
+	    <div class="left">
+	      <h4>Your photo</h4>
+	    </div>
+	    <div class="right">
+	    	<p>
+			<a href="{% url upload_profile_photo %}">&raquo; 
+			{% if laowai.photo %}
+				Change photo
+			{% else %}
+				Add a photo
+			{% endif %}
+			</a>
+			</p>
+	    </div>
+	  </div>
+	  
+		{% if not laowai.city %}
+			<div id="cities" class="serious">
+				<img src="/images/warning.png" style="float: left; margin-right: 10px; position: relative;top:-2px;"/>
+		
+			<h3 style="color: red;">You need to choose a city (otherwise, there's nothing to show you)<br/>
+			<span style="color: #666;font-size: 11px; font-weight: normal; position:relative;top:5px;"><em>If you don't live in China, just choose a city you're interested in.</em></span>
+			</h3>
+		
+			{% for city in all_cities %}
+				<a {% ifequal city laowai.city %}class="selected"{% endifequal %} href="{% url set_city city.slug %}">{{ city.name }}</a>
+			{% endfor %}
 			</div>
+		{% else %}
+		<div class="row">
+   		  <div class="left">
+			<h4>Your city</h4>
+		  </div>
+		  <div class="right">
+		  	<div id="cities">
+				<a class="city" href="{% url set_city city.slug %}">{{ laowai.city.name }} ({{ laowai.city.chinese_name }})</a> 
+				<a href="#" id="change">&laquo; Change your city</a>
+				<div id="choose-new" style="display:none;">
+					<p><em>Click a new city to change</em></p>
+					{% for city in all_cities %}
+						<a href="{% url set_city city.slug %}">{{ city.name }}</a>
+					{% endfor %}
+				</div>
+			</div>		  
+		  </div>
 		</div>
-	{% endif %}
-	
-	<div id="stats">
-		<h3>Your stats</h3>
-		<ul>
-			<li><strong>{{ laowai.added_places.count }}</strong> place{{ laowai.added_places.count|pluralize }}</li>
-			<li><strong>{{ laowai.added_questions.count }}</strong> question{{ laowai.added_questions.count|pluralize }}</li>
-			<li><strong>{{ laowai.added_answers.count }}</strong> answer{{ laowai.added_answers.count|pluralize }}</li>
-			<li><strong>{{ laowai.profile_views }}</strong> profile view{{ laowai.profile_views|pluralize }}</li>
-		</ul>
+		  
+
+		{% endif %}
+	</div>
+	<div id="stats" class="box">
+		
+		<div class="row">
+		  <div class="left">
+		   <h4>Places added</h4>
+		  </div>
+		  <div class="right">
+		  	<p>{{ laowai.added_places.count }}</p>
+		  </div>
+		</div>
+		
+		<div class="row">
+		  <div class="left">
+		   <h4>Questions</h4>
+		  </div>
+		  <div class="right">
+		  	<p>{{ laowai.added_questions.count }}</p>
+		  </div>
+		</div>
+		
+		<div class="row">
+		  <div class="left">
+		   <h4>Answers</h4>
+		  </div>
+		  <div class="right">
+		  	<p>{{ laowai.added_answers.count }}</p>
+		  </div>
+		</div>
+		
+		<div class="row">
+		  <div class="left">
+		   <h4>Profile views</h4>
+		  </div>
+		  <div class="right">
+		  	<p>{{ laowai.profile_views }}</p>
+		  </div>
+		</div>
+		
 	</div>
 
-
+</div>
 
 {% endblock %}
 

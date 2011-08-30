@@ -143,11 +143,13 @@ def index(request, slug=None):
 def news_feed(request, slug):
     city = get_object_or_404(City, slug=slug) 
     
+    # we are building up a collated list of Place, Info and Photo objects
     first_pass = []
     first_pass.extend(list(NewInfo.objects.filter(city=city)))
     first_pass.extend(list(NewPlace.objects.filter(city=city)))
     first_pass.extend(list(Photo.objects.filter(city=city, object_pk="")))
     
+    # on the second pass, we sort it
     second_pass = sorted(first_pass, reverse=True, key=lambda thing: thing.date)
     
     # run through the list and find the same-type items close togther
@@ -258,6 +260,30 @@ def news_feed(request, slug):
 @login_required
 def profile(request):
     laowai = request.user.get_profile()
+    
+    # we are building up a collated list of Place, Info and Photo objects
+    first_pass = []
+    first_pass.extend(list(NewInfo.objects.filter(owner=laowai)))
+    first_pass.extend(list(NewPlace.objects.filter(owner=laowai)))
+    first_pass.extend(list(Photo.objects.filter(owner=laowai, object_pk="")))
+    
+    # on the second pass, we sort it
+    objects_list = sorted(first_pass, reverse=True, key=lambda thing: thing.date)
+    
+    # start the pagination stuff  
+    paginator = Paginator(objects_list, 10) # Show 10 infos per page
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+   
+
+    # If page request (9999) is out of range, deliver last page of results.
+    try:
+        objects = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        objects = paginator.page(paginator.num_pages)
+    
     return render(request, "list/profile.html", locals())
 
 

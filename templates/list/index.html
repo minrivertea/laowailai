@@ -16,49 +16,28 @@ div#top h1 {
   font-size: 40px;	
 }
 
-ul.explanation {
-  padding: 0;
-  margin: 0;
-  list-style-type: none;	
-}
-
-ul.explanation li {
+div.explanation {
+    border-right: 2px dotted #E1E1E1;
     float: left;
-    margin-bottom: 10px;
+    font-weight: bold;
+    margin: 0 20px 10px 0;
     width: 165px;
-    background-color: #e1e1e1;
 }
 
-ul.explanation li.first {
-  width: 140px;
-  padding-right: 20px;
-  background-color: #fff;
-  border-right: 1px solid #e1e1e1;
-  margin-right: 20px;
-}
 
-ul.explanation li.first span.small {
+div.explanation p {
   font-weight: normal;
-  font-size: 12px;
-  line-height: 1.6em;	
+  font-size: 12px;	
+  color:#333;
 }
 
-ul.explanation li.last {
-  border-right: none;	
-  padding-right: 0;
-}
-
-ul.explanation li h3 {
-  font-size: 18px;
+div.explanation h3 {
+  font-size: 24px;
   font-weight: bold;
   margin: 0;
   text-shadow: 0 1px 2px #fff;
-
-}
-
-ul.explanation li p {
-  font-size: 12px;
-  margin: 5px 0 0 0;	
+  color: #2D7886;
+  letter-spacing: -1px;
 }
 
 p.description {
@@ -102,7 +81,7 @@ div#cities h3 {
 
 {% else %}	
 	<div id="top">
-		<h1>Welcome to {{ sitename }}</h1>
+		<h1>China by locals, for locals</h1>
 	</div>
 
 	<p class="description"><em>
@@ -110,13 +89,11 @@ div#cities h3 {
 	It's a place to exchange knowledge about places to go, and life in China. <a href="/about/">Find out more &raquo;</a></em>
 	</p>
 
-	<ul class="explanation">
-		<li class="first">
-			<h3>Browse a city<br/>
-			<span class="small"><em>Pick a city in China that you want to know more about</em></span>
-			</h3>	
-		</li>
-	</ul>
+    <div class="explanation">
+    	<h3>Browse cities</h3>
+		<p>Pick a city in China that you want to know more about</p>
+    </div>
+
 		
 		<div id="cities">
 		{% for city in all_cities %}

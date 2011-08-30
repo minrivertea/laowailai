@@ -37,14 +37,14 @@ div#left input.register-button:active {
 {{ form.errors }}
 
 <form method="post" action=".">
-  <p><label>Your name (what you'll be called on the site)</label>{{ form.name }}</p>
-  <p><label>Your contact email (will not be made public)</label>{{ form.email }}</p>
+  <p><label>Choose a username <span>(what you'll be called on the site)</span></label>{{ form.name }}</p>
+  <p><label>Your contact email <span>(will never be made public)</span></label>{{ form.email }}</p>
   <p><label>Choose a password</label>{{ form.password1 }}</p>
   
   <input type="submit" value="" class="register-button" />
 </form>
 <img style="float:left; position: relative; top: 10px; margin-right: 20px;" src="/images/lock-large.png"/>
-<p style="float: left; width: 300px; font-size: 11px;">We will never pass on your private information to any other individual or company. Your information is stored securely, your password encrypted, and your email will never be displayed publicly. We hate spam just as much as you do!</p>
+<p style="float: left; width: 300px; font-size: 11px;">We will <strong>never</strong> pass on your private information to any other individual or company. Your information is stored securely, your password encrypted, and your email will never be displayed publicly. We hate spam just as much as you do!</p>
 
 </div>
 {% endblock %}
