@@ -77,8 +77,8 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'laowailai.urls'
 
 INSTALLED_APPS = (
-    'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.auth',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.admin',

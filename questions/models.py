@@ -34,24 +34,10 @@ class NewQuestion(CommonInfo):
     def answers_count(self):
         answers = Answer.objects.filter(question=self)
         return answers.count() 
-
-# deprecated, can delete this when I get the time... 
-class Question(models.Model):
-    question = models.CharField(max_length=200)
-    description = models.TextField(blank=True, null=True)
-    slug = models.SlugField(max_length=200)
-    city = models.ForeignKey(City)
-    added_by = models.ForeignKey(Laowai)
-    date_added = models.DateTimeField(default=datetime.now())
-    vote_count = models.IntegerField(default="0")
-    is_published = models.BooleanField(default=True)
-    
-    def __unicode__(self):
-        return self.question 
     
         
 class Answer(models.Model):
-    question = models.ForeignKey(NewQuestion)
+    question = models.ForeignKey(CommonInfo, related_name='to_question')
     added_by = models.ForeignKey(Laowai)
     answer = models.TextField()
     date_added = models.DateTimeField(default=datetime.now())

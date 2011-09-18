@@ -25,6 +25,11 @@ div#left input.submit-question-button:active {
   background: url('/images/submit-question-button.png') no-repeat bottom left;
   cursor: pointer;
 }
+
+.button {
+  font-size: 20px;	
+}
+
 </style>
 {% endblock %}
 
@@ -35,6 +40,9 @@ div#left input.submit-question-button:active {
 
 <p class="description"><em>You're adding a question for {{ city }} laowai - please try to be as descriptive as possible to get a good response. Remember any profanity, racist language or otherwise offensive questions will be removed.</em></p>
 
+{% if form.errors %}
+<p class="error">You must add a title for the question!</p>
+{% endif %}
 
 
 <form action="." method="post">
@@ -48,7 +56,7 @@ div#left input.submit-question-button:active {
 	</select></p>
 	</div>
 
-	<input type="submit" value="" class="submit-question-button">
+	<input type="submit" value="Submit question" class="button">
 	</form>
 
 

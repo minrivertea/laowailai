@@ -5,10 +5,9 @@ from laowailai.list.views import people
 
 
 urlpatterns = patterns('',
-    url(r'^$', views.city, name="city"),
+    (r'^', include('laowailai.list.urls')),
     (r'^places/', include('laowailai.places.urls')),
     url(r'^people/$', people, name="people"),
-    (r'^feed/', include('laowailai.list.urls')),
     (r'^events/', include('laowailai.events.urls')),
     (r'^questions/', include('laowailai.questions.urls')),
 )

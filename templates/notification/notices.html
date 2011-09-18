@@ -23,7 +23,7 @@ ul#notices {
 {% if notices %}
 <ul id="notices">
 {% for notice in notices %}
-  {% with notice.sender.get_profile as laowai %}
+  {% with notice.recipient.get_profile as laowai %}
 	<li>
 		{% if notice.unseen %}<strong>{% endif %}
 		<a href="{% url laowai laowai.id %}">{{ notice.sender.get_profile|capfirst }}</a> posted something on <a href="{% url notification_notice notice.id %}">your post</a>

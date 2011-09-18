@@ -63,6 +63,13 @@ var data = {items: [
 <link rel="stylesheet" type="text/css" href="/css/autoSuggest.css">
 <style type="text/css">
 
+.add-place {
+  float: right;
+  width: 142px;
+  position: relative;
+  margin-bottom: 0px;	
+  top: 0px;
+}
 
 div#places {
   float: left;
@@ -157,7 +164,7 @@ div.ratings ul {
 div#filters {
   margin-bottom: 20px;
   float: left;
-  width: 100%;
+  width: 380px;
   padding-bottom: 20px;	
 }
 
@@ -167,7 +174,7 @@ div#filters div {
 
 div#filters div.right {
   text-align: right;
-  float: right;
+  float: left;
 }
 
 div#filters p {
@@ -285,17 +292,12 @@ span#most_recent:hover, span#highest_rated:hover {
   color: #F67B7B;	
 }
 
-div#left div#search input {	
-  float: none;
-  margin: 0;
-  padding: 0;
-  height: auto;
-  border: none;
-  width: auto;
+div#left div#search {
+  margin-left: 20px;	
 }
 
-div#left div#search input.search-button {
-  margin-top: 0px;	
+div#left div#search input.search {
+  width: 72px;	
 }
 
 
@@ -306,13 +308,15 @@ div#left div#search input.search-button {
 
 <div id="top">
 	{% if request.user.is_authenticated %}
-	<div class="add-place-button"><a href="{% url add_place city.slug %}"><span>Add a place</span></a></div>
+		<a class="add-place button" href="{% url add_place city.slug %}"><span>Add a place</span></a>
 	{% else %}
-	<p class="signup"><a href="{% url registration_register %}"><strong>Signup</strong></a> or <a href="/accounts/login/"><strong>login</strong></a> to add a place</p>
+		<p class="signup">
+		<a href="{% url registration_register %}"><strong>Signup</strong></a> or <a href="/accounts/login/"><strong>login</strong></a> to add a place</p>
 	{% endif %}
-<h1>Places in {{ city }}
-{% if request.user.is_superuser %} ({{ places.count }}){% endif %}
-</h1>
+	
+	<h1>Places in {{ city }}
+	{% if request.user.is_superuser %} ({{ places.count }}){% endif %}
+	</h1>
 </div>
 
 <div id="filters">

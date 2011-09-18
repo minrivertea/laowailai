@@ -4,11 +4,22 @@
 {% block metadescription %}{{ event.description }}{% endblock %}
 {% block pagetitle %}{{ event.title }} - {{ event.city }}{% endblock %}
 
+{% block extracss %}
+<style type="text/css">
+.add-event {
+  width: 142px;
+  float: right;	
+}
+
+</style>
+
+{% endblock %}
+
 {% block content %}
 
 <div id="top">
 	{% if request.user.is_authenticated %}
-	<div class="add-event-button"><a href="{% url add_event city.slug %}"><span>Add an event</span></a></div>
+		<a class="add-event button" href="{% url add_event city.slug %}"><span>Add an event</span></a>
 	{% endif %}
 <h1>Events in {{ city }}</h1>
 </div>

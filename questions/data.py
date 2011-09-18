@@ -6,7 +6,7 @@ from django.db.models import Q
 from django.conf import settings
 
 # app
-from laowailai.questions.models import Question
+from laowailai.questions.models import NewQuestion
 from laowailai.questions.split_search import split_search
 
 STOPWORDS = (
@@ -39,7 +39,7 @@ def find_questions(q=None, skip_photoless=False, city=None,
     string_attributes = ('size_uk','designer', 'label', 'material', 'colour', 'title')
     
     if qs is None:
-        qs = Question.objects.filter(city=city)
+        qs = NewQuestion.objects.filter(city=city)
 
     if q is not None:
             
@@ -86,22 +86,12 @@ def find_questions(q=None, skip_photoless=False, city=None,
                 
                 
                 if qset is None:
-                    qset = Q(corefrock__material__iexact=word) | \
-                           Q(corefrock__colour__name__iexact=word) | \
-                           Q(corefrock__designer__iexact=word) | \
-                           Q(corefrock__label__iexact=word) | \
-                           Q(corefrock__category__name__iexact=word) | \
-                           Q(corefrock__type__name__iexact=word) | \
-                           Q(corefrock__title__icontains=word)
+                    qset = Q(question__iexact=word) | \
+                           Q(description__iexact=word)
                 else:
                     qset = qset | \
-                           Q(corefrock__material__iexact=word) | \
-                           Q(corefrock__colour__name__iexact=word) | \
-                           Q(corefrock__designer__iexact=word) | \
-                           Q(corefrock__label__iexact=word) | \
-                           Q(corefrock__category__name__iexact=word) | \
-                           Q(corefrock__type__name__iexact=word) | \
-                           Q(corefrock__title__icontains=word)
+                           Q(question__iexact=word) | \
+                           Q(description__iexact=word)
 
                 qs = qs.filter(qset)
         
@@ -251,11 +241,9 @@ def find_questions(q=None, skip_photoless=False, city=None,
     if q and len(q.split()) > 1 and not split_searchterm and \
       [w for w in q.split() if w.lower() not in STOPWORDS] and not qs.count():
         # getting desperate
-        qs = find_frocks(split_searchterm=True,
+        qs = find_questions(split_searchterm=True,
                          q=q,
-                         skip_photoless=skip_photoless,
-                         default_find_all=default_find_all,
-                         **parameters)
+                         )
         
     if skip_photoless:
         raise NotImplementedError, "Feature not implemented yet"

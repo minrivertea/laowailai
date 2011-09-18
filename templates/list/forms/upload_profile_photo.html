@@ -4,7 +4,9 @@
 
 {% block extracss %}
 <style type="text/css">
-
+.save-photo {
+  font-size: 20px;	
+}
 
 </style>
 {% endblock %}
@@ -23,7 +25,7 @@
 			{{ form.photo }}
 			<input type="hidden" name="next" value="{% if next %}{{ next }}{% else %}/{% endif %}" />
 			<br/>
-    		<input type="submit" value="" class="save-photo-button">
+    		<input type="submit" value="Save photo" class="save-photo button">
 		</form>
                         
 

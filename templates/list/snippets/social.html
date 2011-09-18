@@ -2,7 +2,6 @@
 {% load thumbnail %}
 
 {% get_comment_count for object as comment_count %}
-
 {% ifequal comment_count 0 %}
 	{% if laowai %}
 		<span class="show-comments" title="Add the first comment" onclick="showComments({{ object.id }});">

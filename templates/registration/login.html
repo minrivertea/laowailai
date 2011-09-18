@@ -4,23 +4,12 @@
 
 {% block extracss %}
 <style type="text/css">
-div#left input.login-button {
-    background: url("/images/login-button.png") no-repeat scroll left top transparent;
-    border: medium none;
-    float: right;
-    height: 33px;
-    margin: 10px 0 10px 0;
-    width: 142px;
-}
 
-div#left input.login-button:hover {
-  background: url('/images/login-button.png') no-repeat center left;	
-  cursor: pointer;
-}
-
-div#left input.login-button:active {
-  background: url('/images/login-button.png') no-repeat bottom left;
-  cursor: pointer;	
+div#left input.login {
+  float: right;
+  width: 170px;	
+  margin-right: 20px;
+  font-size: 16px;
 }
 
 p.red {
@@ -54,7 +43,7 @@ p.red {
 <p><label>Password</label>{{ form.password }}</p>
 
 
-<input type="submit" value="" class="login-button" />
+<input type="submit" value="Login" class="login button" />
 <input type="hidden" name="next" value="{% if next %}{{ next }}{% else %}/{% endif %}" />
 </form>
 

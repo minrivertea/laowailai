@@ -12,13 +12,13 @@
 		<div class="avatar">
 		   	<a title="{{ object.owner }}" href="{% url laowai object.owner.id %}">
 		   	{% if object.owner.photo %}
-		   		{% thumbnail object.owner.photo "40x40" crop="center" as im %}
+		   		{% thumbnail object.owner.photo "60x60" crop="center" as im %}
 	    			<img class="avatar" title="{{ object.owner.name }}" alt="a picture of {{ object.owner.name }}" src="{{ im.url }}">
 	    		{% endthumbnail %}
 	    	{% else %}
 			   	<img class="avatar" title="{{ object.owner }}" alt="" src="/images/avatar_30.jpg">
 			{% endif %}
-			</a>
+			</a>	
 		</div>
 		    
 		<div class="post">
@@ -65,9 +65,9 @@
 					{% endif %}
 				{% endif %}
 			</p>
-				
 			<div class="meta"> 	
 					{% include "list/snippets/social.html" %}
 			</div>
 		</div>
+		
 </li>

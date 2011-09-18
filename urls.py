@@ -4,7 +4,7 @@ import django.views.static
 from django.views.generic.simple import direct_to_template
 
 from list.feeds import LatestEntriesFeed
-from list.views import index, ajax_comment, tell_a_friend, laowai, upload_profile_photo, add_a_bio, like, whats_next, profile
+from list.views import index, ajax_comment, tell_a_friend, laowai, upload_profile_photo, add_a_bio, like, whats_next, profile, profile_notices, notification_mark_as_read
 from cities.views import cities, mark_city
 
 # Uncomment the next two lines to enable the admin:
@@ -36,10 +36,12 @@ urlpatterns = patterns(
 urlpatterns += patterns('',
     url(r'^/?$', index, name="home_page"),
     
+    # direct_to_template URLS
     (r'^error_test/$', direct_to_template, {'template': '500.html'}),
     (r'^robots\.txt$', direct_to_template, {'template': 'robots.txt', 'mimetype': 'text/plain'}),
     (r'^humans\.txt$', direct_to_template, {'template': 'humans.txt', 'mimetype': 'text/plain'}),
     
+    # weird ones
     url(r'^whats-next/$', whats_next, name="whats_next"),
     url(r'^comments/posted/$', ajax_comment, name="ajax_comment"),
     
@@ -49,6 +51,8 @@ urlpatterns += patterns('',
     (r'^accounts/', include('registration.backends.default.urls')),
     (r'^blog/', include('laowailai.blog.urls')),
     (r'^latest/feed/$', LatestEntriesFeed()),
+    url(r'^profile/notices/(\w+)/$', notification_mark_as_read, name="notification_mark_as_read"),
+    url(r'^profile/notices/$', profile_notices, name="profile_notices"),
     url(r'^profile/$', profile, name="profile"),
     url(r'^cities/$', cities, name="cities"),
     url(r'^mark_city/(\w+)/$', mark_city, name="mark_city"),
@@ -59,6 +63,8 @@ urlpatterns += patterns('',
     url(r'^like/(\w+)$', like, name="like"),
     (r'^notifications/', include('notification.urls')),
     url(r'^tell-a-friend/$', tell_a_friend, name="tell_a_friend"),
+    
+    # the main 'city news feed' URL:
     url(r'^(?P<slug>[\w-]+)/', include('laowailai.cities.urls')),
     
 )

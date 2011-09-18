@@ -36,21 +36,25 @@ function bindPostCommentHandler(idx) {
     });  
 }  
 
-function bindLikeHandler(idx) {
-   $('#like_'+ idx).click(function() {
-        $.getJSON("/like/", {xhr: "true", info: idx, laowai: '{{ laowai.id }}',},
-          function(data) {
-            $('#like_'+ idx).replaceWith(data);
-        });	
-   });
-}
-
 function nextPage(page) {
-$.getJSON("/{{ city.slug }}/feed/", {xhr: "true", page: page},
+$.getJSON("/profile/", {xhr: "true", page: page},
   function(data) {
   	$(data).appendTo('#feed ul');
   	pageNum++;
   });
+}
+
+
+$('#notifications-nav').click(function notices() {
+$.getJSON("/profile/notices/", {xhr: "true"},
+  function(data) {
+  	$('div#notifications ul li').remove();
+  	$(data).appendTo('div#notifications ul');
+  });
+});
+
+function tabs() {
+		$( "#tabs" ).tabs();
 }
 
 var pageNum = {{ objects.next_page_number }}
@@ -79,12 +83,37 @@ $('a#change').click(function() {
 	$('#choose-new').toggle();
 });
 
+
+
       
 $(document).ready(function() { 
 	{% for info in objects.object_list %} 
    	     bindPostCommentHandler({{ info.id }});
-   	     bindLikeHandler({{ info.id }});
-	{% endfor %}  
+	{% endfor %} 
+
+ 
+
+ // Set up a listener so that when anything with a class of 'tab' 
+ // is clicked, this function is run.
+ $('.tab').click(function () {
+
+  // Remove the 'active' class from the active tab.
+  $('#tabbox-nav > a.selected')
+	  .removeClass('selected');
+	  
+  // Add the 'active' class to the clicked tab.
+  $(this).addClass('selected');
+
+  // Remove the 'tab_contents_active' class from the visible tab contents.
+  $('#tabbox > .visible')
+	  .removeClass('visible');
+
+  // Add the 'tab_contents_active' class to the associated tab contents.
+  $(this.rel).addClass('visible');
+
+});
+
+ 
 });  
 </script>
 {% endblock %}
@@ -93,9 +122,13 @@ $(document).ready(function() {
 
 
 {% block extracss %}
-
+<script type="application/javascript" src="/js/jquery-ui-1.8.16.custom.min.js"></script>
+<link rel="stylesheet" href="/css/fancybox/jquery.fancybox-1.3.4.css" />
+<link rel="stylesheet" href="/css/feed.css" />
 
 <style type="text/css">
+
+
 p.description {
   border-bottom: none;
   margin: 0;
@@ -104,7 +137,15 @@ p.description {
 }
 
 div#top {
-  border-bottom: none;	
+  border-bottom:;	
+}
+
+div#top h1 {
+ float: none;	
+}
+
+#rightbar {
+  margin-top: 20px;	
 }
 
 div#top div#photo {
@@ -127,22 +168,42 @@ div#top div#photo p {
 }
 
 #tabbox-nav a {
-  margin-right: 0px;
-  float: left;	
-  padding: 10px 15px;
+    float: left;
+    margin-right: 0;
+    padding: 10px 15px;
+    width: 260px;
+    border-bottom: 1px dotted #e1e1e1;
 }
 
 #tabbox-nav a.selected {
   background-color: #DFECF1;
-  border-radius: 5px 5px 0 0;
+  position: relative;
+  border-bottom: none;
+}
+
+#tabbox-nav a.selected:before {
+	content: ' ';
+	height: 0px;
+	left: -35px;
+	top: -1px;
+	position: absolute;
+	width: 0px;
+	border: 18px solid transparent;
+	border-right-color: #DFECF1;
+}
+
+#tabbox-nav a:hover {
+  background-color: #f6f6f6;	
+}
+
+#tabbox-nav a.selected:hover {
+  background-color: #DFECF1;
 }
 
 #tabbox {
   float: left;
   width: 540px;
-  padding: 10px 15px;
-  border: 3px solid #DFECF1;
-  border-width: 15px 0px 0px;
+  padding: 10px 5px;
   background-color: #fff;
   position: relative;	
 }
@@ -155,6 +216,11 @@ div#top div#photo p {
   padding: 10px 0px;	
   background-color: #fff;
   font-size: 13px;
+  display: none;
+}
+
+#tabbox .box.visible {
+  display: block;	
 }
 
 #tabbox .box .row {
@@ -194,10 +260,14 @@ div#cities a {
 }
 
 div#cities a#change {
-  background: none;
-  box-shadow: none;
-  border: none;	
-  font-weight: normal;
+    background: none repeat scroll 0 0 #DFECF1;
+    border: medium none;
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: none;
+    float: none;
+    font-weight: normal;
+    margin-left: 10px;
+    padding: 4px 5px;
 }
 
 div#cities h3 {
@@ -205,15 +275,18 @@ div#cities h3 {
 }
 
 div#cities div#choose-new {
-  float: left;
-  margin-top: 20px;
-  width: 560px;	
+    background-color: #F1F1F1;
+    float: left;
+    margin-left: -10px;
+    padding: 10px 15px;
+    width: 400px;
 }
 
 div#cities div#choose-new a {
-  background: none;
-  box-shadow: none;
-  padding: 0;	
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
+    box-shadow: none;
+    padding: 0;
 }
 
 div#cities div#choose-new p {
@@ -222,7 +295,6 @@ div#cities div#choose-new p {
 }
 
 div#stats {
-    border-top: 1px solid #E1E1E1;
     float: left;
     padding-top: 20px;
     width: 560px;
@@ -237,112 +309,193 @@ div#stats ul {
   color: #666;	
 }
 
+#no-city-warning {
+  float: left;
+  width: 560px;
+  margin-bottom: 30px;	
+}
+
+#tabbox-nav span.red {
+    background-color: #CC1F1F;
+    border-radius: 3px 3px 3px 3px;
+    color: #FFFFFF;
+    font-size: 10px;
+    margin-left: 4px;
+    padding: 2px 5px;
+}
+
+ul#notices {
+  list-style-type: none;
+  margin-left: 0px;	
+}
+
+ul#notices li {
+  border-bottom: 1px dotted #e1e1e1;
+  padding: 0;	
+  float: left;
+  width: 100%;
+  margin-bottom: 3px;
+}
+
+ul#notices li.unseen {
+  background-color: #f1f8f9;
+  border-bottom: 1px solid #fff;
+  	
+}
+
+ul#notices li p {
+  padding: 5px 5px 0px 10px;
+  float: left;	
+  line-height: 1.2em;
+}
+
+ul#notices li img {
+  float: left;	
+}
+
+ul#notices li a.mark-as-read {
+  font-size: 11px;
+}
+
 </style>
 {% endblock %}
 
 {% block content %}
 	
+
+	
 <div id="top">
 	<div id="photo">
-	{% if laowai.photo %}
-		{% thumbnail laowai.photo "110x110" crop="center" as im %}
-		<img class="profile-photo-large" title="{{ laowai.name }}" alt="{{ laowai.name }}'s photo" src="{{ im.url }}">
-		{% endthumbnail %}
-	{% else %}
-		<img class="profile-photo-large" title="{{ laowai.name }}" alt="" src="/images/avatar_80.jpg">
-	{% endif %}
-	
-	
-
-	
-
-
+		{% if laowai.photo %}
+			{% thumbnail laowai.photo "110x110" crop="center" as im %}
+			<img class="profile-photo-large" title="{{ laowai.name }}" alt="{{ laowai.name }}'s photo" src="{{ im.url }}">
+			{% endthumbnail %}
+		{% else %}
+			<img class="profile-photo-large" title="{{ laowai.name }}" alt="" src="/images/avatar_80.jpg">
+		{% endif %}
 	</div>
 	
 	<h1>{{ laowai.name }}</h1>
-
 	<p class="description">
-		<em>{{ laowai.bio|urlize }}</em><br/>
+		<em>{{ laowai.bio|urlize }}
+		{% if not laowai.bio %}
+		<a href="{% url add_a_bio %}">Introduce yourself (add a bio) &raquo;</a>
+		{% endif %}
+		</em><br/>
 	</p>
 	
 </div>
 
+	<div id="rightbar">
+		<div id="tabbox-nav">
+			<a href="#" class="tab selected" rel="#notifications" id="notifications-nav">Notifications
+				{% if notifications %}<span class="red">{{ notifications.count }}</span>{% endif %}
+			</a>
+			<a href="#" class="tab" rel="#posts">Your posts</a>
+			<a href="#" class="tab" rel="#settings">Settings</a>
+			<a href="#" class="tab" rel="#stats">Your stats</a>
+		</div>
+	</div>
 
-<div id="tabbox-nav">
-	<a href="" class="">Your posts</a>
-	<a href="" class="selected">Settings</a>
-	<a href="">Notifications</a>
-	<a href="">Your stats</a>
-</div>
+	{% if not laowai.city %}
+		<div id="no-city-warning">
+			<img src="/images/warning.png" style="float: left; margin-right: 10px; position: relative;top:-2px;"/>
+			<h3 style="color: red;">You haven't set a home city in China - click Settings below to set it<br/>
+			</h3>
+		</div>
+	{% endif %}
+
+
 
 <div id="tabbox">
-	<div id="settings" class="box">
-	  <div class="row">
-		<div class="left">
-			<h4>Your bio</h4>
-		</div>
-		<div class="right">
-		   	<p>
-			{% if laowai.bio %}
-				<a href="{% url add_a_bio %}">&raquo; Edit your bio</a>
-			{% else %}
-		    	<a href="{% url add_a_bio %}">&raquo; Add a bio</a>	
-			{% endif %}
-			</p>
-		</div>
-	  </div>
-	  
-	  <div class="row">
-	    <div class="left">
-	      <h4>Your photo</h4>
-	    </div>
-	    <div class="right">
-	    	<p>
-			<a href="{% url upload_profile_photo %}">&raquo; 
-			{% if laowai.photo %}
-				Change photo
-			{% else %}
-				Add a photo
-			{% endif %}
-			</a>
-			</p>
-	    </div>
-	  </div>
-	  
-		{% if not laowai.city %}
-			<div id="cities" class="serious">
-				<img src="/images/warning.png" style="float: left; margin-right: 10px; position: relative;top:-2px;"/>
-		
-			<h3 style="color: red;">You need to choose a city (otherwise, there's nothing to show you)<br/>
-			<span style="color: #666;font-size: 11px; font-weight: normal; position:relative;top:5px;"><em>If you don't live in China, just choose a city you're interested in.</em></span>
-			</h3>
-		
-			{% for city in all_cities %}
-				<a {% ifequal city laowai.city %}class="selected"{% endifequal %} href="{% url set_city city.slug %}">{{ city.name }}</a>
-			{% endfor %}
-			</div>
-		{% else %}
-		<div class="row">
-   		  <div class="left">
-			<h4>Your city</h4>
-		  </div>
-		  <div class="right">
-		  	<div id="cities">
-				<a class="city" href="{% url set_city city.slug %}">{{ laowai.city.name }} ({{ laowai.city.chinese_name }})</a> 
-				<a href="#" id="change">&laquo; Change your city</a>
-				<div id="choose-new" style="display:none;">
-					<p><em>Click a new city to change</em></p>
-					{% for city in all_cities %}
-						<a href="{% url set_city city.slug %}">{{ city.name }}</a>
-					{% endfor %}
-				</div>
-			</div>		  
-		  </div>
-		</div>
-		  
 
+	<div id="notifications" class="box visible">
+		{% if notices %}
+			<ul id="notices">
+			{% for notice in notices %}
+				{% include 'notification/snippets/notice-snippet.html' %}
+			{% endfor %}
+			</ul>
+		{% else %}
+			<p>You have no new notifications</p>
 		{% endif %}
 	</div>
+
+	<div id="posts" class="box">
+	{% if objects %}
+		{% with request.user.get_profile.city as city %}
+		<div id="feed">
+		{% include "list/snippets/feed.html" %}
+		</div>
+		{% endwith %}
+	{% else %}
+		<p>You haven't posted anything!</p>
+	{% endif %}
+	</div>
+
+	<div id="settings" class="box">
+	  	<div class="row">
+			<div class="left">
+				<h4>Your bio</h4>
+			</div>
+			<div class="right">
+			   	<p>
+				{% if laowai.bio %}
+					<a href="{% url add_a_bio %}">&raquo; Edit your bio</a>
+				{% else %}
+			    	<a href="{% url add_a_bio %}">&raquo; Add a bio</a>	
+				{% endif %}
+				</p>
+			</div>
+		</div>
+	  
+		<div class="row">
+	    	<div class="left">
+	    	  <h4>Your photo</h4>
+	    	</div>
+	    	<div class="right">
+	    		<p>
+				<a href="{% url upload_profile_photo %}">&raquo; 
+				{% if laowai.photo %}
+					Change photo
+				{% else %}
+					Add a photo
+				{% endif %}
+				</a>
+				</p>
+	    	</div>
+		</div>
+	  
+		<div class="row">
+   			<div class="left">
+				<h4>Your city</h4>
+		  	</div>
+			<div class="right">
+	  			<div id="cities">
+	  			{% if city %}
+	  				<p>
+	  					<a class="city" href="">{{ laowai.city.name }} ({{ laowai.city.chinese_name }})</a>
+	  					<a href="#" id="change">Change your city</a>
+	  				</p>
+	  			{% else %}
+	  				<p>
+	  					No city set
+	  					<a href="#" id="change">Set your city</a>
+	  				</p>
+	  			{% endif %}
+	  			<br clear="all"/>
+			
+					<div id="choose-new" style="display:none;">
+						<p><em>Click a city to select it:</em></p>
+						{% for city in all_cities %}
+							<a class="button" href="{% url set_city city.slug %}">{{ city.name }}</a>
+						{% endfor %}
+					</div>
+				</div>		  
+	  		</div>
+		</div>
+	</div>
+	
 	<div id="stats" class="box">
 		
 		<div class="row">

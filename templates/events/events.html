@@ -31,6 +31,13 @@ div#events ul li p {
   font-size: 11px;	
 }
 
+.add-event {
+  float: right;
+  width: 142px;
+  position: relative;
+  top: 0px;
+}
+
 
 </style>
 {% endblock %}
@@ -39,7 +46,7 @@ div#events ul li p {
 
 <div id="top">
 	{% if request.user.is_authenticated %}
-	<div class="add-event-button"><a href="{% url add_event city.slug %}"><span>Add an event</span></a></div>
+	<a class="add-event button" href="{% url add_event city.slug %}">Add an event &raquo;</a>
 	{% endif %}
 <h1>Events in {{ city }}</h1>
 </div>

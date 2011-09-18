@@ -12,16 +12,12 @@ from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
 from django.template import Context
 from django.template.loader import render_to_string
-
 from django.core.exceptions import ImproperlyConfigured
-
 from django.contrib.sites.models import Site
 from django.contrib.auth.models import User
 from django.contrib.auth.models import AnonymousUser
-
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
-
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext, get_language, activate
 
@@ -180,8 +176,11 @@ class Notice(models.Model):
         verbose_name_plural = _("notices")
 
     def get_absolute_url(self):
-        return ("notification_notice", [str(self.pk)])
-    get_absolute_url = models.permalink(get_absolute_url)
+        object_type = ContentType.objects.get(name=self.content_type)
+        object = object_type.get_object_for_this_type(pk=self.object_pk) 
+        url = object.get_absolute_url()
+        return url
+    #get_absolute_url = models.permalink(get_absolute_url)
 
 class NoticeQueueBatch(models.Model):
     """

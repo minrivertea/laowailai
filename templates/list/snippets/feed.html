@@ -2,12 +2,15 @@
 {% load comments %}
 {% load thumbnail %}
 
-
+<!--
 {% if request.user.is_authenticated %}
-<div id="add-form">
-{% include "list/snippets/add-form.html" %}
-</div>
+	{% if request.user.get_profile.city %}
+		<div id="add-form">
+		{% include "list/snippets/add-form.html" %}
+		</div>
+	{% endif %}
 {% endif %}
+-->
 
 
 <ul>

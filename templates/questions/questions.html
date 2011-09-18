@@ -35,13 +35,21 @@ p.description {
   border-bottom: none;
   padding-bottom: 10px;	
 }
+
+.add-question {
+  float: right;
+  width: 142px;
+  position: relative;
+  top: 0px;
+}
+
 </style>
 {% endblock %}
 
 {% block content %}
 <div id="top">
 	{% if request.user.is_authenticated %}
-	<div class="add-question-button"><a href="{% url add_question city.slug %}"><span>Add a question</span></a></div>
+	<a class="add-question button" href="{% url add_question city.slug %}"><span>Add a question</span></a>
 	{% else %}
 	<p class="signup"><a href="{% url registration_register %}"><strong>Signup</strong></a> or <a href="/accounts/login/"><strong>login</strong></a> to add a question</p>
 
@@ -67,7 +75,11 @@ p.description {
 	{% endfor %}
 </ul>
 {% else %}
-<p><em>There's no questions for {{ city }}!</em></p>
+	{% if q %}
+		<p><em>There's no questions that match your search!</em></p>
+	{% else %}
+		<p><em>There's no questions yet for Fuzhou!</em></p>
+	{% endif %}
 {% endif %}
 </div>
 

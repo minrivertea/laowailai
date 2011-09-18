@@ -2,7 +2,7 @@
 {% if places %}
  {% for place in places %}
 	
-<div class="place{% cycle '' ' right' %}">
+<div class="place{% cycle '' '' ' right' %}">
 	<h3><a href="{% url place place.city.slug place.id %}">{{ place.name }}</a></h3>
 	<div class="ratings">
 	<ul class="star-rating">

@@ -19,6 +19,10 @@ $('#set-city').click(function () {
 {% block extracss %}
 <style type="text/css">
 
+div#left input.button {
+  width: 310px;	
+}
+
 div#left p {
   float: left;	
 }
@@ -28,7 +32,7 @@ div.box {
     float: left;
     margin-bottom: 20px;
     padding: 10px 15px;
-    width: 530px;
+    width: 560px;
     border-radius: 10px;
     height: 140px;
 }
@@ -73,8 +77,7 @@ div.box div#cities a {
 }
 
 div.box div#cities a.selected {
-  background-color: #226e13;
-  color: #fff;	
+  color: #226e13;	
 }
 
 div.box img.profile-photo {
@@ -150,6 +153,14 @@ h2 {
   margin: 10px 0 20px 0;
   font-weight: bold;
   font-size: 20px;	
+  float: left;
+  width: 560px;
+}
+
+a.finished {
+  float: left;
+  width: 560px;	
+  font-size: 20px;
 }
 </style>
 {% endblock %}
@@ -167,7 +178,6 @@ h2 {
 		<h2>Your profile is 50% complete!</h2>
 		{% else %}
 		<h2>Your profile is 100% complete!</h2>
-		<p style="margin: -20px 0 20px;font-size: 13px; font-weight: bold;"><a href="{% url profile %}">Go to your profile page &raquo;</a></p>
 		{% endif %}
 	{% else %}
 		<h2>Your profile is 0% complete</h2>
@@ -181,7 +191,7 @@ h2 {
 		<form action="{% url upload_profile_photo %}" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="next" value="/whats-next/" />
 		<input type="file" name="photo" id="id_photo" />
-		<input type="submit" value="" class="save-photo-button"/>
+		<input type="submit" value="Save profile photo" class="save-photo-button button"/>
 		</form>
 	{% else %}
 		<h3>Photo added - nice work!</h3>
@@ -196,17 +206,21 @@ h2 {
 	{% if not laowai.city %}
 		<h3>Where do you live in China?</h3>
 	{% else %}
-		<h3>Your home city is {{ laowai.city.name }}</h3>
+		<h3>Your home city is <span style="color: #226e13;">{{ laowai.city.name }}</span></h3>
 	{% endif %}
 	<p><em>This will be your 'home' city in China</em></p>
 	<div id="cities">
 		{% for city in all_cities %}
-			<a {% ifequal city laowai.city %}class="selected"{% endifequal %} href="{% url set_city city.slug %}">{{ city.name }}</a>
+			<a class="button {% ifequal city laowai.city %}selected{% endifequal %}" href="{% url set_city city.slug %}">{{ city.name }}</a>
 		{% endfor %}
 	</div>
 </div>
 
-<p style="float: right; font-size: 12px; font-weight: bold; margin-right: 20px;"><a href="{% url profile %}">I don't care, take me to my profile page now &raquo;</a></p>
+{% if laowai.city and laowai.photo %}
+	<a href="{% url profile %}" class="button finished">Finished! Take me to my profile &raquo;</a>
+{% else %}
+<p style="float: left; font-size: 12px; font-weight: bold; margin-right: 20px;width:560px; text-align: right;"><a href="{% url profile %}">I don't care, take me to my profile page now &raquo;</a></p>
+{% endif %}
 
 {% endwith %}
 

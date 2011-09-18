@@ -53,26 +53,11 @@ $('input').customInput();
 
 p.description {
   margin-bottom: 20px;	
-
+  width: 100%;
 }
 
-div#left input.submit-place {
-  background: url('/images/submit-place-button.png') no-repeat top left;
-  border: medium none;
-  height: 33px;
-  margin: 10px 0 10px 0px;
-  width: 142px;
-  float: right;  
-}
-
-div#left input.submit-place:hover {
-  cursor: pointer;
-  background: url('/images/submit-place-button.png') no-repeat center left;	
-}
-
-div#left input.submit-place:active {
-  cursor: pointer;
-  background: url('/images/submit-place-button.png') no-repeat bottom left;	
+.button {
+  font-size: 20px;	
 }
 
 div#main {
@@ -81,7 +66,7 @@ div#main {
     left: -30px;
     padding: 25px 30px;
     position: relative;
-    width: 580px;
+    width: 100%;
     margin-bottom: 30px;
 }
 
@@ -114,7 +99,7 @@ div#main h4 {
 
 div#maps {
   float: left;
-  width: 560px;
+  width: 800px;
   margin-bottom: 20px;
   padding-bottom: 20px;
   border-bottom: 3px dotted #e1e1e1;	
@@ -232,12 +217,12 @@ div#maps span#close_map:hover {
 <p class="description"><em>A place might be a coffee shop, a tourist destination, a gym or a clothes shop - anywhere that you can go and do/buy/see something. Please try to be as descriptive as possible, and give Chinese names if you know them.</em></p>
 
 {% if form.errors %}
-{{ form.errors }}
+	<ul class="errorlist">
+	{% for error in form.errors %}
+		<li>You must add a <span class="error"><strong>{{ error }}!</strong></span></li>
+	{% endfor %}
+	</ul>
 {% endif %}
-
-{% for error in error_list %}
-{{ error }}
-{% endfor %}
 
 <form action="." method="post">
 <form action="." method="post">
@@ -268,10 +253,14 @@ div#maps span#close_map:hover {
 
 <div id="main">
 	<h4>Next, tell us about the place:</h4>
-	<label for="id_name">Place name (in English or <em>pinyin</em>)</label> <input id="id_name" type="text" name="name" maxlength="200" />
-	<label for="id_chinese_name">Chinese name (optional)</label> <input id="id_chinese_name" type="text" name="chinese_name" maxlength="200" />
+	<label for="id_name">Place name (in English or <em>pinyin</em>)</label> 
+	{{ form.name }}
+	
+	<label for="id_chinese_name">Chinese name (optional)</label> 
+	{{ form.chinese_name }}
+	
 	<label for="id_description">Description (give a description of the place)</label> 
-	<textarea id="id_description" rows="10" cols="40" name="description"></textarea>
+	{{ form.description }}
 
 </div>
 
@@ -283,12 +272,13 @@ div#maps span#close_map:hover {
 <div id="maps">
 <h4>Finally, give the place a location</h4>
 <p><em>Drag and drop the marker to the location, and we'll find the street address automatically.</em></p>
-<div id="map_area" style="width:560px; height:330px"></div>
+<div id="map_area" style="width:800px; height:430px"></div>
 <span id="close_map" style="display: none;">Close map</span>
-<label for="id_location">Location (you can edit this if you want)</label> <input id="id_location" type="text" name="location" maxlength="200" />
+<label for="id_location">Location (you can edit this if you want)</label>
+{{ form.location }}
 <div style="display: none;">
-	<input id="id_longitude" type="text" name="longitude" maxlength="200" value="" />
-	<input id="id_latitude" type="text" name="latitude" maxlength="200" value="" />
+	{{ form.longitude }}
+	{{ form.latitude }}
 </div>
 </div>
 
@@ -305,7 +295,7 @@ div#maps span#close_map:hover {
 
 
 
-<input type="submit" class="submit-place" value="">
+<input type="submit" class="button" value="Save this place">
 </form>
 
 

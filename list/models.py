@@ -83,8 +83,8 @@ class Laowai(models.Model):
         return places
     
     def added_questions(self):
-        from laowailai.questions.models import Question
-        questions = Question.objects.filter(added_by=self)
+        from laowailai.questions.models import NewQuestion
+        questions = NewQuestion.objects.filter(owner=self)
         return questions    
 
     def added_answers(self):
@@ -97,6 +97,12 @@ class CommonInfo(models.Model):
     owner = models.ForeignKey(Laowai, null=True)
     date = models.DateTimeField('date added', default=datetime.now, null=True)
     city = models.ForeignKey(City, null=True)
+    
+    # this is very important. It will return the URL to a single, generic 'item' page.
+    # it's used for the commenting and notifications. Change it at your peril.
+    def get_absolute_url(self):
+        url = self.city.slug
+        return url
 
 
 class NewInfo(CommonInfo):
@@ -120,7 +126,7 @@ class NewInfo(CommonInfo):
         return likers
     
     def get_absolute_url(self):
-        url = "/%s/feed/posts/%s/" % (self.city.slug, self.pk)
+        url = "/%s/posts/%s/" % (self.city.slug, self.pk)
         # url = reverse('a_post', args=[(self.city.slug, self.pk)])
         return url  
     
@@ -163,7 +169,8 @@ class Suggestion(models.Model):
 
 class Photo(CommonInfo):
     image = models.ImageField(upload_to="photos/images/")
-    # a photo might relate to anything, so this is a generic relationship to other items
+    
+    # a photo might relate to anything, so this is an optional, generic relationship to other items
     content_type   = models.ForeignKey(ContentType,
         verbose_name=_('content type'),
         related_name="content_type_set_for_%(class)s", blank=True, null=True)

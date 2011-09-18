@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% load thumbnail %}
 
-{% block metadescription %}Add a place in Fuzhou{% endblock %}
-{% block pagetitle %}Add a place{% endblock %}
+{% block metadescription %}Add a map location for {{ place.name }} in Fuzhou{% endblock %}
+{% block pagetitle %}Add a map location for {{ place.name }}{% endblock %}
 
 {% block mapscripts %}
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.1&services=true"></script>
@@ -108,7 +108,7 @@ div#maps div#map_area {
 {% block content %}
 
 <div id="top">
-<h1>Edit the location for {{ place.name }}</h1>
+<h1>Add a map location for {{ place.name }}</h1>
 </div>
 
 <p class="description"><em>Drag and drop the marker to highlight the map location of this place - we'll automatically find the street address.</em></p>
@@ -141,7 +141,7 @@ div#maps div#map_area {
 
 
 
-<input type="submit" class="save-location-button" value="">
+<input type="submit" class="button" value="Save location">
 </form>
 
 

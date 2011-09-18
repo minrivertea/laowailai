@@ -1,89 +1,41 @@
 {% load thumbnail %}
 
 <div id="header">
+	    	
 	    	<div id="logo">
+	    	
 		    	<a title="LaoWaiLai (Fuzhou) Home" alt="home" href="/">
-		    		<img src="/images/logo.png"/>
+		    		<img src="/images/logo2.png"/>
 		    		<span>LaoWaiLai Fuzhou</span>
 		    	</a>
+		    	
 		    </div>
+		    {% if city %}
+		    	<div id="citychanger">
+		    		<span id="currentcity">{{ city.name }} ({{ city.chinese_name }})</span><br/>
+		    		<span id="changecity"><a href="{% url cities %}">Change city</a></span>
+		    	</div>
+		    {% endif %}
 		    
 		    <div id="site-introduction">
 		    <em>News, events and info for the well connected laowai in China</em>
 		    </div>
 		    
-		    
+		    <!-- HIDING THIS NOW WE HAVE A NEW CITY CHOOSER
 		    <div id="browse-cities">
 		    	<a href="{% url cities %}">Browse cities in China &raquo;</a>
-		    {% if city %}
-		    	<p>You're now browsing <strong>{{ city.name }}</strong></p>
-		    {% endif %}
 			</div>
-
-
-		
-	    	{% if user.is_authenticated %}
-	    	<!--
-	    	<div id="account">
-	    		<div class="photo">
-	    		<a title="Click to view your profile" href="{% url laowai laowai.id %}">
-	    		{% if laowai.photo %}
-	    			{% thumbnail laowai.photo "60x60" crop="center" as im %}
-	    			<img class="avatar" title="Click to view your profile" alt="a picture of {{ laowai.user.name }}" src="{{ im.url }}">
-	    			{% endthumbnail %}
-	    		{% else %}
-	    			<img class="avatar" title="Click to view your profile" alt="" src="/images/avatar_small.png">
-	    		{% endif %}
-	    		</a>
-	    		</div>
-	    		
-	    		<div class="info">
-	    			<p class="name"><a title="Click to view your profile" href="{% url laowai laowai.id %}">{{ user.email }}</a></p>
-	    			<p>
-
-	    			</p>
-	    			<p>
-	    				<span class="small">
-	    					<a title="Click to upload a new profile photo" href="{% url upload_profile_photo %}">
-	    						{% if laowai.photo %}Change your profile photo
-	    						{% else %}Upload a profile photo
-	    						{% endif %}
-	    					</a>
-	    				</span>
-	    			</p>
-	    			<p><span class="small"><a href="{% url add_a_bio %}">{% if laowai.bio %}Edit bio{% else %}Add a bio{% endif %}</a></span></p>
-	    			<p><span class="small"><a title="Click to logout" href="{% url auth_logout %}">Logout</a></span></p>
-
-	    		</div>
-
-	    		
-	  
-
-	    	</div>
-	    	-->
-	    	{% else %}
-	    			<div id="nav">
-	    				<div class="signup-button">
-	    					<a title="Register" alt="Register" href="{% url registration_register %}"><span>register</span></a>
-	    				</div>
-	    				<div class="login">
-							<p>...or if you have an account, <a title="Login" alt="login" href="/accounts/login/"><strong>login</strong></a> </p>
-						</div>
-	    			</div>
-	    	{% endif %}
-	    	
-
-
+			-->
 			
-			{% if user.is_superuser %}
-			<div id="admin">
-			<h4>Admin stats</h4>
-	    		<p>{{ signups }} signups</p>
-	    		<p>{{ places.count }} places</p>
-	    		<p><a href="/admin/">Login to admin interface</a></p>
-	    		<p><a href="/newsletter/">Newsletter</a></p>
-	    		</div>
-	    	{% endif %}
-	
+			{% if not user.is_authenticated %}
+			<div id="nav">
+	    		<a class="signup button" title="Register" alt="Register" href="{% url registration_register %}"><span>Signup now &raquo;</span></a>
+	    	<!-- REMOVED 8 September 2011, login is now in header
+	    		<div class="login">
+				<p>...or if you have an account, <a title="Login" alt="login" href="/accounts/login/"><strong>login</strong></a> </p>
+				</div>
+	    	-->
+	    	</div>
+			{% endif %}
 			
        </div>

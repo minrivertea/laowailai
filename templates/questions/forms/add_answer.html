@@ -7,24 +7,10 @@
 {% block extracss %}
 <style type="text/css">
 
-div#left input.submit-answer-button {
-  background: url('/images/submit-answer-button.png') no-repeat top left;
-  border: medium none;
-  height: 33px;
-  margin: 0px 0 10px 0px;
-  width: 142px;
-  float: right;
+.button {
+  font-size: 20px;	
 }
 
-div#left input.submit-answer-button:hover {
-  background: url('/images/submit-answer-button.png') no-repeat center left;
-  cursor: pointer;
-}
-
-div#left input.submit-answer-button:active {
-  background: url('/images/submit-answer-button.png') no-repeat bottom left;
-  cursor: pointer;
-}
 </style>
 {% endblock %}
 
@@ -37,7 +23,7 @@ div#left input.submit-answer-button:active {
 <p><em>{{ question.description }}</p>
 <form action="." method="post">
 {{ form.as_p }}
-<input type="submit" value="" class="submit-answer-button">
+<input type="submit" value="Submit answer" class="button">
 </form>
 
 

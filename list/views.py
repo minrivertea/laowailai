@@ -12,6 +12,7 @@ from models import *
 from forms import *
 from laowailai.cities.models import City
 from laowailai.places.models import Place, NewPlace
+from laowailai.notification.models import Notice
 
 # django stuff
 from django.http import Http404, HttpResponse, HttpResponseRedirect
@@ -25,6 +26,8 @@ from django.utils import simplejson
 from django import http
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.core.serializers.json import DjangoJSONEncoder
+from django.db.models import Q
+
 
 
 
@@ -36,119 +39,25 @@ def render(request, template, context_dict=None, **kwargs):
                               **kwargs
     )
 
-def index(request, slug=None):
-    
-    if request.user.is_authenticated():   
-        if request.user.get_profile().city:   
-            city = get_object_or_404(City, slug=request.user.get_profile().city.slug)
-            url = reverse('city', args=[city.slug])
-            return HttpResponseRedirect(url)
-        else:
-            url = reverse('profile')
-            return HttpResponseRedirect(url)
-    else:  
-        return render(request, "list/index.html", locals())
-        
-    
-    #objects_list = NewInfo.objects.filter(city=city).order_by('-date')    
-    paginator = Paginator(objects_list, 10) # Show 10 infos per page
-    
-    # this is where we load some ajax stuff
-    try:
-        page = int(request.GET.get('page', '1'))
-
-    except ValueError:
-        page = 1
-    
-    if request.GET.get('xhr') and page > 1:
-        infos = paginator.page(int(request.GET.get('page')))
-        if request.user.is_authenticated():
-            laowai = request.user.get_profile()
-        else:
-            laowai = None
-        objects_list = []
-        for info in infos.object_list:
-            objects_list.append(render_to_string('list/snippets/feed_li.html', {
-                    'object': info,
-                    'laowai': laowai,
-            }, context_instance=RequestContext(request)))
-
-        json =  simplejson.dumps(objects_list, cls=DjangoJSONEncoder)
-        return HttpResponse(json, mimetype='application/json')
-        
-
-    # If page request (9999) is out of range, deliver last page of results.
-    try:
-        objects = paginator.page(page)
-    except (EmptyPage, InvalidPage):
-        objects = paginator.page(paginator.num_pages)
-    
-    # here we are going to save the 'info' if someone posts something
-    if request.method == 'POST':
-        form = InfoAddForm(request.POST)
-        if form.is_valid():
-            content = form.cleaned_data['content']
-            if content == "Add something" or content == "":
-                HttpResponseRedirect('/')
-                
-            contact_details = form.cleaned_data['contact_details']
-            date = form.cleaned_data['date']
-            location = form.cleaned_data['location']
-            url = form.cleaned_data['related_url']
-            
-            # find or create the user
-            try:
-                laowai = get_object_or_404(Laowai, user=request.user)
-            except:
-                return HttpResponseRedirect('/not-authorised/')
-            
-            # ignore the extra inputs if they are just the default values
-            if contact_details == "Your contact details?":
-                contact_details = ""
-            if location == "A location for this piece of news?":
-                location = ""
-            if url == "A related URL?":
-                url = ""
-            
-            # create the new piece of info
-            new = NewInfo.objects.create(
-                                      content=content,
-                                      contact_details=contact_details,
-                                      location=location,
-                                      date=date,
-                                      related_url=url,
-                                      added_by=laowai,
-                                      )
-            
-            new.save()
-            url = request.META.get('HTTP_REFERER','/')
-            return HttpResponseRedirect(url)
+# this is a generic view for generating a news feed. 
+# It takes optional 'city' and 'user' filters
+def _get_news_feed(request, user=None, city=None):
          
-        
+    # setup the filters, based on person or city (it performs an AND lookup)
+    if user:
+        if city:
+            filters = Q(owner=user) & Q(city=city)
         else:
-            if form.non_field_errors():
-                non_field_errors = form.non_field_errors()
-            else:
-                errors = form.errors
+            filters = Q(owner=user)
+    if city:
+        filters = Q(city=city)                
         
-    
-    else:
-        infoform = InfoAddForm()
-        photoform = PhotoInfoAddForm()
-        
-    return render(request, "list/index.html", locals()) 
-
-
-# news feed for a particular city
-def news_feed(request, slug):
-    city = get_object_or_404(City, slug=slug) 
-    
     # we are building up a collated list of Place, Info and Photo objects
     first_pass = []
-    first_pass.extend(list(NewInfo.objects.filter(city=city)))
-    first_pass.extend(list(NewPlace.objects.filter(city=city)))
-    first_pass.extend(list(Photo.objects.filter(city=city, object_pk="")))
-    
+    first_pass.extend(list(NewInfo.objects.filter(filters)))
+    first_pass.extend(list(NewPlace.objects.filter(filters)))
+    first_pass.extend(list(Photo.objects.filter(filters, object_pk="")))
+
     # on the second pass, we sort it
     second_pass = sorted(first_pass, reverse=True, key=lambda thing: thing.date)
     
@@ -170,39 +79,77 @@ def news_feed(request, slug):
     # now remove the close-together items from the list - we don't
     # want to have 10 'place' items clogging up the news feed
     objects_list = []
-    [objects_list.append(x) for x in second_pass if x not in doubles]    
+    [objects_list.append(x) for x in second_pass if x not in doubles] 
     
-    # start the pagination stuff  
     paginator = Paginator(objects_list, 10) # Show 10 infos per page
     try:
         page = int(request.GET.get('page', '1'))
     except ValueError:
         page = 1
     
-    
-    # this is ajax for the 'load more news' function
-    if request.GET.get('xhr') and page > 1:
-        infos = paginator.page(int(request.GET.get('page')))
-        if request.user.is_authenticated():
-            laowai = request.user.get_profile()
-        else:
-            laowai = None
-        objects_list = []
-        for info in infos.object_list:
-            objects_list.append(render_to_string('list/snippets/feed_li.html', {
-                    'object': info,
-                    'laowai': laowai,
-            }, context_instance=RequestContext(request)))
-
-        json =  simplejson.dumps(objects_list, cls=DjangoJSONEncoder)
-        return HttpResponse(json, mimetype='application/json')
-        
-
     # If page request (9999) is out of range, deliver last page of results.
     try:
         objects = paginator.page(page)
     except (EmptyPage, InvalidPage):
         objects = paginator.page(paginator.num_pages)
+    
+    return objects
+
+
+# this is a generic 'update the news feed with AJAX' function
+def _news_feed_update_page(request, objects):
+
+    infos = objects.paginator.page(int(request.GET.get('page')))
+    laowai = request.user.get_profile()
+        
+    objects_list = []
+    for info in infos.object_list:
+        objects_list.append(render_to_string('list/snippets/feed_li.html', {
+                'object': info,
+                'laowai': laowai,
+        }, context_instance=RequestContext(request)))
+
+    json =  simplejson.dumps(objects_list, cls=DjangoJSONEncoder)
+    return json    
+    
+
+
+def index(request, slug=None):
+    
+    if request.user.is_authenticated():   
+        if request.user.get_profile().city:   
+            city = get_object_or_404(City, slug=request.user.get_profile().city.slug)
+            url = reverse('news_feed', args=[city.slug])
+            return HttpResponseRedirect(url)
+        else:
+            url = reverse('profile')
+            return HttpResponseRedirect(url)
+    else:  
+        return render(request, "list/index.html", locals())
+        
+    return render(request, "list/index.html", locals()) 
+
+
+# news feed for a particular city
+def news_feed(request, slug):
+    city = get_object_or_404(City, slug=slug)
+    latest_people = Laowai.objects.filter(city=city).exclude(photo=False).order_by('-date_joined')[:5]
+    latest_photos = Photo.objects.filter(city=city).order_by('-date')[:6]    
+    objects = _get_news_feed(request, city=city)
+    
+    
+    # we repeat ourselves a bit, for the Ajax to work
+    paginator = objects.paginator
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1    
+    
+    # this is ajax for the 'load more news' function
+    if request.GET.get('xhr') and page > 1:
+        json = _news_feed_update_page(request, objects)
+        return HttpResponse(json, mimetype='application/json')
+        
         
     if request.method == 'POST':
         form = InfoAddForm(request.POST)
@@ -250,8 +197,6 @@ def news_feed(request, slug):
                 non_field_errors = form.non_field_errors()
             else:
                 errors = form.errors
-        
-    
     else:
         infoform = InfoAddForm()
     
@@ -260,37 +205,61 @@ def news_feed(request, slug):
 @login_required
 def profile(request):
     laowai = request.user.get_profile()
+    notices = Notice.objects.filter(recipient=laowai.user)
+    objects = _get_news_feed(request, user=laowai)
     
-    # we are building up a collated list of Place, Info and Photo objects
-    first_pass = []
-    first_pass.extend(list(NewInfo.objects.filter(owner=laowai)))
-    first_pass.extend(list(NewPlace.objects.filter(owner=laowai)))
-    first_pass.extend(list(Photo.objects.filter(owner=laowai, object_pk="")))
     
-    # on the second pass, we sort it
-    objects_list = sorted(first_pass, reverse=True, key=lambda thing: thing.date)
+    # this is ajax for the 'load more news' function
+    if request.GET.get('xhr') and objects.paginator.page > 1:
+        json = _news_feed_update_page(request, objects)
+        return HttpResponse(json, mimetype='application/json')
     
-    # start the pagination stuff  
-    paginator = Paginator(objects_list, 10) # Show 10 infos per page
-    try:
-        page = int(request.GET.get('page', '1'))
-    except ValueError:
-        page = 1
-   
+    
+    for notice in notices:
+        object_type = ContentType.objects.get(name=notice.content_type)
+        try:
+            thing = object_type.get_object_for_this_type(pk=notice.object_pk)
+        except:
+            pass
 
-    # If page request (9999) is out of range, deliver last page of results.
-    try:
-        objects = paginator.page(page)
-    except (EmptyPage, InvalidPage):
-        objects = paginator.page(paginator.num_pages)
     
     return render(request, "list/profile.html", locals())
 
+
+@login_required
+def profile_notices(request):
+    laowai = request.user.get_profile()
+    
+    # this is mainly an AJAX view...
+    if request.GET.get('xhr'):
+        notices = Notice.objects.filter(recipient=laowai.user)
+        html = []
+        for n in notices:
+            html.append(render_to_string('notification/snippets/notice-snippet.html', {
+                    'notice': n,
+            }, context_instance=RequestContext(request)))
+
+        json =  simplejson.dumps(html, cls=DjangoJSONEncoder)
+        return HttpResponse(json, mimetype='application/json')
+    
+    # but just in case no AJAX, redirect them to the normal notifications view
+    else:
+        url = reverse('notification_notices')
+        return HttpResponseRedirect(url)
+
+def notification_mark_as_read(request, id):
+    notice = get_object_or_404(Notice, pk=id)
+    notice.unseen = False
+    notice.save()
+    
+    url = request.META.get('HTTP_REFERER','/')
+    return HttpResponseRedirect(url)
 
 
 def laowai(request, id):
     this_laowai = get_object_or_404(Laowai, pk=id)
 
+    objects = _get_news_feed(request, user=this_laowai)
     if request.user.is_authenticated():
         if request.user.get_profile() == this_laowai:
             url = reverse('profile')
@@ -315,13 +284,7 @@ def post(request, slug):
     if request.method == 'POST':
         form = InfoAddForm(request.POST, request.FILES)
         if form.is_valid():
-            
-            if not form.cleaned_data['content'] and not request.FILES['image'] \
-            or form.cleaned_data['content'] == "Write something on the wall...":
-                url = reverse('city', args=[city.slug])
-                return HttpResponseRedirect(url)
-            
-            
+                        
             try:
                 # Figure out what type of image it is
                 photo = request.FILES['image']
@@ -342,27 +305,33 @@ def post(request, slug):
             
                 open(path, 'w').write(image_content)
                 
+                
                 # create a Photo object first
                 new_photo = Photo.objects.create(
                     image = 'photos/images/%s' % filename,
                     city = city,
                     owner = laowai,
+                    object_pk = "tmp" # give it a fake one for a moment
                 )
                 
                 # now see if there's a post with the photo
                 if form.cleaned_data['content']:
-                    if not form.cleaned_data['content'] == "Write something on the wall...":
-                        new_info = NewInfo.objects.create(
-                            content = form.cleaned_data['content'],
-                            city = city,
-                            owner = laowai,
-                        )
+                    if form.cleaned_data['content'] == "Write something on the wall...":
+                        content = None
+                    else:
+                        content = form.cleaned_data['content']
                         
-                        # update the new_photo with relationship to this new_info
-                        info_type = ContentType.objects.get(app_label="list", model="newinfo")
-                        new_photo.content_type = info_type
-                        new_photo.object_pk = new_info.id
-                        new_photo.save()
+                    new_info = NewInfo.objects.create(
+                        content = content,
+                        city = city,
+                        owner = laowai,
+                    )
+                        
+                    # update the new_photo with relationship to this new_info
+                    info_type = ContentType.objects.get(app_label="list", model="newinfo")
+                    new_photo.content_type = info_type
+                    new_photo.object_pk = new_info.id
+                    new_photo.save()
                 
             # if it's just a message, no photo, then just create an info.
             except:
@@ -371,6 +340,8 @@ def post(request, slug):
                     city = city,
                     owner = laowai,
                 )
+                new_info.save()
+            
             
             url = reverse('news_feed', args=[city.slug])
             return HttpResponseRedirect(url)
@@ -390,7 +361,7 @@ def post(request, slug):
 def a_post(request, slug=None, number=None):
     city = get_object_or_404(City, slug=slug)
     object = get_object_or_404(NewInfo, id=number)
-    return render(request, 'list/a_post.html', locals())
+    return render(request, 'list/single_item.html', locals())
 
 
 @login_required
@@ -767,12 +738,13 @@ def ajax_comment(request):
         comment = get_object_or_404(Comment, pk=request.GET.get('c'))
                 
         # create a notification first
-        from notification import models as notification
-        object = get_object_or_404(NewInfo, pk=comment.object_pk)
-        if not object.owner.user == comment.user:
+        from notification import models as notification     
+
+        object = get_object_or_404(CommonInfo, pk=comment.object_pk)
+
+        if not comment.user == object.owner.user:
             notification.send([object.owner.user], "comment_posted", sender=comment.user,
                 object_pk=comment.object_pk, content_type=comment.content_type)
-        
     
         # send back the comment as AJAX response
         comment_html = render_to_string('snippets/comment.html', {'comment': comment})
@@ -799,13 +771,13 @@ def set_city(request, slug):
 def delete_a_post(request, slug, id):
     laowai = request.user.get_profile()
     city = get_object_or_404(City, slug=slug)
-    info = get_object_or_404(NewInfo, pk=id)
+    object = get_object_or_404(CommonInfo, pk=id)
     
     # IMPORTANT!!
-    if not laowai == info.owner:
+    if not laowai == object.owner:
         return HttpResponseRedirect('/naughty/')
 
-    info.delete()
+    object.delete()
     
     url = request.META.get('HTTP_REFERER','/')
     return HttpResponseRedirect(url)

@@ -1,0 +1,16 @@
+{% load thumbnail %}
+
+<li class="{% if notice.unseen %}unseen{% endif %}">
+	{% thumbnail notice.sender.get_profile.photo "40x40" crop="center" as im %}
+		<img src="{{ im.url }}">
+	{% endthumbnail %}
+	<p>
+		<a href="{% url laowai notice.sender.get_profile %}"><strong>{{ notice.sender.get_profile }}</strong></a> 
+		{{ notice.notice_type.description }} - <a href="{{ notice.get_absolute_url }}">view post</a>
+		{% if notice.unseen %}
+			<br/>
+			<a class="mark-as-read" href="{% url notification_mark_as_read notice.id %}">mark as read</a>
+		{% endif %}
+	</p>
+	
+</li>

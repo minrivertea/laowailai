@@ -10,13 +10,19 @@
 {% endblock %}
 
 {% block mapscripts %}
-{% if place.has_map %}<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.1&services=true"></script>{% endif %}
+	{% if place.has_map %}
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.1&services=true"></script>
+	{% endif %}
 {% endblock %} 
 
 {% block extrajs %}
 
-{% if place.has_map %}
+
+
 <script type="text/javascript">
+
+
+{% if place.has_map %}
 
 var map = new BMap.Map("map_area");
 var point = new BMap.Point({{ place.longitude }}, {{ place.latitude }});  
@@ -66,6 +72,8 @@ $("#close_map").click(function(){
   });
 });
 
+{% endif %}
+
 function bindPostCommentHandler() {    
     $('#comment-form form').submit(function() {
     	if ($('#comment-form form textarea').val() == '') {
@@ -93,25 +101,46 @@ function bindPostCommentHandler() {
 }  
       
 $(document).ready(function() { 
-   	     bindPostCommentHandler();  
+    bindPostCommentHandler(); 
+	$("#photos a.image").fancybox();
+   
 });  
 
 
    
  
 </script> 
-{% endif %} 
 
+
+ 
+
+<script type="application/javascript" src="/js/lightbox/jquery.fancybox-1.3.4.pack.js"></script>
 {% endblock %}
 
 
 
 
 {% block extracss %}
-
+<link rel="stylesheet" href="/css/fancybox/jquery.fancybox-1.3.4.css" />
 <link rel="stylesheet" href="/css/print.css" type="text/css" media="print" />
-
 <style type="text/css">
+
+.add-place {
+  float: right;
+  width: 142px;	
+}
+
+#rightbar .search h4 {
+  font-size: 13px;
+  font-weight: bold;
+  color: #333;	
+}
+
+#rightbar input.small-search {
+  width: 240px;
+  padding: 3px 5px;	
+}
+
 div#infobar {
   height: 50px;
   float: left;
@@ -133,22 +162,32 @@ div#infobar div p {
 
 div#place {
   float: left;
-  width: 100%;
+  width: 560px;
   margin-bottom: 0px;
   padding-bottom: 20px;
+}
+
+#map_area {
+  border: 10px solid #f1f1f1;
+  border-radius: 5px;	
+  float: left;
 }
 
 p.description {
   font-family: Georgia, sans-serif;	
   margin: 0;
   border-bottom: none;
+  width: 100%;
 }
 
 span#close_map {
-  float: right;
-  font-size: 11px;
-  padding-right: 20px;
-  color: #096233;	
+    background-color: #F1F1F1;
+    border-radius: 0 0 5px 5px;
+    float: right;
+    font-size: 11px;
+    padding: 3px 10px 5px;
+    color: #2D7886;
+    font-weight: bold;
 }
 
 span#close_map:hover {
@@ -350,13 +389,14 @@ div#photos a.add-one {
 
 
 </style>
+
 {% endblock %}
 
 {% block content %}
 
 <div id="top">
 	{% if request.user.is_authenticated %}
-	<div class="add-place-button"><a href="{% url add_place city.slug %}"><span>Add a place</span></a></div>
+		<a class="add-place button" href="{% url add_place city.slug %}"><span>Add a place</span></a>
 	{% else %}
 	<p class="signup"><a href="{% url registration_register %}"><strong>Signup</strong></a> or <a href="/accounts/login/"><strong>login</strong></a> to add a place</p>
 	{% endif %}
@@ -364,8 +404,23 @@ div#photos a.add-one {
 <h1>Places in {{ city }}</h1>
 </div>
 
-<h2>{{ place.name }} ({{ place.chinese_name }})</h2>
 
+
+<!--
+<div id="rightbar">
+	<div class="box">
+		<h3>Related places</h3>
+	</div>
+	
+	<div class="search">
+		<h4>Search for places in Fuzhou</h4>
+		<input type="text" class="small-search">
+	</div>
+</div>
+-->
+
+
+<h2>{{ place.name }} ({{ place.chinese_name }})</h2>
 
 
 <div id="place">
@@ -373,10 +428,10 @@ div#photos a.add-one {
 	<p class="description">{{ place.description }}</p>
 {% if place.has_map %}
 <div id="map_area" style="width: 560px; height: 80px;"></div>
-<span id="close_map" style="display: none;z-index: 9999;">Close map</span>
+<span id="close_map" style="display: none;z-index: 9999;">X Close map</span>
 {% else %}
 	{% if request.user.is_authenticated %}
-	<p><em>There's no map location for this place. <a href="{% url edit_location city.slug place.id %}">Add a map location</a></em></p>
+	<p><em>There's no map location for this place. <a href="{% url edit_location place.city.slug place.id %}">Add a map location &raquo;</a></em></p>
 	{% endif %}
 {% endif %}
 
@@ -420,21 +475,23 @@ div#photos a.add-one {
 
 
 <div id="photos">
-{% if place.get_photos %}
-{% for photo in place.get_photos %}
-	
-		{% thumbnail photo.image "80x80" crop="center" as im %}
-			<img alt="" title="" src="{{ im.url }}"/></a>
-		{% endthumbnail %}
+	{% if place.get_photos %}
+		{% for photo in place.get_photos %}
+			{% thumbnail photo.image "x600" crop="center" as im_large %}
+				<a class="image" href="{{ im_large.url }}">
+					{% thumbnail photo.image "80x80" crop="center" as im %}
+						<img alt="" title="" src="{{ im.url }}"/>
+					{% endthumbnail %}
+				</a>
+			{% endthumbnail %}
+		{% endfor %}
+	{% else %}
+		<p>There are no photos of this place yet!</p>
+	{% endif %}
 
-	
-{% endfor %}
-{% else %}
-<p>There are no photos of this place yet!</p>
-{% endif %}
-{% if request.user.is_authenticated %}
-<a class="add-one" href="{% url add_photo_to_place place.city.slug place.id %}">Add a photo of {{ place }} &raquo;</a>
-{% endif %}
+	{% if request.user.is_authenticated %}
+		<a class="add-one" href="{% url add_photo_to_place place.city.slug place.id %}">Add a photo of {{ place }} &raquo;</a>
+	{% endif %}
 </div>
 
 
@@ -452,8 +509,8 @@ div#photos a.add-one {
 	{% include "snippets/comment-list.html" %}
 	{% else %}
 	
-	<p><em>There are no comments about this place yet. 
-	{% if request.user.is_authenticated %}Why not add yours below?
+	<p><em>
+	{% if request.user.is_authenticated %}Have you been here? Tell others what you thought.
 	{% else %}
 	<br/><a href="{% url registration_register %}"><strong>Signup</strong></a> or <a href="{% url auth_login %}"><strong>login</strong></a> to add a comment</p>
 	{% endif %}

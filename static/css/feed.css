@@ -1,0 +1,299 @@
+
+div#feed {
+    float: left;
+    margin-top: 0px;
+    width: 600px;
+}
+
+div#feed ul {
+  margin: 0;
+  padding: 0;	
+}
+
+div#feed ul li {
+    display: block;
+    float: left;
+    list-style-type: none;
+    margin-bottom: 20px;
+    padding: 15px 20px;
+    padding-bottom: 20px;
+    width: 560px;
+    position: relative;
+    background-color: #f6f6f6;
+    border-radius: 5px;
+    box-shadow: 0 1px 2px #c1c1c1;
+}
+
+div#feed ul li.last {
+  border-bottom: none;	
+}
+
+div#feed ul li.first.only {
+  border-bottom: none;	
+}
+
+div#feed div.avatar {
+    float: left;
+    margin-right: 30px;
+    margin-top: 6px;
+    width: 42px;
+}
+
+div#feed div.post {
+    #background-color: #f9f9f9;
+    #border-radius: 5px 5px 5px 5px;
+    #box-shadow: 0 1px 5px #c1c1c1;
+    display: block;
+    float: left;
+    #padding: 15px 20px;
+    width: 465px;
+    #border: 1px solid #fff;
+}
+
+div#feed div.post img {
+  border: 3px solid #fff;
+  box-shadow: 0 1px 2px #666;	
+}
+
+div#feed div.post div.related_photo {
+  float: left;	
+  margin-top: 10px;
+}
+
+div#feed span.author {
+  font-weight: bold;	
+}
+
+div#feed span.placename {
+	font-weight: bold;	
+}
+
+div#feed span#placeinfo {
+  float: left;
+  margin-top: 5px;	
+  width: 480px;
+}
+
+div#feed p.url {
+  margin-top: 5px;	
+}
+
+div#feed div.meta {
+    background-color: #E2F1F3;
+    border: 1px solid #FFFFFF;
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: 0 1px 3px #C1C1C1;
+    color: #333333;
+    float: left;
+    font-size: 11px;
+    margin: 10px 0 0;
+    padding: 5px 10px;
+    width: 380px;
+}
+
+div#feed div.meta img {
+  position: relative;
+  top: 3px;	
+  left: 0px;
+  margin-bottom: 3px;
+  margin-right: 5px;
+}
+
+div#feed p {
+  margin-top: 0;	
+  margin-bottom: 0;
+  line-height: 1.6em;
+  font-size: 12px;
+}
+
+div#feed textarea {
+    border: medium none;
+    border-radius: 0 0 0 0;
+    color: #666666;
+    margin-bottom: 10px;
+    width: 300px;
+}
+
+img.map {
+  border: 10px solid white;
+  margin-top: -5px;
+  margin-left: 0px;	
+}
+
+
+
+
+span.like {
+ color: #2D7886;	
+}
+
+span.like:hover {
+  color: #F67B7B;
+  cursor: pointer;	
+}
+
+div#pagination {
+    background-color: #E6E6E6;
+    
+    /* Firefox 3.6+ */ 
+    background: -moz-linear-gradient(100% 100% 90deg, #e6e6e6, #f1f1f1); 
+    
+    /* Safari 4-5, Chrome 1-9 */ /* -webkit-gradient(<type>, <point> [, <radius>]?, <point> [, <radius>]? [, <stop>]*) */ 
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f1f1f1), to(#e6e6e6)); 
+    
+    /* Safari 5.1+, Chrome 10+ */ 
+    background: -webkit-linear-gradient(#e6e6e6, #f1f1f1); 
+    
+    /* Opera 11.10+ */ background: -o-linear-gradient(#e6e6e6, #f1f1f1);   
+    
+    border: 1px solid #d1d1d1;
+    border-radius: 2px 2px 2px 2px;
+    color: #2D7886;
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 40px;
+    padding: 15px 0;
+    text-align: center;
+    width: 100%;
+}
+
+div#pagination:hover {
+  cursor: pointer;
+  background-color: #e1e1e1;
+  color: #F67B7B;	
+}
+
+div#add-form {
+    float: left;
+    width: 560px;
+    margin: 0 0 20px 0;
+}
+
+div#add-form textarea {
+  width: 535px;
+  height: 20px;
+  padding: 10px;
+  font-size: 13px;
+  color: #666;
+  line-height: 1.4em;
+  margin-bottom: 0px;	
+}
+
+div#add-form textarea:focus {
+  border: 1px solid #999;	
+}
+
+div#add-form input.submit-button {
+  margin: 10px 18px 0 0;	
+}
+
+div#add-form form {
+    background-color: #E2F1F3;
+    border: 1px solid #FFFFFF;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 1px 2px #C1C1C1;
+    float: left;
+    margin: 0 0 30px;
+    padding: 15px;
+    width: 570px;
+}
+
+div#add-form h4 {
+  margin: 0 0 5px 0;
+  color: #666;	
+  font-size: 0.8em;
+}
+
+div#add-form div.form-left h4 {
+  color: black;	
+}
+
+
+div#add-form label {
+  margin: 0;
+  color: #666;
+  font-weight: normal;
+  font-size: 0.9em;
+}
+
+div#add-form p.small {
+  font-size: 0.7em;
+  margin: 0;
+  padding: 0;	
+}
+
+#button-block {
+  display: none;	
+}
+
+div#add-form div.options p {
+  float: left;
+  font-weight: bold;
+  padding: 0 20px;
+  position: relative;
+  top: 5px;	
+}
+
+div#add-form div.options p.selected {
+    background-color: #F6F6F6;
+    padding: 5px 20px 2px;
+    top: 0px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+div#add-form div#image-question {
+  font-size: 12px;
+  font-weight: bold;
+  float: left;
+  margin-top: 10px;
+  color: #2D7886;	
+}
+
+div#add-form div#image-question:hover {
+  cursor: pointer;
+  color: #F67B7B;	
+}
+
+div#add-form div#image-question span {
+  position: relative;
+  top: -7px;	
+}
+
+div#add-form div#image-question img {
+  margin-right: 5px;
+}
+
+div#add-form div#image-field {
+   font-size: 12px;
+   font-weight: bold;
+   margin-top: 10px;
+   float: left;
+   width: 310px;	
+}
+
+a.delete {
+  float: right;
+  font-size: 11px;
+  font-weight: bold;
+  display:none;	
+  padding: 5px;
+  background-color: #f4f4f4;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+a.delete:hover {
+  background-color: #DFECF1;	
+}
+
+div#feed ul li:hover a.delete {
+  display: block;	
+}
+
+div#add-form div.image {
+  float: left;
+  margin: 0 15px 0 0;	
+}

@@ -150,6 +150,17 @@ def add_place(request, slug):
                 current_number_suffix = current_number_suffix_match and current_number_suffix_match.group() or 0
                 next = str(int(current_number_suffix) +1)
                 slug = re.sub("(\d+)?$", next, slug)
+            
+            if not form.cleaned_data['longitude']:
+                longitude = None
+            else:
+                longitude = form.cleaned_data['longitude']
+            
+            if not form.cleaned_data['latitude']:
+                latitude = None
+            else: 
+                latitude = form.cleaned_data['latitude']
+            
             creation_args = {
                         'name': form.cleaned_data['name'],
                         'chinese_name': form.cleaned_data['chinese_name'],
@@ -159,15 +170,19 @@ def add_place(request, slug):
                         'owner': laowai,
                         'slug': slug,
                         'category': form.cleaned_data['category'],
-                        'longitude': form.cleaned_data['longitude'],
-                        'latitude': form.cleaned_data['latitude'],
+                        'longitude': longitude,
+                        'latitude': latitude,
             }
                    
             
             place = NewPlace.objects.create(**creation_args)
             redirect_url = reverse('places', args=[city.slug])
             return HttpResponseRedirect(redirect_url)
-    
+        
+        #if errors...
+        else:
+            form = AddPlaceForm(request.POST)
+            return render(request, "places/forms/add_place.html", locals())
     else:
         form = AddPlaceForm()
         
@@ -218,7 +233,7 @@ def add_photo(request, slug, id):
     
 
 @login_required
-def edit_location(request, id):
+def edit_location(request, slug, id):
     place = get_object_or_404(NewPlace, pk=id)
     
     # just double check that someone isn't trying to edit a place with an existing location
@@ -232,8 +247,8 @@ def edit_location(request, id):
             place.latitude = form.cleaned_data['latitude']
             place.save()
                     
-            redirect_url = reverse('place', args=[place.id])
-            return HttpResponseRedirect(redirect_url)
+            url = reverse('place', args=[place.city.slug, place.id])
+            return HttpResponseRedirect(url)
             
     
     else:

@@ -6,6 +6,10 @@ p.description {
   border-bottom: none;
   margin-bottom: 0;	
 }
+
+.save-profile {
+  font-size: 20px;	
+}
 </style>
 {% endblock %}
 
@@ -20,7 +24,7 @@ p.description {
 	{{ form.bio.errors }}
 		<textarea id="id_bio" rows="10" cols="60" name="bio">{{ laowai.bio }}</textarea>
 				<br/>
-		<input type="submit" value="" class="save-profile-button" />
+		<input type="submit" value="Save profile" class="save-profile button" />
 	</form>
 
 

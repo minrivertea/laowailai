@@ -13,7 +13,7 @@ function bindPostCommentHandler(idx) {
 	var thisObject = $('#comment-form-' + idx + ' form'); 
     thisObject.submit(function() {
     	if ($('textarea#id_comment_' + idx).val() == '') {
-    		$(this).append('<p class="warning" style="color:red; display:block; float:right;position:relative;top:10px;"><em>You must type something!</em></p>');
+    		$(this).append('<p class="warning" style="color:red; display:block; float:right;position:relative;top:5px; right: 10px;"><em>You must type something!</em></p>');
     	}
     	else {
         	$.ajax({  
@@ -52,7 +52,7 @@ function showComments(id) {
 
 
 function nextPage(page) {
-$.getJSON("/{{ city.slug }}/feed/", {xhr: "true", page: page},
+$.getJSON("/{{ city.slug }}/", {xhr: "true", page: page},
   function(data) {
   	$(data).appendTo('#feed ul');
   	pageNum++; 
@@ -65,18 +65,9 @@ $("#pagination").click(function () {
 });
 
 $("textarea").focus(function() {
-    if( $(this).text() == "Write something on the wall..." ) {
+    if( $(this).text() == "Write something on the wall...") {
         $(this).text("");
     }
-
-});
-
-$("textarea").blur(function() {
-
-    if( $(this).text() == "" ) {
-        $(this).text("Write something on the wall...");
-    }
-
 });
 
 $("#loading").ajaxStart(function(){
@@ -131,21 +122,98 @@ div#introduction {
   height: 300px;
   float: left;	
 }
+
+div#top {
+  	
+}
+
+#explanation {
+  font-family: Georgia, serif;
+  font-size: 16px;
+  font-style: italic;
+  margin: 0 0 20px 0;	
+}
+
+#people {
+  float: left;
+  margin-bottom: 30px;	
+  padding-bottom: 0px;
+}
+
+#people img {
+  float: left;
+  margin-right: 5px;	
+}
+
+#people span, #photos span {
+    color: #C1C1C1;
+    display: block;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+#photos {
+  float: left;	
+}
 </style>
 {% endblock %}
 
 {% block content %}
 	
 <div id="top">
-<h1>News from {{ city }}</h1>
+<h1>News from {{ city }} ({{ city.chinese_name }})</h1>
 {% if request.user.is_authenticated %}
 {% else %}
 	<p class="signup"><a href="{% url registration_register %}"><strong>Signup</strong></a> or <a href="/accounts/login/"><strong>login</strong></a> to add your news</p>
 	{% endif %}
 </div>
 
+<div id="rightbar">
+
+	
+		<div id="explanation">
+		{% if not request.user.is_authenticated %}
+			<p>This is a news feed for <strong>{{ city.name }}</strong> - it's created by the foreigners living and working here. <a href="{% url registration_register %}">Signup to add your voice.</a></p>
+		{% else %}
+			<p>This is a news feed for <strong>{{ city.name }}</strong> - it's created by the foreigners living and working here.</p>
+		{% endif %}
+	</div>
+
+	<div id="people">
+		<span>newest people in {{ city.name }} &raquo;</span>
+		{% for person in latest_people %}
+		  {% thumbnail person.photo "50x50" crop="center" as im %}
+			<a title="{{ person }}" href="{% url laowai person.pk %}"><img src="{{ im.url }}"></a>
+		  {% endthumbnail %}
+		{% endfor %}
+	</div>
+	
+	<div id="photos">
+		<span>latest photos from {{ city.name }} &raquo;</span>
+		{% for photo in latest_photos %}
+			{% thumbnail photo.image "50x50" crop="center" as im %}
+				<img src="{{ im.url }}">
+			{% endthumbnail %}
+		{% endfor %}
+	</div>
+	
+	
+	
+</div>
+
 	
 	<div id="feed">
+		{% if request.user.is_authenticated %}
+			{% if request.user.get_profile.city %}
+				<div id="add-form">
+					{% include "list/snippets/add-form.html" %}
+				</div>
+			{% endif %}
+		{% endif %}
+		
 		{% include "list/snippets/feed.html" %}
 	</div>
 

@@ -61,6 +61,17 @@
 <div id="iemessage"><p>This site won't work in IE6 - it's a 10 year old browser, and you should replace it with something better like <a href="http://www.mozilla.com/">Firefox</a> or <a href="http://www.google.com/chrome/">Chrome</a></div>
 <![endif]-->
 
+{% if user.is_superuser %}
+<div id="banner-message">
+	<p>
+		{{ signups }} signups | 
+		{{ places.count }} places |
+		<a href="/admin/">Login to admin interface</a> |
+		<a href="/newsletter/">Newsletter</a> |
+		<a href="{% url auth_logout %}">Logout</a>
+</div>
+{% endif %}
+
 	<div id="container">
 	    
 	    <!-- The header area -->
@@ -76,11 +87,34 @@
 		
 		<!-- the main section of the page -->
 
-		{% if user.is_authenticated %}
-		
+
+		<!-- REMOVED 7 September 2011
+		<div id="city-chooser">
+		   	<a id="home" href="">
+		   		{% if city %}
+		   			{{ city.name }}
+		   		{% else %}
+		   			{% if request.user.get_profile.city %}
+		   				{{ request.user.get_profile.city.name }}
+		   			{% else %}
+		   				Browse a city
+		   			{% endif %}
+		   		{% endif %}</a>
+	    	<ul class="city-chooser">
+	    		<li class="helper">Browse cities in China</li>
+		   		{% for city in all_cities %}
+		   		<li><a href="{% url news_feed city.slug %}">{{ city.name }} ({{ city.chinese_name }})</a></li>
+		   		{% endfor %}
+		   		</ul>
+		   </div>
+		-->
+
+		  
+		{% if user.is_authenticated %}  
 		<div id="profile" class="{% if 'profile' in request.path %}selected{% endif %}">
+		
 			<a title="Click to view your profile" href="{% url profile %}">Your profile</a>
-			<a class="notifications{% if notifications %} active{% endif %}" href="{% url notification_notices %}">
+			<a class="notifications{% if notifications %} active{% endif %}" href="{% url profile %}">
 			{% if notifications %}
 				{{ notifications.count }}
 			{% else %}
@@ -88,15 +122,20 @@
 			{% endif %}
 			</a>
 		</div>
+		{% else %}
+			<a id="home" class="{% ifequal '/' request.path %}selected{% endifequal %}" href="/">Home</a>
+			<a id="about" class="{% if '/about/' in request.path %}selected{% endif %}" href="/about/">About</a>
+			<a id="login" class="{% if '/login/' in request.path %}selected{% endif %}" href="{% url auth_login %}">Login</a>
+		
 		{% endif %}
 
 		<div id="navigation">
 				{% if city %}
-					<a class="events {% if 'events' in request.path %}selected{% endif %}" href="{% url events city.slug %}">Events</a>
+					<!--<a class="events {% if 'events' in request.path %}selected{% endif %}" href="{% url events city.slug %}">Events</a>-->
 					<a class="places {% if 'places' in request.path %}selected{% endif %}" href="{% url places city.slug %}">Places</a>
 					<a class="people {% if 'people' in request.path or 'laowai' in request.path %}selected{% endif %}" href="{% url people city.slug %}">People</a>
-					<a class="questions {% if 'questions' in request.path %}selected{% endif %}" href="{% url questions city.slug %}">How-to</a>
-					<a class="news {% if 'feed' in request.path %}selected{% endif %}" href="{% url news_feed city.slug%}">News</a>
+					<!--<a class="questions {% if 'questions' in request.path %}selected{% endif %}" href="{% url questions city.slug %}">How-to</a>-->
+					<a class="news {% ifequal city.get_absolute_url request.path %}selected{% endifequal %}" href="{% url news_feed city.slug%}">News</a>
 				{% endif %}
 
 		</div>

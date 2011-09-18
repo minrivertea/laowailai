@@ -24,23 +24,9 @@ $(document).ready(function() {
 {% block extracss %}
 
 <style type="text/css">
-div#left input.submit-event-button {
-    background: url("/images/submit-event-button.png") no-repeat scroll left top transparent;
-    border: medium none;
-    float: right;
-    height: 33px;
-    margin: 10px 0 10px 0;
-    width: 142px;
-}
 
-div#left input.submit-event-button:hover {
-  background: url('/images/submit-event-button.png') no-repeat center left;	
-  cursor: pointer;
-}
-
-div#left input.submit-event-button:active {
-  background: url('/images/submit-event-button.png') no-repeat bottom left;
-  cursor: pointer;	
+.button {
+  font-size: 20px;	
 }
 
 </style>
@@ -80,7 +66,7 @@ div#left input.submit-event-button:active {
 
 
 
-<input type="submit" class="submit-event-button" value="">
+<input type="submit" class="button" value="Submit Event">
 
 </form>
 

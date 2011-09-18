@@ -13,8 +13,10 @@ def common(request):
     context['all_cities'] = City.objects.all()
     if request.user.is_authenticated():
         context['notifications'] = Notice.objects.filter(recipient=request.user, unseen=True)
-        if request.user.get_profile().city:
+        try:
             context['city'] = request.user.get_profile().city
+        except:
+            context['city'] = None
     return context
     
 def get_laowai(request):
