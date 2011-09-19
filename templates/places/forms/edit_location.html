@@ -45,23 +45,10 @@ $('input').customInput();
 
 {% block extracss %}
 <style type="text/css">
-div#left input.save-location-button {
-  background: url('/images/save-location-button.png') no-repeat top left;
-  border: medium none;
-  height: 33px;
-  margin: 10px 0 10px 0px;
-  width: 142px;
-  float: right;  
-}
 
-div#left input.save-location-button:hover {
-  cursor: pointer;
-  background: url('/images/save-location-button.png') no-repeat center left;	
-}
-
-div#left input.save-location-button:active {
-  cursor: pointer;
-  background: url('/images/save-location-button.png') no-repeat bottom left;	
+p.description {
+  width: 100%;
+  border-bottom: none;	
 }
 
 div#categories {
@@ -79,10 +66,14 @@ div#categories h4 {
 
 div#maps {
   float: left;
-  width: 560px;
+  width: 860px;
   margin-bottom: 20px;
-  padding-bottom: 20px;
-  border-bottom: 3px dotted #e1e1e1;	
+  padding-bottom: 20px;	
+}
+
+div#map_area {
+  border: 10px solid #e1e1e1;
+  border-radius: 5px;	
 }
 
 div#maps h4 {
@@ -98,6 +89,12 @@ div#maps div#map_area {
   margin-bottom: 20px;	
 }
 
+.button {
+  font-size: 16px;
+  float: right;
+  width: 250px;
+  margin-right: 30px;	
+}
 
 
 
@@ -130,7 +127,7 @@ div#maps div#map_area {
 
 
 <div id="maps">
-<div id="map_area" style="width:560px; height:330px"></div>
+<div id="map_area" style="width:860px; height:430px"></div>
 <span id="close_map" style="display: none;">Close map</span>
 <label for="id_location">Location</label> <input id="id_location" type="text" name="location" maxlength="200" />
 <div style="display: none;">
