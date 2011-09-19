@@ -471,6 +471,19 @@ ul#notices li a.mark-as-read {
 				</p>
 	    	</div>
 		</div>
+		
+		<div class="row">
+	    	<div class="left">
+	    	  <h4>Password</h4>
+	    	</div>
+	    	<div class="right">
+	    		<p>
+				<a href="{% url auth_password_change %}">&raquo; 
+				Change your password
+				</a>
+				</p>
+	    	</div>
+		</div>	
 	  
 		<div class="row">
    			<div class="left">
@@ -492,16 +505,19 @@ ul#notices li a.mark-as-read {
 	  			<br clear="all"/>
 			
 					<div id="choose-new" style="display:none;">
-						<p><em>Click a city to select it:</em></p>
+						<p><em>Click a city to select it (this will change your home city)</em></p>
 						{% for city in all_cities %}
 							<a class="button" href="{% url set_city city.slug %}">{{ city.name }}</a>
 						{% endfor %}
 					</div>
 				</div>		  
 	  		</div>
-		</div>
+	  		
+
+	  		
+		</div>		
 	</div>
-	
+
 	<div id="stats" class="box">
 		
 		<div class="row">
