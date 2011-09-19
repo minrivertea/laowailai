@@ -31,19 +31,22 @@ var marker = new BMap.Marker(point);
 map.addOverlay(marker);
 
 
-$("#map_area").click(function openMap(){ 
+function openMap(){
+  $("#expand").css('display', 'none'); 
   $("#map_area").animate({
     height: "300px",
     opacity: 1,
     fontSize: "3em",
-    borderWidth: "10px"
   }, 500, function() {
   $("#close_map").attr("style", "display:block;");
   $('#map_area').unbind('click');
   map.centerAndZoom(new BMap.Point(marker.point.lng, marker.point.lat), 15); 
   map.addControl(new BMap.NavigationControl());	
   });
-});
+}
+
+$("#map_area").click(openMap);
+$("#expand").click(openMap);
 
 
 
@@ -52,18 +55,18 @@ $("#close_map").click(function(){
     height: "80px",
     opacity: 1,
     fontSize: "3em",
-    borderWidth: "10px"
   }, 500, function() {
   $("#close_map").attr("style", "display:none;");
+  $('#expand').css('display', 'block');
   map.centerAndZoom(new BMap.Point(marker.point.lng, marker.point.lat), 15);  
   $("#map_area").click(function openMap(){ 
   $("#map_area").animate({
     height: "300px",
     opacity: 1,
     fontSize: "3em",
-    borderWidth: "10px"
   }, 500, function() {
   $("#close_map").attr("style", "display:block;");
+  $('#expand').css('display', 'block');
   $('#map_area').unbind('click');
   map.centerAndZoom(new BMap.Point(marker.point.lng, marker.point.lat), 15); 
   map.addControl(new BMap.NavigationControl());	
@@ -167,10 +170,47 @@ div#place {
   padding-bottom: 20px;
 }
 
+#map {
+  position: relative;
+  float: left;	
+}
+
 #map_area {
   border: 10px solid #e1e1e1;
   border-radius: 5px;	
   float: left;
+  position: relative;
+  z-index: 0;
+}
+
+#expand {
+    background-color: #E1E1E1;
+    border-radius: 10px 0 0 0;
+    bottom: 0;
+    color: #2D7886;
+    display: block;
+    font-size: 29px;
+    font-weight: bold;
+    padding: 0px 10px 4px 8px;
+    position: absolute;
+    right: 0;
+    z-index: 101;
+}
+
+#expand:hover {
+  cursor: pointer;
+  color: #F67B7B;	
+}
+
+#overlay {
+  position: absolute;
+  width: 560px;
+  height: 80px;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  opacity: 0.8;	
+  z-index: 1;
 }
 
 p.description {
@@ -427,8 +467,11 @@ div#photos a.add-one {
 
 	<p class="description">{{ place.description }}</p>
 {% if place.has_map %}
-<div id="map_area" style="width: 560px; height: 80px;"></div>
-<span id="close_map" style="display: none;z-index: 9999;">X Close map</span>
+	<div id="map">
+		<div id="map_area" style="width: 560px; height: 80px; position: relative;"></div>
+		<div id="expand" style="">+</div>
+		<span id="close_map" style="display: none;z-index: 9999;">X Close map</span>
+	</div>
 {% else %}
 	{% if request.user.is_authenticated %}
 	<p><em>There's no map location for this place. <a href="{% url edit_location place.city.slug place.id %}">Add a map location &raquo;</a></em></p>
