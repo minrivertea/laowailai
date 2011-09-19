@@ -6,10 +6,16 @@
 <style type="text/css">
 
 div#left input.login {
-  float: right;
-  width: 170px;	
-  margin-right: 20px;
-  font-size: 16px;
+    float: left;
+    font-size: 20px;
+    margin-left: 265px;
+    margin-right: 20px;
+    width: 170px;
+}
+
+a.forgotten {
+  font-size: 11px;
+  float: left;	
 }
 
 p.red {
@@ -32,7 +38,7 @@ p.red {
 <h1>Login</h1>
 </div>
 
-<p class="description">Login to {{ sitename }} - if you haven't got an account, <a href="{% url registration_register %}">register here</a>.</p>
+<p class="description">Login to {{ sitename|lower }} - if you haven't got an account, <a href="{% url registration_register %}">register here</a>.</p>
 
 {% if form.errors %}
 <p class="red">Your username and password didn't match. Please try again.</p>
@@ -42,8 +48,9 @@ p.red {
 <p><label>Email</label> {{ form.username }}</p>
 <p><label>Password</label>{{ form.password }}</p>
 
-
+<p><a class="forgotten" href="{% url auth_password_reset %}">Forgotten your password?</a></p>
 <input type="submit" value="Login" class="login button" />
+
 <input type="hidden" name="next" value="{% if next %}{{ next }}{% else %}/{% endif %}" />
 </form>
 

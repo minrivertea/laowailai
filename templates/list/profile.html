@@ -36,6 +36,12 @@ function bindPostCommentHandler(idx) {
     });  
 }  
 
+function showComments(id) {
+  	bindPostCommentHandler(id);
+    $("div#comments_full_" + id).toggle();
+    $("span.show_comments" + id).removeAttr("onclick");	
+}
+
 function nextPage(page) {
 $.getJSON("/profile/", {xhr: "true", page: page},
   function(data) {
@@ -46,11 +52,11 @@ $.getJSON("/profile/", {xhr: "true", page: page},
 
 
 $('#notifications-nav').click(function notices() {
-$.getJSON("/profile/notices/", {xhr: "true"},
-  function(data) {
-  	$('div#notifications ul li').remove();
-  	$(data).appendTo('div#notifications ul');
-  });
+	$.getJSON("/profile/notices/", {xhr: "true"},
+	  function(data) {
+	  	$('div#notifications ul li').remove();
+	  	$(data).appendTo('div#notifications ul');
+	});
 });
 
 function tabs() {
@@ -87,12 +93,9 @@ $('a#change').click(function() {
 
       
 $(document).ready(function() { 
-	{% for info in objects.object_list %} 
-   	     bindPostCommentHandler({{ info.id }});
-	{% endfor %} 
-
  
-
+ $("a.image").fancybox();
+ 
  // Set up a listener so that when anything with a class of 'tab' 
  // is clicked, this function is run.
  $('.tab').click(function () {
@@ -116,6 +119,9 @@ $(document).ready(function() {
  
 });  
 </script>
+
+<script type="application/javascript" src="/js/lightbox/jquery.fancybox-1.3.4.pack.js"></script>
+
 {% endblock %}
 
 

@@ -16,7 +16,7 @@
     <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="/css/styles.css" />
     
-    <title>{% block title %}{% block pagetitle %}{% endblock %} - laowailai.com{% endblock %}</title>
+    <title>{% block title %}{% block pagetitle %}{% endblock %} - {{ sitename|lower }}{% endblock %}</title>
     <!--[if lte IE 6]>
 		<link rel="stylesheet" media="screen" type="text/css" href="/css/ie6.css" />
 	<![endif]-->
@@ -86,28 +86,6 @@
 		{% endif %}
 		
 		<!-- the main section of the page -->
-
-
-		<!-- REMOVED 7 September 2011
-		<div id="city-chooser">
-		   	<a id="home" href="">
-		   		{% if city %}
-		   			{{ city.name }}
-		   		{% else %}
-		   			{% if request.user.get_profile.city %}
-		   				{{ request.user.get_profile.city.name }}
-		   			{% else %}
-		   				Browse a city
-		   			{% endif %}
-		   		{% endif %}</a>
-	    	<ul class="city-chooser">
-	    		<li class="helper">Browse cities in China</li>
-		   		{% for city in all_cities %}
-		   		<li><a href="{% url news_feed city.slug %}">{{ city.name }} ({{ city.chinese_name }})</a></li>
-		   		{% endfor %}
-		   		</ul>
-		   </div>
-		-->
 
 		  
 		{% if user.is_authenticated %}  

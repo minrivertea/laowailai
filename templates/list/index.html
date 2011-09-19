@@ -72,6 +72,10 @@ div#top h1 {
   font-style: italic;
 }
 
+div#left #explanation div#search {
+  display: none;	
+}
+
 #explanation input.search {
   width: 220px;
   margin: 10px 0 5px 0;	
@@ -95,23 +99,12 @@ div#top h1 {
 
 
 #explanation a.help {
-  font-size: 12px;
-  float: right;
+  font-size: 13px;
+  float: left;
+  margin-top:10px;
   margin-right: 20px;	
 }
 
-
-
-div#left input.bigsearch {
-    border: 1px solid #E1E1E1;
-    border-radius: 5px 5px 5px 5px;
-    float: left;
-    font-size: 20px;
-    padding: 14px;
-    width: 740px;
-    margin: 0 5px 0px 0;
-    color: #999;
-}
 
 p.description {
   margin-bottom: 30px;	
@@ -253,11 +246,15 @@ div#cities a.city {
 	</div>
 	
 	<div id="explanation">
-		<p>This site is for foreigners living, working and travelling in China. Find things to do, eat and see, activities, friends and culture in your city.<br/>
-		<input type="text" class="search" value="What do you want to do?"/>
-		<input type="submit" value="Go!" class="go button"/>
-		<br/>
-		<a class="help" href="">How does it work?</a>
+		<p>This site is for foreigners living, working and travelling in China. Find things to do, eat and see, activities, friends and culture in your city.		
+		<div id="search">
+			<br/>
+			<input type="text" class="search" value="What do you want to do?"/>
+			<input type="submit" value="Go!" class="go button"/>
+			<br/>
+		</div>
+		
+		<a class="help" href="/user-guide/">How does it work?</a>
 		</p>
 	</div>
 

@@ -5,7 +5,7 @@
 	    	<div id="logo">
 	    	
 		    	<a title="LaoWaiLai (Fuzhou) Home" alt="home" href="/">
-		    		<img src="/images/logo2.png"/>
+		    		<img src="/images/logo3.png"/>
 		    		<span>LaoWaiLai Fuzhou</span>
 		    	</a>
 		    	
@@ -21,20 +21,10 @@
 		    <em>News, events and info for the well connected laowai in China</em>
 		    </div>
 		    
-		    <!-- HIDING THIS NOW WE HAVE A NEW CITY CHOOSER
-		    <div id="browse-cities">
-		    	<a href="{% url cities %}">Browse cities in China &raquo;</a>
-			</div>
-			-->
 			
 			{% if not user.is_authenticated %}
 			<div id="nav">
 	    		<a class="signup button" title="Register" alt="Register" href="{% url registration_register %}"><span>Signup now &raquo;</span></a>
-	    	<!-- REMOVED 8 September 2011, login is now in header
-	    		<div class="login">
-				<p>...or if you have an account, <a title="Login" alt="login" href="/accounts/login/"><strong>login</strong></a> </p>
-				</div>
-	    	-->
 	    	</div>
 			{% endif %}
 			

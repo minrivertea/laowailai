@@ -100,8 +100,11 @@ def _get_news_feed(request, user=None, city=None):
 def _news_feed_update_page(request, objects):
 
     infos = objects.paginator.page(int(request.GET.get('page')))
-    laowai = request.user.get_profile()
-        
+    try:
+        laowai = request.user.get_profile()
+    except:
+        laowai = None
+    
     objects_list = []
     for info in infos.object_list:
         objects_list.append(render_to_string('list/snippets/feed_li.html', {
@@ -258,14 +261,20 @@ def notification_mark_as_read(request, id):
 
 def laowai(request, id):
     this_laowai = get_object_or_404(Laowai, pk=id)
-
-    objects = _get_news_feed(request, user=this_laowai)
+    
     if request.user.is_authenticated():
         if request.user.get_profile() == this_laowai:
             url = reverse('profile')
             return HttpResponseRedirect(url)
+
     
-    city = this_laowai.city
+    city = this_laowai.city    
+    objects = _get_news_feed(request, user=this_laowai)
+    
+    # this is ajax for the 'load more news' function
+    if request.GET.get('xhr') and objects.paginator.page > 1:
+        json = _news_feed_update_page(request, objects)
+        return HttpResponse(json, mimetype='application/json')
     
     if this_laowai.profile_views == None:
         this_laowai.profile_views = 1
@@ -722,6 +731,7 @@ def suggestion_vote(request, suggestion):
 #    return render(request, 'suggestions.html', locals())
 
 def people(request, slug):
+    
     if request.user.is_authenticated():
         laowai = request.user.get_profile()
     else:

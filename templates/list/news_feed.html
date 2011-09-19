@@ -194,8 +194,12 @@ div#top {
 	<div id="photos">
 		<span>latest photos from {{ city.name }} &raquo;</span>
 		{% for photo in latest_photos %}
-			{% thumbnail photo.image "50x50" crop="center" as im %}
-				<img src="{{ im.url }}">
+			{% thumbnail photo.image "x600" crop="center" as im_large %}
+				<a class="image" href="{{ im_large.url }}">
+					{% thumbnail photo.image "50x50" crop="center" as im %}
+						<img alt="" title="" src="{{ im.url }}"/>
+					{% endthumbnail %}
+				</a>
 			{% endthumbnail %}
 		{% endfor %}
 	</div>
