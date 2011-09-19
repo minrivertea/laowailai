@@ -19,7 +19,7 @@ $('#id_name').blur( function() {
                 $('#username_status .notok').css('display', 'none');		
             }
             else {
-            	$('#id_name').attr('style', 'border-color: #e1adad; background-color: #f3dbdb;');
+            	$('#id_name').attr('style', 'border-color: red; background-color: #f3dbdb;');
                 $('#username_status .ok').css('display', 'none');
                 $('#username_status .notok').toggle();	
             }
@@ -61,28 +61,36 @@ p.description {
   float: left;
   height: 40px;
   width: 290px;	
-  margin: 26px 0 20px 0;
+  margin: 27px 0 20px 0;
 }
 
 #username_status .ok, #username_status .notok {
-    border-radius: 5px 5px 5px 5px;
+    border-radius: 0 5px 5px 0;
     display: none;
     float: left;
-    height: 20px;
-    padding: 12px 15px 10px;
-    width: 195px;
+    font-size: 11px;
     font-weight: bold;
-    font-size: 14px;
+    height: 19px;
+    left: -108px;
+    padding: 12px 15px 10px;
+    position: relative;
+    width: 50px;
 }
 
-.ok {
+#username_status .ok {
   background-color: #2e9e33;
   color: #fff;
-  	
+  width: 87px;
+  left: -145px;	
+  padding: 8px 15px 14px 15px;
 }
 
-.notok {
-  background-color: red;	
+#username_status .notok {
+  background-color: red;
+  color: #fff;	
+  width: 123px;
+  left: -182px;
+  padding: 8px 15px 14px 15px;
 }
 
 </style>
@@ -97,8 +105,8 @@ p.description {
 
 <div id="rightbar">
 	<div id="username_status">
-		<div class="ok">Cool</div>
-		<div class="notok">Not cool!</div>
+		<div class="ok"><img src="/images/username_tick.png" style="float: left; margin-right: 10px;"/>Username available</div>
+		<div class="notok"><img src="/images/username_cross.png" style="float: left; margin: 2px 10px 0 0;"/>Username taken (choose another)</div>
 	</div>
 
 	<p class="description"><em>Registering for an account at <span class="site">{{ sitename|lower }}</span> allows you to add to your city's feed, add and review places, and get notifications.</em></p>
