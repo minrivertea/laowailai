@@ -2,6 +2,40 @@
 
 {% block pagetitle %}Register{% endblock %}
 
+{% block extrajs %}
+<script type="text/javascript">
+
+$('#id_name').blur( function() {
+    $.ajax({  
+        type: "GET",  
+        data: $('#id_name').serialize(),  
+        url: "{% url check_username %}",  
+        cache: false,  
+        dataType: "html",  
+        success: function(data) {
+            if (data == "success") {
+            	$('#id_name').attr('style', 'border-color: #9acd9c; background-color: #def2df;');
+                $('#username_status .ok').toggle();
+                $('#username_status .notok').css('display', 'none');		
+            }
+            else {
+            	$('#id_name').attr('style', 'border-color: #e1adad; background-color: #f3dbdb;');
+                $('#username_status .ok').css('display', 'none');
+                $('#username_status .notok').toggle();	
+            }
+        },  
+        error: function (XMLHttpRequest, textStatus, errorThrown) {  
+            alert('error'); 
+        }  
+    }); 
+});
+
+
+
+</script>
+{% endblock %}
+
+
 {% block extracss %}
 <style type="text/css">
 div#left input.register {
@@ -14,11 +48,42 @@ div#left input.register {
 p.description {
     float: right;
     font-size: 19px;
-    margin: 20px 0 10px;
+    margin: 20px 20px 10px;
     width: 290px;
     border-bottom: none;
 }
 
+#rightbar {
+  width: 310px;	
+}
+
+#username_status {
+  float: left;
+  height: 40px;
+  width: 290px;	
+  margin: 26px 0 20px 0;
+}
+
+#username_status .ok, #username_status .notok {
+    border-radius: 5px 5px 5px 5px;
+    display: none;
+    float: left;
+    height: 20px;
+    padding: 12px 15px 10px;
+    width: 195px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.ok {
+  background-color: #2e9e33;
+  color: #fff;
+  	
+}
+
+.notok {
+  background-color: red;	
+}
 
 </style>
 {% endblock %}
@@ -29,12 +94,21 @@ p.description {
 <h1>Signup to {{ sitename|lower }}</h1>
 </div>
 
-<p class="description"><em>Registering for an account allows you to add to your city's feed, add and review places, and get notifications.</em></p>
+
+<div id="rightbar">
+	<div id="username_status">
+		<div class="ok">Cool</div>
+		<div class="notok">Not cool!</div>
+	</div>
+
+	<p class="description"><em>Registering for an account at <span class="site">{{ sitename|lower }}</span> allows you to add to your city's feed, add and review places, and get notifications.</em></p>
+
+</div>
 
 {{ form.errors }}
 
 <form method="post" action=".">
-  <p><label>Choose a username <span>(what you'll be called on the site)</span></label>{{ form.name }}</p>
+  <p id="username"><label>Choose a username <span>(your display name on the site)</span></label>{{ form.name }}</p>
   <p><label>Your email address <span>(will never be made public)</span></label>{{ form.email }}</p>
   <p><label>Choose a password</label>{{ form.password1 }}</p>
 

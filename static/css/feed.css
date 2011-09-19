@@ -21,7 +21,7 @@ div#feed ul li {
     position: relative;
     background-color: #f6f6f6;
     border-radius: 5px;
-    box-shadow: 0 1px 2px #c1c1c1;
+    box-shadow: 0 2px 2px #999;
 }
 
 div#feed ul li.last {
@@ -104,6 +104,7 @@ div#feed p {
   margin-bottom: 0;
   line-height: 1.6em;
   font-size: 12px;
+  color: #333;
 }
 
 div#feed textarea {

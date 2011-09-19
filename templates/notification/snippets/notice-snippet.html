@@ -7,6 +7,8 @@
 	<p>
 		<a href="{% url laowai notice.sender.get_profile %}"><strong>{{ notice.sender.get_profile }}</strong></a> 
 		{{ notice.notice_type.description }} - <a href="{{ notice.get_absolute_url }}">view post</a>
+		<br/>
+		<span class="date">made {{ notice.added|timesince }} ago</span>
 		{% if notice.unseen %}
 			<br/>
 			<a class="mark-as-read" href="{% url notification_mark_as_read notice.id %}">mark as read</a>

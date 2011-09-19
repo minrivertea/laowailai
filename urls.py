@@ -4,7 +4,7 @@ import django.views.static
 from django.views.generic.simple import direct_to_template
 
 from list.feeds import LatestEntriesFeed
-from list.views import index, ajax_comment, tell_a_friend, laowai, upload_profile_photo, add_a_bio, like, whats_next, profile, profile_notices, notification_mark_as_read
+from list.views import index, ajax_comment, tell_a_friend, laowai, upload_profile_photo, add_a_bio, like, whats_next, profile, profile_notices, notification_mark_as_read, _check_username
 from cities.views import cities, mark_city
 
 # Uncomment the next two lines to enable the admin:
@@ -61,6 +61,7 @@ urlpatterns += patterns('',
     url(r'^laowai/(\w+)/$', laowai, name="laowai"),
     url(r'^like/$', like, name="like"),
     url(r'^like/(\w+)$', like, name="like"),
+    url(r'^check_username/$', _check_username, name="check_username"),
     (r'^notifications/', include('notification.urls')),
     url(r'^tell-a-friend/$', tell_a_friend, name="tell_a_friend"),
     
