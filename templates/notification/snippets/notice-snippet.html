@@ -5,7 +5,7 @@
 		<img src="{{ im.url }}">
 	{% endthumbnail %}
 	<p>
-		<a href="{% url laowai notice.sender.get_profile %}"><strong>{{ notice.sender.get_profile }}</strong></a> 
+		<a href="{% url laowai notice.sender.get_profile.id %}"><strong>{{ notice.sender.get_profile }}</strong></a> 
 		{{ notice.notice_type.description }} - <a href="{{ notice.get_absolute_url }}">view post</a>
 		<br/>
 		<span class="date">made {{ notice.added|timesince }} ago</span>
