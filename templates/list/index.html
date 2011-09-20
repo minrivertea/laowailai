@@ -6,18 +6,8 @@
 
 {% block extrajs %}
 <script type="text/javascript">
-$('#expand').click(function openMap(){
-  $('#overlay').fadeOut('20'); 
-  $("#map").animate({
-    height: "500px",
-    opacity: 1,
-  }, 500, function() {
-  
-  $('#map_area').unbind('click');
-  });
-});
 
-$('#overlay').click(function openMap(){
+function openMap() {
   $('#overlay').fadeOut('20');
   $('.arrow').toggle(); 
   $("#map").animate({
@@ -27,8 +17,10 @@ $('#overlay').click(function openMap(){
   
   $('#map_area').unbind('click');
   });
-});
+}
 
+$('#expand').click(openMap);
+$('#overlay').click(openMap);
 
 
 $("input.search").focus(function() {
@@ -198,6 +190,11 @@ div#cities a.city {
   text-shadow: 0 2px 2px #fff;
   border-radius: 10px 0px 0px 0px;
   z-index: 101;
+}
+
+#map #expand:hover {
+  cursor: pointer;
+  color: #F67B7B;	
 }
 
 #map .arrow {
