@@ -124,7 +124,7 @@ class NewPlace(CommonInfo):
     rating_count = models.IntegerField(default="0")
     rating_total = models.IntegerField(default="0")
     category = models.CharField(max_length=200, choices=CATEGORY_CHOICES)
-    # verified = models.IntegerField(default="0")
+    verified = models.IntegerField(default="0")
     
     objects = DistanceManager()
 
