@@ -132,7 +132,7 @@ def place(request, slug, id):
         rated = Rating.objects.filter(rated_object=place, rated_by=laowai)
     
     if place.get_average_rating > 0:
-        current_rating = int(place.get_average_rating()) * 25
+        current_rating = int(place.get_average_rating()) * 25 # weird numbers for the CSS to work
     else:
         current_rating = 0
         
@@ -295,10 +295,18 @@ def get_place_by_slug(request, city, slug):
     
 @login_required
 def verify_place(request, slug, id):
+
     place = get_object_or_404(NewPlace, pk=id)
     place.verified += 1
     place.verified_by.add(request.user.get_profile())
     place.save()
+
+    if request.GET.get('xhr'):
+        response_dict = {}
+        response_dict.update({'success': True })
+        response_dict.update({'num': place.verified })
+        json =  simplejson.dumps(response_dict, cls=DjangoJSONEncoder)
+        return HttpResponse(json, mimetype='application/json')
        
     url = reverse('place', args=[place.city.slug, place.id])
     return HttpResponseRedirect(url)

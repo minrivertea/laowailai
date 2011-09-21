@@ -102,9 +102,25 @@ function bindPostCommentHandler() {
         return false;
     });  
 }  
+
+
+function verifyPlace() {
+    $.getJSON("{% url verify_place place.city.slug place.id %}", {xhr: "true"},
+      function(data) {
+      if (data.success == true) {
+          $('#verify a.button').replaceWith('<span class="button already-verified">Verified by you!</span>');
+          $('#verify #num').replaceWith(data.num);
+      }
+      else {
+      	
+      }
+  	});
+}
       
 $(document).ready(function() { 
     bindPostCommentHandler(); 
+    $('#verify a.button').attr('href', '#');
+    $('#verify a.button').click(verifyPlace);
 	$("#photos a.image").fancybox();
     $('#social-proof').fancybox({
     	'autoDimensions':false,
@@ -594,7 +610,7 @@ div#feed div.comment-content {
 		{% else %}
 			<span class="unverified button">Not verified</span>
 		{% endif %}
-		<p>Verified by {{ place.verified }} {{ place.verified|pluralize:"person, people" }}
+		<p>Verified by <span id="num">{{ place.verified }}</span> {{ place.verified|pluralize:"person, people" }}
 		<br/>
 		<a class="help" href="#social-proof-full" id="social-proof">What is this?</a>
 		<div id="social-proof-full">

@@ -20,3 +20,12 @@ class City(models.Model):
     
     def get_absolute_url(self):
         return "/%s/" % self.slug
+        
+        
+class Blog(models.Model):
+    url = models.URLField()
+    name = models.CharField(max_length=200, blank=True, null=True)
+    feed = models.URLField(blank=True, null=True)
+    
+    def __unicode_(self):
+        return self.url

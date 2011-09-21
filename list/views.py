@@ -124,10 +124,8 @@ def _check_username(request):
         response_dict = {}
         if Laowai.objects.filter(name__iexact=temp_username).count() > 0:
             response_dict.update({'fail': True })
-            print "yes, this username is already taken"
         else:
             response_dict.update({'success': True })
-            print "no, this username is not taken"
         return HttpResponse(response_dict)
             
 
