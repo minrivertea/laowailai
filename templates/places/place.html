@@ -139,6 +139,29 @@ $(document).ready(function() {
   color: #333;	
 }
 
+#rightbar #nearest {
+	background-color: #ecf3f6;
+	border-radius: 5px;
+}
+
+#rightbar #nearest h3 {
+  color: #C24046;
+  font-size: 13px;	
+}
+
+#rightbar #nearest ul {
+    font-size: 13px;
+    list-style-type: square;
+    margin: 10px 0 0 20px;
+    font-weight: bold;
+}
+
+#rightbar #nearest ul li span {
+  color: #666;	
+  font-size: 11px;
+  font-weight: normal;
+}
+
 #rightbar input.small-search {
   width: 240px;
   padding: 3px 5px;	
@@ -161,6 +184,32 @@ div#infobar div {
 div#infobar div p {
   font-size: 11px;
   margin: 0;	
+}
+
+#verify {
+    display: none;
+    float: left;
+    height: 50px;
+    width: 560px;
+}
+
+#verify a.button {
+  padding: 5px 8px;
+  font-size: 11px;
+  float: left;	
+}
+
+#verify a.help {
+  font-size: 10px;
+  float: left;	
+}
+
+#verify p {
+    color: #999999;
+    float: left;
+    font-size: 11px;
+    margin-left: 10px;
+    line-height: 1.2em;
 }
 
 div#place {
@@ -446,18 +495,21 @@ div#photos a.add-one {
 
 
 
-<!--
 <div id="rightbar">
-	<div class="box">
-		<h3>Related places</h3>
-	</div>
 	
-	<div class="search">
-		<h4>Search for places in Fuzhou</h4>
-		<input type="text" class="small-search">
+	{% if place.get_nearest %}
+	<div id="nearest" class="box">
+		<h3>Nearby places</h3>
+		<ul>
+		{% for p in place.get_nearest %}
+			<li><a href="{% url place p.city.slug p.id %}">{{ p.name }}</a> <span>{{ p.distance_miles|floatformat }} km away</span></li>
+		{% endfor %}
+		</ul>
 	</div>
+	{% endif %}
+	
 </div>
--->
+
 
 
 <h2>{{ place.name }} ({{ place.chinese_name }})</h2>
@@ -466,6 +518,20 @@ div#photos a.add-one {
 <div id="place">
 
 	<p class="description">{{ place.description }}</p>
+	
+	
+	<div id="verify">
+		{% if request.user.is_authenticated %}
+			{% if place.verified > 3 %}
+				<span class="verified">Verified</span>
+			{% else %}
+				<a class="button" href="">Verify this place</a> 
+			{% endif %}
+		<p>Verified by 2 people
+		<br/><a class="help" href="">What is this?</a></p>
+		{% endif %}
+	</div>
+	
 {% if place.has_map %}
 	<div id="map">
 		<div id="map_area" style="width: 560px; height: 80px; position: relative;"></div>
@@ -511,6 +577,7 @@ div#photos a.add-one {
 	<div>
 		<div class="print" onClick="window.print()"><span>Print</span></div>
 	</div>
+
 
 	
 </div>

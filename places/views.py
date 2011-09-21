@@ -124,6 +124,7 @@ def place(request, slug, id):
         laowai = get_object_or_404(Laowai, user=request.user)
     except:
         laowai = None
+        
     # check if this has been rated
     if place.rating_count > 0:
         # get a list of ratings related to this place and this user
@@ -133,6 +134,7 @@ def place(request, slug, id):
         current_rating = int(place.get_average_rating()) * 25
     else:
         current_rating = 0
+        
         
     return render(request, "places/place.html", locals())
 
