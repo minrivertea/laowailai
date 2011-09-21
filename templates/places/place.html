@@ -106,7 +106,11 @@ function bindPostCommentHandler() {
 $(document).ready(function() { 
     bindPostCommentHandler(); 
 	$("#photos a.image").fancybox();
-   
+    $('#social-proof').fancybox({
+    	'autoDimensions':false,
+    	'width':600,
+    	'padding': 30,
+    });
 });  
 
 
@@ -192,7 +196,7 @@ div#infobar div p {
 }
 
 #verify {
-    display: none;
+    display: block;
     float: left;
     height: 50px;
     width: 560px;
@@ -209,12 +213,40 @@ div#infobar div p {
   float: left;	
 }
 
+#verify #social-proof-full {
+  display: none;	
+}
+
+#social-proof-full h3 {
+    color: #C24046;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
 #verify p {
     color: #999999;
     float: left;
     font-size: 11px;
     margin-left: 10px;
     line-height: 1.2em;
+}
+
+#verify span.unverified {
+  	padding: 5px 8px;
+  	color: #C24046;
+  	float: left;
+}
+
+#verify span.verified {
+  	padding: 5px 8px;
+  	color: green;
+  	float: left;
+}
+
+#verify span.already-verified {
+  	padding: 5px 8px;
+  	color: green;
+  	float: left;	
 }
 
 div#place {
@@ -550,14 +582,26 @@ div#feed div.comment-content {
 	
 	<div id="verify">
 		{% if request.user.is_authenticated %}
-			{% if place.verified > 3 %}
-				<span class="verified">Verified</span>
+			{% if request.user.get_profile in place.verified_by.all %}
+				<span class="button already-verified">Verified by you!</span>
 			{% else %}
-				<a class="button" href="">Verify this place</a> 
+				{% if place.verified > 2 %}
+					<span class="verified button">Verified</span>
+				{% else %}	
+					<a class="button" href="{% url verify_place place.city.slug place.id %}">Verify this place</a> 
+				{% endif %}
 			{% endif %}
-		<p>Verified by 2 people
-		<br/><a class="help" href="">What is this?</a></p>
+		{% else %}
+			<span class="unverified button">Not verified</span>
 		{% endif %}
+		<p>Verified by {{ place.verified }} {{ place.verified|pluralize:"person, people" }}
+		<br/>
+		<a class="help" href="#social-proof-full" id="social-proof">What is this?</a>
+		<div id="social-proof-full">
+			<h3>Verified places</h3>
+			<p>A verified place means that it's been added by one user, and then confirmed by other users of the site. It's helpful to establish whether a place actually exists, still exists and is as the description says it is.</p>
+			</div>
+		</p>
 	</div>
 	
 {% if place.has_map %}

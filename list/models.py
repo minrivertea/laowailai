@@ -38,6 +38,7 @@ class Laowai(models.Model):
     photo = models.ImageField(blank=True, upload_to='photos/profiles/')
     rank_points = models.IntegerField(default="0")
     profile_views = models.IntegerField(default="0")
+    verified = models.ManyToManyField('CommonInfo', null=True, blank=True)
     
     
     def __unicode__(self):

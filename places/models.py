@@ -43,7 +43,6 @@ class DistanceManager(models.Manager):
         cursor = connection.cursor()
         x, y = point # x=latitude, y=longitude
         table = self.model._meta.db_table
-        print exclude
         
         
         template = Template("""
@@ -125,6 +124,7 @@ class NewPlace(CommonInfo):
     rating_total = models.IntegerField(default="0")
     category = models.CharField(max_length=200, choices=CATEGORY_CHOICES)
     verified = models.IntegerField(default="0")
+    verified_by = models.ManyToManyField(Laowai, null=True, blank=True)
     
     objects = DistanceManager()
 
@@ -174,7 +174,7 @@ class NewPlace(CommonInfo):
         
         return r   
 
-# this is depracated, DO NOT USE
+# this is deprecated, DO NOT USE
 class Place(models.Model):
     name = models.CharField(max_length=200)
     chinese_name = models.CharField(max_length=200)
