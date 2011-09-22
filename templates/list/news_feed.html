@@ -104,6 +104,7 @@ $('#image-question').click(function() {
       
 $(document).ready(function() { 
 	$("a.image").fancybox();
+	$('a.add-blog').fancybox({'autoDimensions': false, 'width': 600, 'height': 600, 'padding': 30,});
 });  
 
 </script>  
@@ -146,7 +147,7 @@ div#top {
   margin-right: 5px;	
 }
 
-#people span, #photos span {
+#people span, #photos span, #blogs span {
     color: #C1C1C1;
     display: block;
     font-size: 11px;
@@ -158,6 +159,39 @@ div#top {
 
 #photos {
   float: left;	
+  margin-bottom: 20px;
+}
+
+#blogs {
+  float: left;
+}
+
+#blogs ul {
+  list-style-type: none;
+  font-size: 15px;
+  line-height: 1em;	
+}
+
+#blogs ul p {
+  line-height: 1.2em;	
+}
+
+#blogs ul span.url {
+  font-size: 11px;	
+  text-transform: none;
+  font-weight: normal;
+  letter-spacing: 0;
+  color: #666;
+}
+
+.button.add-blog {
+  padding: 2px 4px;
+  font-size: 11px;	
+}
+
+#blogs #add-blog-form {
+  display: none;
+  width: 200px;	
 }
 </style>
 {% endblock %}
@@ -184,7 +218,7 @@ div#top {
 	</div>
 
 	<div id="people">
-		<span>newest people in {{ city.name }} &raquo;</span>
+		<span>newest people in {{ city.name }} <a href="{% url people city.slug %}">more &raquo;</a></span>
 		{% for person in latest_people %}
 		  {% thumbnail person.photo "50x50" crop="center" as im %}
 			<a title="{{ person }}" href="{% url laowai person.pk %}"><img src="{{ im.url }}"></a>
@@ -193,7 +227,7 @@ div#top {
 	</div>
 	
 	<div id="photos">
-		<span>latest photos from {{ city.name }} &raquo;</span>
+		<span>latest photos from {{ city.name }} <a href="">more &raquo;</a></span>
 		{% for photo in latest_photos %}
 			{% thumbnail photo.image "x600" crop="center" as im_large %}
 				<a class="image" href="{{ im_large.url }}">
@@ -203,6 +237,36 @@ div#top {
 				</a>
 			{% endthumbnail %}
 		{% endfor %}
+	</div>
+	
+	
+	<div id="blogs">
+		<span>blogs from {{ city.name }} &raquo;</span>
+		<ul>
+			{% for blog in city.get_latest_blogs %}
+			<li>
+				<p>
+					{% if blog.name %}
+						<a href="{{ blog.url }}">{{ blog.name }}</a><br/>
+						<span class="url">{{ blog.url }}</span>
+					{% else %}
+						<a href="{{ blog.url }}">{{ blog.url }}</a>
+					{% endif %}
+				</p>
+			</li>
+			{% endfor %}
+		</ul>
+		<a class="button add-blog" href="#add-blog-form">+ Add a blog</a>
+		<div id="add-blog-form">
+			<h3>Add a blog feed to {{ city.name }}</h3>
+			<p>Enter the URL of a blog about {{ city.name }} (or just written by somebody living in {{ city.name }}) and we'll grab the latest entries from that blog automatically and display them on the {{ city.name }} news feed.</p>
+			<form action="{% url add_blog city.slug %}" method="POST">
+			<label>URL *</label><input type="text" name="url" id="id_url"/>
+			<label>Name</label><input type="text" name="name" id="id_name"/>
+			<label>RSS Feed URL</label><input type="text" name="feed" id="id_feed"/>
+			<input type="submit" class="button" value="Submit"/>
+			</form>
+		</div>
 	</div>
 	
 	

@@ -90,6 +90,29 @@ a:hover, a:active {
 
 /* main divs */
 
+#header-messages {
+    background-color: #F1F1F1;
+    border-bottom: 1px solid #FFFFFF;
+    box-shadow: 0 1px 3px #999999;
+    padding: 10px 0;
+    text-align: center;
+    width: 100%;
+}
+
+#header-messages a {
+  text-decoration: underline;	
+}
+
+#header-messages p {
+  font-weight: bold;
+  color: green;
+}
+
+#header-messages #speaker {
+  position: relative;
+  top: 6px;
+}
+
 div#container {
   margin: 0 auto;
   width: 960px;

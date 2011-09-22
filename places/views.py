@@ -16,6 +16,7 @@ from laowailai.places.data import find_places
 from laowailai.slugify import get_slugify
 from laowailai.ratings.models import Rating
 from laowailai.cities.models import City
+from laowailai.utils import set_message
 
 # django stuff
 from django.http import Http404, HttpResponse, HttpResponseRedirect
@@ -179,6 +180,10 @@ def add_place(request, slug):
                    
             
             place = NewPlace.objects.create(**creation_args)
+            
+            message = '%s has been added! You can <a href="%s">view it here</a>' % (place.name, place.get_absolute_url())
+            set_message(request, message)
+            
             redirect_url = reverse('places', args=[city.slug])
             return HttpResponseRedirect(redirect_url)
         
@@ -300,6 +305,8 @@ def verify_place(request, slug, id):
     place.verified += 1
     place.verified_by.add(request.user.get_profile())
     place.save()
+    
+    request.user.get_profile().rank_points += 1
 
     if request.GET.get('xhr'):
         response_dict = {}

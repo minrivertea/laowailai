@@ -1,6 +1,6 @@
 {% load thumbnail %}
 
-<li class="{% if notice.unseen %}unseen{% endif %}">
+<li id="notice_{{ notice.id }}" class="{% if notice.unseen %}unseen{% endif %}">
 	{% thumbnail notice.sender.get_profile.photo "40x40" crop="center" as im %}
 		<img src="{{ im.url }}">
 	{% endthumbnail %}

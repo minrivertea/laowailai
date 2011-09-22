@@ -15,6 +15,7 @@ from django.template.loader import render_to_string
 from laowailai.list.models import Laowai, CommonInfo
 from laowailai.cities.models import City
 
+
 #these are the values in the database
 CATEGORY_1 = 'eat'
 CATEGORY_2 = 'drink'
@@ -117,7 +118,7 @@ class NewPlace(CommonInfo):
     chinese_name = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200)
     description = models.TextField()
-    location = models.CharField(max_length=200)
+    location = models.CharField(max_length=200, blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
     latitude = models.FloatField(blank=True, null=True)
     rating_count = models.IntegerField(default="0")
@@ -146,7 +147,7 @@ class NewPlace(CommonInfo):
         return current_rating  
     
     def canonical_url(self):
-        return "http://www.laowailai.com/places/%s/%s" % (self.city.slug, self.slug)
+        return "http://www.laowailai.com/%s/places/%s" % (self.city.slug, self.slug)
     
     def has_map(self):
         if self.longitude == None or self.latitude == None:
@@ -155,7 +156,7 @@ class NewPlace(CommonInfo):
             return True
     
     def get_absolute_url(self):
-        return "/places/%s/" % self.pk  
+        return "/%s/places/%s/" % (self.city.slug, self.pk)  
         
     def get_photos(self):
         from laowailai.list.models import Photo
@@ -164,15 +165,21 @@ class NewPlace(CommonInfo):
     
     def get_nearest(self, num=5, within_range=20):
         r = []
-        places = NewPlace.objects.nearest_to((self.latitude, self.longitude),
+        try:
+            places = NewPlace.objects.nearest_to((self.latitude, self.longitude),
                                                 number=num, within_range=within_range,
                                                 exclude=self.slug)
+        except:
+            places = None
+            
+        if places:
+            for place, distance_miles in places:
+                place.distance_miles = distance_miles
+                r.append(place)
+            return r
         
-        for place, distance_miles in places:
-            place.distance_miles = distance_miles
-            r.append(place)
-        
-        return r   
+        else:
+            return False
 
 # this is deprecated, DO NOT USE
 class Place(models.Model):

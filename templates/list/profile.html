@@ -50,6 +50,14 @@ $.getJSON("/profile/", {xhr: "true", page: page},
   });
 }
 
+function markAsRead(pk) {
+	$.getJSON("/profile/notices/" + pk + '/', {xhr: "true"},
+	  function(data) {
+	  	$('#notice_' + pk).removeClass('unseen');
+	  	$('#notice_' + pk + ' a.mark-as-read').replaceWith('');
+	});
+}
+
 
 $('#notifications-nav').click(function notices() {
 	$.getJSON("/profile/notices/", {xhr: "true"},
@@ -89,6 +97,9 @@ $('a#change').click(function() {
 	$('#choose-new').toggle();
 });
 
+$('#add-contact-button').click( function() {
+	$('#add-contact-form').toggle();
+});
 
 
       
@@ -96,6 +107,15 @@ $(document).ready(function() {
  
  $("a.image").fancybox();
  
+ {% for n in notices %}{% if n.unseen %}
+  $('#notice_{{ n.id }} a.mark-as-read').attr('href', '#');
+  $('#notice_{{ n.id }} a.mark-as-read').click( function() {
+     markAsRead({{ n.id }});
+  });
+ {% endif %}
+ {% endfor %}
+  
+   
  // Set up a listener so that when anything with a class of 'tab' 
  // is clicked, this function is run.
  $('.tab').click(function () {
@@ -294,6 +314,25 @@ div#cities div#choose-new p {
   margin: 0px 0 10px 0px;	
 }
 
+
+div#add-contact-form {
+  margin-bottom: 20px;	
+}
+
+div#add-contact-form input {
+    margin: 10px 0 5px;
+    width: 400px;
+}
+
+div#add-contact-form span.help {
+  font-size: 11px;
+  color: #999;	
+}
+
+div#add-contact-form span.help strong {
+  color: #333;	
+}
+
 div#stats {
     float: left;
     padding-top: 20px;
@@ -478,6 +517,25 @@ ul#notices li a.mark-as-read {
 				<a href="{% url auth_password_change %}">&raquo; 
 				Change your password
 				</a>
+				</p>
+	    	</div>
+		</div>	
+		
+		<div class="row" style="display:none;">
+	    	<div class="left">
+	    	  <h4>Contact details</h4>
+	    	</div>
+	    	<div class="right">
+	    		<p>
+	    		{% if laowai.contact_public %}
+	    			{{ laowai.contact_public }}
+	    		{% else %}
+	    			<a id="add-contact-button" href="#">&raquo; Add contact details</a>
+	    			<div id="add-contact-form" style="display: none;">
+	    				<input id="id_contact_public" name="contact_public" type="text">
+	    				<span class="help">This will be a <strong>public</strong> contact method. Do not put private email or phone numbers that you do not want other people to see. If you leave this box empty, your contact details will remain private.</span>
+	    			</div>
+	    		{% endif %}
 				</p>
 	    	</div>
 		</div>	

@@ -268,6 +268,11 @@ def notification_mark_as_read(request, id):
     notice.unseen = False
     notice.save()
     
+    if request.GET.get('xhr'):
+        response_dict = {}
+        response_dict.update({'success': True})
+        return HttpResponse(simplejson.dumps(response_dict, cls=DjangoJSONEncoder))
+    
     url = request.META.get('HTTP_REFERER','/')
     return HttpResponseRedirect(url)
 

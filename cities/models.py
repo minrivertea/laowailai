@@ -18,6 +18,12 @@ class City(models.Model):
     def __unicode__(self):
         return self.name
     
+    
+    def get_latest_blogs(self):
+        blogs = Blog.objects.filter(city=self, approved=True)
+        return blogs
+        
+    
     def get_absolute_url(self):
         return "/%s/" % self.slug
         
@@ -26,6 +32,9 @@ class Blog(models.Model):
     url = models.URLField()
     name = models.CharField(max_length=200, blank=True, null=True)
     feed = models.URLField(blank=True, null=True)
+    city = models.ForeignKey(City)
+    last_checked = models.DateTimeField(default=datetime.now())
+    approved = models.BooleanField(default=False)
     
-    def __unicode_(self):
+    def __unicode__(self):
         return self.url

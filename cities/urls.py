@@ -6,6 +6,7 @@ from laowailai.list.views import people
 
 urlpatterns = patterns('',
     (r'^', include('laowailai.list.urls')),
+    url(r'^add-blog/$', views.add_blog, name="add_blog"),
     (r'^places/', include('laowailai.places.urls')),
     url(r'^people/$', people, name="people"),
     (r'^events/', include('laowailai.events.urls')),

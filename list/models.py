@@ -16,7 +16,16 @@ from django.shortcuts import get_object_or_404
 from laowailai.list.signals import new_laowai, new_subscriber #comment_notifier
 from laowailai.cities.models import City
 
-
+#these are the values in the database
+GENDER_1 = 'male'
+GENDER_2 = 'female'
+GENDER_3 = 'other'
+# these are the values it will display
+GENDER_CHOICES = (
+            (GENDER_1, u"Male"),
+            (GENDER_2, u"Female"),
+            (GENDER_3, u"Other"),    
+)
 
 class Subscriber(models.Model):
     email = models.EmailField()
@@ -39,6 +48,12 @@ class Laowai(models.Model):
     rank_points = models.IntegerField(default="0")
     profile_views = models.IntegerField(default="0")
     verified = models.ManyToManyField('CommonInfo', null=True, blank=True)
+    contact_public = models.CharField(max_length=200, blank=True, null=True)
+    # gender = models.CharField(max_length=100, blank=True, null=True, choices=GENDER_CHOICES)
+    # languages = models.CharField(max_length=256, blank=True, null=True)
+    # nationality = models.CharField(max_length=100, blank=True, null=True, choices=COUNTRY_CHOICES)
+    # job_title = models.CharField(max_length=200, blank=True, null=True)
+    # url = models.URLField(blank=True, null-True)
     
     
     def __unicode__(self):
