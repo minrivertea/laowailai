@@ -233,7 +233,7 @@ div#top {
 	</div>
 	
 	<div id="photos">
-		<span>latest photos from {{ city.name }} <a href="">more &raquo;</a></span>
+		<span>latest photos from {{ city.name }} <a href="{% url photos city.slug %}">more &raquo;</a></span>
 		{% for photo in latest_photos %}
 			{% thumbnail photo.image "x600" crop="center" as im_large %}
 				<a class="image" href="{{ im_large.url }}">

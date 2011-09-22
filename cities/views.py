@@ -23,6 +23,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 
 from cities.forms import BlogAddForm
+from list.models import Photo
 
 #render shortcut
 def render(request, template, context_dict=None, **kwargs):
@@ -50,7 +51,12 @@ def mark_city(request, id):
     laowai.save()
     url = reverse('city', args=[city.slug])
     return HttpResponseRedirect(url)
-    
+
+
+def photos(request, slug):
+    city = get_object_or_404(City, slug=slug)
+    photos = Photo.objects.filter(city=city)
+    return render(request, "cities/photos.html", locals())    
 
 def add_blog(request, slug):
     city = get_object_or_404(City, slug=slug)

@@ -121,7 +121,7 @@
 					<!--<a class="events {% if 'events' in request.path %}selected{% endif %}" href="{% url events city.slug %}">Events</a>-->
 					<a class="places {% if 'places' in request.path %}selected{% endif %}" href="{% url places city.slug %}">Places</a>
 					<a class="people {% if 'people' in request.path or 'laowai' in request.path %}selected{% endif %}" href="{% url people city.slug %}">People</a>
-					<!--<a class="questions {% if 'questions' in request.path %}selected{% endif %}" href="{% url questions city.slug %}">How-to</a>-->
+					<a class="questions {% if 'questions' in request.path %}selected{% endif %}" href="{% url questions city.slug %}">How-to</a>
 					<a class="news {% ifequal city.get_absolute_url request.path %}selected{% endifequal %}" href="{% url news_feed city.slug%}">News</a>
 				{% endif %}
 

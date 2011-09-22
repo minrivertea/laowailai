@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block metadescription %}Photos from {{ city }}{% endblock %}
+{% block pagetitle %}Photos from {{ city }}{% endblock %}
+
+{% block extrajs %}
+<script type="text/javascript">
+
+
+$(document).ready( function() {
+	$('a.image').fancybox();	
+});
+
+</script>
+<script type="application/javascript" src="/js/lightbox/jquery.fancybox-1.3.4.pack.js"></script>
+{% endblock %}
+
+{% block extracss %}
+<link rel="stylesheet" href="/css/fancybox/jquery.fancybox-1.3.4.css" />
+<style type="text/css">
+
+#photos {
+  float: left;
+  width: 100%;	
+}
+
+#photos ul {
+  list-style-type: none;	
+}
+
+#photos ul  li {
+  width: 60px; 
+  float: left;
+  margin: 0 10px 10px 0;	
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div id="top">
+<h1>Photos from {{ city }}</h1>
+</div>
+
+<p class="description"><em>Photos related to {{ city.name }} added by the foreigners living and working there</p>
+
+<div id="photos">
+<ul>
+{% for photo in photos %}
+
+  <li>
+		{% thumbnail photo.image "x600" crop="center" as im_large %}
+			<a class="image" rel="[{{ city.name }}]" href="{{ im_large.url }}">
+				{% thumbnail photo.image "60x60" crop="center" as im %}
+					<img alt="{{ photo.owner }}" title="added by {{ photo.owner }}" src="{{ im.url }}"/>
+				{% endthumbnail %}
+			</a>
+		{% endthumbnail %}
+  </li>
+
+{% endfor %}
+</ul>
+
+</div>
+
+
+
+
+
+
+
+{% endblock %}
