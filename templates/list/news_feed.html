@@ -184,6 +184,12 @@ div#top {
   color: #666;
 }
 
+#blogs p.none {
+  font-size: 12px;
+  font-style: italic;
+  margin-bottom: 5px;	
+}
+
 .button.add-blog {
   padding: 2px 4px;
   font-size: 11px;	
@@ -242,6 +248,8 @@ div#top {
 	
 	<div id="blogs">
 		<span>blogs from {{ city.name }} &raquo;</span>
+		
+		{% if city.get_latest_blogs %}
 		<ul>
 			{% for blog in city.get_latest_blogs %}
 			<li>
@@ -256,6 +264,9 @@ div#top {
 			</li>
 			{% endfor %}
 		</ul>
+		{% else %}
+		<p class="none">We have no blogs listed for {{ city }} yet</p>
+		{% endif %}
 		<a class="button add-blog" href="#add-blog-form">+ Add a blog</a>
 		<div id="add-blog-form">
 			<h3>Add a blog feed to {{ city.name }}</h3>
