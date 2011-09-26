@@ -8,10 +8,67 @@
 {% block extracss %}
 <style type="text/css">
 
+#top-three {
+  float: right;
+  width: 260px;	
+}
+
+#top-three h3 {
+    color: #C1C1C1;
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: -0.5px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+#top-three ul {
+  list-style-type: none;	
+}
+
+#top-three ul li {
+  float: left;
+  width: 100%;
+  margin-bottom: 10px;	
+}
+
+#top-three ul li img {
+  float: left;
+  margin-right: 10px;	
+}
+
+#top-three ul li p {
+	float: left;	
+	margin: 0;
+	line-height: 1.2;
+	font-size: 13px;
+}
+
+#top-three ul li p span.date {
+  font-size: 11px;	
+  color: #999;
+}
+
+#top-three ul li p a {
+  font-weight: bold;	
+}
+
 div#people div.person {
   float: left;
   width: 80px;
   margin: 0 10px 10px 0;	
+  position: relative;
+}
+
+div#people div.person .star {
+	position: absolute;
+	top:59px;
+	left: 5px;
+	font-size: 9px;
+	padding: 1px 5px 2px;
+	border-radius: 0px;
+	box-shadow: 0 1px 2px #fff;
 }
 
 
@@ -21,6 +78,26 @@ div#people div.person {
 {% block content %}
 <div id="top">	
 <h1>Other members in {{ city }} ({{ city.chinese_name }})</h1>
+</div>
+
+<div id="top-three">
+	<h3>Top contributors in {{ city.name }} &raquo;</h3>
+  <ul>
+  {% for person in top_three %}
+  	<li>
+  		{% if person.has_photo %}
+		    {% thumbnail person.photo "30x30" crop="center" as im %}
+			<img src="{{ im.url }}" title="{{ person.name }}" alt="photo of laowai {{ person.name }}">
+			{% endthumbnail %}
+		{% else %}
+			<img class="avatar" title="{{ person.name }}" alt="" src="/images/avatar_30.jpg">
+		{% endif %}
+			<p><a href="{% url laowai person.id %}">{{ person.name }}</a><br/>
+			<span class="date">Joined {{ person.date_joined|date:"M Y" }}</span>
+			</p>
+	</li>
+  {% endfor %}
+  </ul>
 </div>
 
 <div id="people">

@@ -756,7 +756,9 @@ def people(request, slug):
         laowai = None
     
     city = get_object_or_404(City, slug=slug)       
-    people = Laowai.objects.filter(city=city).order_by('-date_joined')        
+    people = Laowai.objects.filter(city=city).order_by('-date_joined')
+    top_three = people.order_by('rank_points')[:3]
+    print top_three        
     return render(request, "list/people.html", locals())
 
 
