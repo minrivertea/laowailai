@@ -44,10 +44,6 @@ $("input.search").blur(function() {
 
 {% block extracss %}
 <style type="text/css">
-div#introduction {
-  height: 300px;
-  float: left;	
-}
 
 div#top h1 {
   color: #333;
@@ -143,100 +139,20 @@ div#cities a.city {
     padding: 5px 8px;
 }
 
-#map {
-  background-color: fuschia;
-  height: 80px;
-  border: 10px solid #f1f1f1;
-  float: left;
-  width: 880px;	
-  margin: 0px 0 30px 0;
-  position: relative;
-  overflow: hidden;
-  border-radius: 5px;
-}
 
-#map #overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 880px;
-  height: 80px;
-  background-color: #fff;
-  opacity: 0.5;
-  float: left;
-  display: block;
-  z-index: 100;	
-  text-align: center;
-}
 
-#map #overlay span {
-  width: 100%;
-  text-align: center;
-  margin-top: 30px;	
-  float: left;
-  font-weight: bold;
-  color: #999;
-}
-
-#map #expand {
-  position: absolute;
-  bottom:0;
-  right: 0;	
-  font-size: 40px;
-  font-weight: bold;
-  background-color: #f1f1f1;
-  color: #2D7886;
-  padding: 0 8px 0 14px;
-  text-shadow: 0 2px 2px #fff;
-  border-radius: 10px 0px 0px 0px;
-  z-index: 101;
-}
-
-#map #expand:hover {
-  cursor: pointer;
-  color: #F67B7B;	
-}
-
-#map .arrow {
-  position: absolute;
-  z-index: 100;
-  top: 307px;
-  left: 258px;	
-  display: none;
-}
 
 </style>
 {% endblock %}
 
 {% block content %}
 
-{% if request.user.is_authenticated %}
-	<div id="top">
-		<h1>Set your city in China</h1>
-	</div>
-	
-	<p class="description"><em>You need to choose a city as your 'home' city in China. Click on one of the cities below, and remember you can always browse other cities.</em></p>
-	
-	<div id="cities">
-		
-		{% for city in laowai.cities.all %}
-		<a href="{% url mark_city city.id %}">{{ city.name }}</a>
-		{% endfor %}
-	</div>
-	
-
-	<div id="feed">
-		{% include "list/snippets/feed.html" %}
-	</div>
-
-{% else %}	
 
 	<div id="top">
 		<h1>See China, the local way</h1>
 	</div>
 		
-	<div id="explanation">
-		<p><span class="site">{{ sitename }}</span> is for foreigners living, working and travelling in China. Find things to do, eat and see, activities, friends and culture in your city.		
+	<div id="explanation">		
 		<div id="search">
 			<br/>
 			<input type="text" class="search" value="What do you want to do?"/>
@@ -245,7 +161,7 @@ div#cities a.city {
 		</div>
 		
 		<a class="help" href="/user-guide/">How does it work?</a>
-		</p>
+
 	</div>
 
 	<div id="cities">
@@ -257,18 +173,6 @@ div#cities a.city {
 	</div>
 	
 	
-
-
-
-	
-
-
-
-
-		
-
-
-{% endif %}
 
 
 
