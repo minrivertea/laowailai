@@ -78,27 +78,25 @@
 </div>
 {% endif %}
 
-	<div id="container">
 	    
-	    <!-- The header area -->
+ <!-- The header area -->
 	    
-	    <div id="header">
-	    	<div id="logo">
-	    		<img src="/images/mobile/logo.jpg">
-	    	</div>	  
-	    	<a id="login" class="button" href="{% url auth_login %}">login</a>  
-	    </div>
+ <div id="header" class="button">
+   	<div id="logo">
+   		<img src="/images/mobile/logo.jpg">
+   	</div>	  
+   	<a id="login" class="button" href="{% url auth_login %}">login</a>  
+ </div>
 	    
-		{% if message %}
-		<!-- a message -->
-			<div id="message">
-				<p>{{ message|safe }}</p>
-			</div>
-		{% endif %}
+{% if message %}
+<!-- a message -->
+	<div id="message">
+		<p>{{ message|safe }}</p>
+	</div>
+{% endif %}
 		
-		<!-- the main section of the page -->
+<!-- the main section of the page -->
 
-		  
 		{% if user.is_authenticated %}  
 		<div id="profile" class="{% if 'profile' in request.path %}selected{% endif %}">
 		
@@ -125,12 +123,10 @@
 
 		</div>
 	  	
-	  	<div id="left">
-	    	{% block content %}{% endblock %}
+
+    	{% block content %}{% endblock %}
 	    	
-	    </div>
-	    
-	       
+      
     
     </div>
 
