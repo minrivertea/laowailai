@@ -72,7 +72,7 @@ $("input.search").blur(function() {
 
 		<div id="cities">
 			{% for city in all_cities %}
-				<a class="city" href="{% url news_feed city.slug %}">{{ city.name }} ({{ city.chinese_name }})<span class="arrow">img src="/images/mobile/rarrow.png"></span></a>
+				<a class="city" href="{% url news_feed city.slug %}">{{ city.name }} ({{ city.chinese_name }})<span class="arrow"><img src="/images/mobile/rarrow.png"></span></a>
 			{% endfor %}
 		</div>
 	
