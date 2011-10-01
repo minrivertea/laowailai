@@ -91,8 +91,8 @@
 
 {% endblock %}
 
-<script type="text/javascript">
-setTimeout(function () {
+<script>
+/mobile/i.test(navigator.userAgent) && !window.location.hash && setTimeout(function () {
   window.scrollTo(0, 1);
 }, 1000);
 </script>
