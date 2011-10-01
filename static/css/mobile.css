@@ -99,6 +99,12 @@ h2 {
 	width: 100%;
 }
 
+#container {
+  float: left;
+  width: 100%;
+  position: relative;	
+}
+
 #main {
   float:left;
   width: 90%;
