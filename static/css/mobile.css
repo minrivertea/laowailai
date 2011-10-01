@@ -125,7 +125,8 @@ h2 {
   width: 121px;
   position: absolute;
   margin-left: 50%;
-  left: -60px;	
+  left: -60px;
+  top: 5px;	
 }
 
 #login {
