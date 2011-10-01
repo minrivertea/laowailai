@@ -144,7 +144,7 @@ h2 {
 }
 
 #logo {
-  width: 163px;
+  width: 121px;
   position: absolute;
   margin-left: 50%;
   left: -25%;	
@@ -152,6 +152,7 @@ h2 {
 
 #login {
   float: right;
+  margin-right: 10px;
   width: 50px;
   padding: 5px 10px;
   font-weight: bold;	
