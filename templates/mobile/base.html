@@ -14,7 +14,6 @@
 	{% block canonical %}{% endblock %}
     
     <meta name="viewport" content="width=320" />
-    <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="stylesheet" href="/css/mobile.css" />
     
     <title>{% block title %}{% block pagetitle %}{% endblock %} - {{ sitename|lower }}{% endblock %}</title>
@@ -56,7 +55,7 @@
 
 </head>
 
-<body>
+<body onload="setTimeout(function() { window.scrollTo(0, 1) }, 100);">
 
 
 {% if messages %}
@@ -133,14 +132,6 @@
 
 {% block extrajs %}{% endblock %}
 
-{% if messages %}
-<script type="text/javascript">
-
-window.setTimeout(function () {
-  window.scrollTo(0, 1);
-}, 1000);
-</script>
-{% endif %}
 
 
 </body>
