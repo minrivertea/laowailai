@@ -58,5 +58,6 @@ a:hover, a:active {
 a.nav {
   background-color: #fff;
   padding: 8px 15px;
-  border-radius: 7px;	
+  border-radius: 7px;
+  margin-bottom: 20px;	
 }
