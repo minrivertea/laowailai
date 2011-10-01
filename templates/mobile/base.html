@@ -12,7 +12,8 @@
 	<meta content="en-gb" http-equiv="Content-Language" />
 	<meta content="{% block metadescription %}{% endblock %}" name="description" /> 
 	{% block canonical %}{% endblock %}
-    
+	
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=320" />
     <link rel="stylesheet" href="/css/mobile.css" />
     
@@ -55,7 +56,7 @@
 
 </head>
 
-<body onload="setTimeout(function() { window.scrollTo(0, 1) }, 100);">
+<body>
 
 
 {% if messages %}
