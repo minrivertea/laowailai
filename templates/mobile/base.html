@@ -111,7 +111,13 @@
     
     </div>
 
-{% block extrajs %}{% endblock %}
+{% block extrajs %}
+<script type="text/javascript">
+setTimeout(function () {
+  window.scrollTo(0, 1);
+}, 1000);
+</script>
+{% endblock %}
 
 
 
