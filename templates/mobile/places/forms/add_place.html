@@ -4,9 +4,6 @@
 {% block metadescription %}Add a place in {{ city }}{% endblock %}
 {% block pagetitle %}Add a place{% endblock %}
 
-{% block mapscripts %}
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.1&services=true"></script>
-{% endblock %} 
 
 {% block extrajs %}
 <script type="text/javascript">
@@ -28,34 +25,6 @@ function error_callback(p)
 {
 	alert('error='+p.code);
 }		
-
-
-
-
-var map = new BMap.Map("map_area");
-var myGeo = new BMap.Geocoder();   
-myGeo.getPoint("{{ city.centre_of_town }}", function(point){  
- if (point) {  
-   map.centerAndZoom(point, 11);
-   map.addControl(new BMap.NavigationControl()); 
-   var marker = new BMap.Marker(point);
-   marker.enableDragging(); 
-   map.addOverlay(marker); 
-   marker.addEventListener("dragend", function(e){
-     var myGeo = new BMap.Geocoder();
-     myGeo.getLocation(new BMap.Point(e.point.lng, e.point.lat), function(result){
-       	  document.getElementById("id_location").value = result.address;
-     	  $("#id_longitude").attr("value", e.point.lng);
-     	  $("#id_latitude").attr("value", e.point.lat);
-     	  $("#id_location").attr("value", result.address);
-     });
-   }); 
- }  
-}, "{{ city.chinese_name }}");  
-
-  
-
-
  
 </script> 
 
