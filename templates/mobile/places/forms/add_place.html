@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block metadescription %}Add a place in {{ city }}{% endblock %}
+{% block pagetitle %}Add a place{% endblock %}
+
+{% block mapscripts %}
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.1&services=true"></script>
+{% endblock %} 
+
+{% block extrajs %}
+<script type="text/javascript">
+
+
+if(geo_position_js.init()){
+	geo_position_js.getCurrentPosition(success_callback,error_callback,{enableHighAccuracy:true});
+}
+else{
+	alert("Functionality not available");
+}
+
+function success_callback(p)
+{
+	alert('lat='+p.coords.latitude.toFixed(2)+';lon='+p.coords.longitude.toFixed(2));
+}
+
+function error_callback(p)
+{
+	alert('error='+p.code);
+}		
+
+
+
+
+var map = new BMap.Map("map_area");
+var myGeo = new BMap.Geocoder();   
+myGeo.getPoint("{{ city.centre_of_town }}", function(point){  
+ if (point) {  
+   map.centerAndZoom(point, 11);
+   map.addControl(new BMap.NavigationControl()); 
+   var marker = new BMap.Marker(point);
+   marker.enableDragging(); 
+   map.addOverlay(marker); 
+   marker.addEventListener("dragend", function(e){
+     var myGeo = new BMap.Geocoder();
+     myGeo.getLocation(new BMap.Point(e.point.lng, e.point.lat), function(result){
+       	  document.getElementById("id_location").value = result.address;
+     	  $("#id_longitude").attr("value", e.point.lng);
+     	  $("#id_latitude").attr("value", e.point.lat);
+     	  $("#id_location").attr("value", result.address);
+     });
+   }); 
+ }  
+}, "{{ city.chinese_name }}");  
+
+  
+
+
+ 
+</script> 
+
+
+{% endblock %}
+
+{% block extracss %}
+
+<style type="text/css">
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div id="top">
+<h1>Add a place in {{ city }}</h1>
+</div>
+
+<p class="description"><em>A place might be a coffee shop, a tourist destination, a gym or a clothes shop - anywhere that you can go and do/buy/see something. Please try to be as descriptive as possible, and give Chinese names if you know them.</em></p>
+
+
+<form action="." method="post">
+<form action="." method="post">
+
+<div style='display:none;'>
+{% csrf_token %}
+</div>
+
+
+<div id="categories">
+<h4>First, give the place a category</h4>
+<label for="id_category_0" class="one"><span>Eat</span></label>
+<input type="radio" id="id_category_0" value="eat" name="category" />
+
+<label for="id_category_1" class="two"><span>Drink</span></label>
+<input type="radio" id="id_category_1" value="drink" name="category" />
+
+<label for="id_category_2" class="three"><span>Do</span></label>
+<input type="radio" id="id_category_2" value="do" name="category" />
+
+<label for="id_category_3" class="four"><span>See</span></label>
+<input type="radio" id="id_category_3" value="see" name="category" />
+
+<label for="id_category_4" class="five"><span>Buy</span></label>
+<input type="radio" id="id_category_4" value="buy" name="category" />
+</div>
+
+
+<div id="main">
+	<h4>Next, tell us about the place:</h4>
+	<label for="id_name">Place name (in English or <em>pinyin</em>)</label> 
+	{{ form.name }}
+	
+	<label for="id_chinese_name">Chinese name (optional)</label> 
+	{{ form.chinese_name }}
+	
+	<label for="id_description">Description (give a description of the place)</label> 
+	{{ form.description }}
+
+</div>
+
+
+
+
+
+
+<div id="maps">
+<h4>Finally, give the place a location</h4>
+<p><em>Drag and drop the marker to the location, and we'll find the street address automatically.</em></p>
+<div id="map_area" style="width:800px; height:430px"></div>
+<span id="close_map" style="display: none;">Close map</span>
+<label for="id_location">Location (you can edit this if you want)</label>
+{{ form.location }}
+<div style="display: none;">
+	{{ form.longitude }}
+	{{ form.latitude }}
+</div>
+</div>
+
+
+
+<div style="display:none;">
+<label for="id_city">City:</label> 
+<select name="city" id="id_city">
+<option selected="selected" value="{{ city.id }}">{{ city }}</option>
+</select>
+
+</div>
+
+
+
+
+<input type="submit" class="button" value="Save this place">
+</form>
+
+
+
+
+{% endblock %}
