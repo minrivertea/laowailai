@@ -52,7 +52,8 @@ a:hover, a:active {
 
 #logo {
   width: 100%;
-  text-align: center;	
+  text-align: center;
+  margin-bottom: 20px;	
 }
 
 #left {
