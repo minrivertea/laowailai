@@ -28,30 +28,6 @@
 	<script src="/js/jquery.min.js" type="text/javascript"></script>
 	{% endif %}
 	
-	{% if ga_is_on %}
-	<!-- Place this tag in your head or just before your close body tag -->
-	<script type="text/javascript" src="https://apis.google.com/js/plusone.js">{lang: 'en-GB'}</script>
-	{% endif %}
-	
-    {% block mapscripts %}{% endblock %}
-	
-    
-    {% if ga_is_on %}
-    <meta name="google-site-verification" content="RMs4V5Zji85hamI0ZxdZwKTcNZwMYQsq2MS570ZP6Dk" />
-    <script type="text/javascript">
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-9041614-5']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-	</script>
-	{% endif %}
 
 {% block extracss %}{% endblock %}
 
@@ -112,12 +88,14 @@
     </div>
 
 {% block extrajs %}
+
+{% endblock %}
+
 <script type="text/javascript">
 setTimeout(function () {
   window.scrollTo(0, 1);
 }, 1000);
 </script>
-{% endblock %}
 
 
 
