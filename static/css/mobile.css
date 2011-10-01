@@ -92,6 +92,10 @@ a:hover, a:active {
   padding: 5px;	
 }
 
+#header {
+  width: 100%;	
+}
+
 #logo {
   width: 163px;
   float:left;
