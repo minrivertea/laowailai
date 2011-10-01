@@ -107,9 +107,9 @@
 			</a>
 		</div>
 		{% else %}
-			<a id="home" class="{% ifequal '/' request.path %}selected{% endifequal %}" href="/">Home</a>
-			<a id="about" class="{% if '/about/' in request.path %}selected{% endif %}" href="/about/">About</a>
-			<a id="login" class="{% if '/login/' in request.path %}selected{% endif %}" href="{% url auth_login %}">Login</a>
+			<a id="home" class="nav {% ifequal '/' request.path %}selected{% endifequal %}" href="/">Home</a>
+			<a id="about" class="nav {% if '/about/' in request.path %}selected{% endif %}" href="/about/">About</a>
+			<a id="login" class="nav {% if '/login/' in request.path %}selected{% endif %}" href="{% url auth_login %}">Login</a>
 		
 		{% endif %}
 
