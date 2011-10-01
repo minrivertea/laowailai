@@ -7,35 +7,8 @@
 {% block extrajs %}
 <script type="text/javascript">
 
-function openMap() {
-  $('#overlay').fadeOut('20');
-  $('.arrow').toggle(); 
-  $("#map").animate({
-    height: "500px",
-    opacity: 1,
-  }, 500, function() {
-  
-  $('#map_area').unbind('click');
-  });
-}
-
-$('#expand').click(openMap);
-$('#overlay').click(openMap);
-
-
-$("input.search").focus(function() {
-    if( $(this).val() == "What do you want to do?" ) {
-        $(this).val("");
-        $(this).css('color', '#333');
-    }
-
-});
-
-$("input.search").blur(function() {
-    if( $(this).val() == "" ) {
-        $(this).val("What do you want to do?");
-        $(this).css('color', '#999');
-    }
+$('#more').click(function() {
+	$('a.hidden').toggle();
 });
 
 </script>
@@ -44,8 +17,9 @@ $("input.search").blur(function() {
 
 {% block extracss %}
 <style type="text/css">
-
-
+a.hidden {
+  display: none;	
+}
 </style>
 {% endblock %}
 
@@ -58,7 +32,13 @@ $("input.search").blur(function() {
 	<div class="whitebox">
 		<div id="choices">
 			{% for city in all_cities %}
- 			<a href="{% url news_feed city.slug %}">{{ city.name }} ({{ city.chinese_name }})<span class="arrow"><img src="/images/mobile/rarrow.png"></span></a>
+ 			<a {% if forloop.count < 3 %}{% else %}class="hidden" {% endif %}href="{% url news_feed city.slug %}">
+ 				{{ city.name }} ({{ city.chinese_name }})
+ 				<span class="arrow"><img src="/images/mobile/rarrow.png"></span>
+ 			</a>
+ 			{% ifequal forloop.count 3 %}
+ 			<a id="more" href="#">more…</a>
+ 			{% endifequal %}
 			{% endfor %}
 		</div>
 	</div>
