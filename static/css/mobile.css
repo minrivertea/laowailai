@@ -53,7 +53,8 @@ a:hover, a:active {
 #logo {
   width: 100%;
   text-align: center;
-  margin-bottom: 20px;	
+  margin-bottom: 20px;
+  margin-left:20px;	
 }
 
 #left {
