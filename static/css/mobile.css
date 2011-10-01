@@ -101,10 +101,7 @@ h2 {
 
 #main {
   float:left;
-  width: 90%;
-  position: absolute;
-  margin-left: 50%;
-  left: -25%;	
+  width: 100%;	
 }
 
 .whitebox {
