@@ -92,6 +92,12 @@ a:hover, a:active {
   padding: 5px;	
 }
 
+#main {
+  background-color: #fff;
+  padding: 5px 10px;
+  float:left;	
+}
+
 #header {
   width: 100%;
   float: left;

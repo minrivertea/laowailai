@@ -45,96 +45,6 @@ $("input.search").blur(function() {
 {% block extracss %}
 <style type="text/css">
 
-#explanation {
-  padding: 0px 0px;
-  float: right;
-  width: 320px;
-  margin: 0 0 0 20px;	
-  font-size: 15px;
-  font-family: Georgia, serif;
-  font-style: italic;
-}
-
-div#left #explanation div#search {
-  display: none;	
-}
-
-#explanation input.search {
-  width: 220px;
-  margin: 10px 0 5px 0;	
-  float: left;
-  border-radius: 5px 0px 0px 5px;
-  color:#999;
-}
-
-#explanation input.go {
-    border-radius: 0 5px 5px 0;
-    border-width: 1px 1px 0 0;
-    float: left;
-    font-size: 13px;
-    margin: 10px 0 5px;
-    padding: 9px;
-    position: relative;
-    top: 1px;
-    width: 50px;
-    font-family: Helvetica,sans-serif;
-}
-
-
-#explanation a.help {
-  font-size: 13px;
-  float: left;
-  margin-top:10px;
-  margin-right: 20px;	
-}
-
-
-p.description {
-  margin-bottom: 30px;	
-}
-
-div#cities {
-    background-color: #F6F6F6;
-    border: 3px solid #FFFFFF;
-    border-radius: 5px 5px 5px 5px;
-    box-shadow: 0 1px 3px #C1C1C1;
-    margin: 0px 0 20px;
-    padding: 20px;
-    width: 100%;
-}
-
-div#cities h2, #bigsearch h2 {
-  font-size: 16px;
-  letter-spacing: -1px;
-  font-weight: bold;
-  color: #000;	
-}
-
-div#cities h3 {
-  float: left;
-  margin-right: 10px;
-  position: relative;
-  top: 2px;	
-}
-
-div#cities a.vote {
-  float: right;
-  font-size: 11px;	
-}
-
-div#cities a.city {
-    background-color: #E2F1F3;
-    border: 1px solid #FFFFFF;
-    border-radius: 4px 4px 4px 4px;
-    box-shadow: 0 1px 3px #999999;
-    float: left;
-    font-size: 12px;
-    font-weight: bold;
-    margin: 0 10px 10px 0;
-    padding: 5px 8px;
-}
-
-
 
 
 </style>
@@ -142,22 +52,8 @@ div#cities a.city {
 
 {% block content %}
 
-
-	<div id="top">
-		<h1>See China, the local way - <a href="{% url auth_login %}">login</a></h1>
-	</div>
-		
-	<div id="explanation">		
-		<div id="search">
-			<br/>
-			<input type="text" class="search" value="What do you want to do?"/>
-			<input type="submit" value="Go!" class="go button"/>
-			<br/>
-		</div>
-		
-		<a class="help" href="/user-guide/">How does it work?</a>
-
-	</div>
+<div id="main">
+	
 
 	<div id="cities">
 		<a class="vote" href="/cant-find-my-city/">Can't see your city?</a>
@@ -168,7 +64,7 @@ div#cities a.city {
 	</div>
 	
 	
-
+</div>
 
 
 {% endblock %}
