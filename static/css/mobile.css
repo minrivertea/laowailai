@@ -97,7 +97,7 @@ a:hover, a:active {
   width: 100%;	
 }
 
-#whitebox {
+.whitebox {
   width: 100%;	
   background-color: #fff;
   border-radius: 8px;
