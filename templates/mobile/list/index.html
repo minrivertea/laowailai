@@ -59,14 +59,18 @@ $("input.search").blur(function() {
 
 <div id="main">
 	
-
-	<div id="cities">
-		<h2>Choose your city in China</h2>
-		{% for city in all_cities %}
-			<a class="city" href="{% url news_feed city.slug %}">{{ city.name }}</a>
-		{% endfor %}
-	</div>
+	<h2>Choose your city in China</h2>
 	
+	<div class="whitebox">
+
+		<div id="cities">
+			
+			{% for city in all_cities %}
+				<a class="city" href="{% url news_feed city.slug %}">{{ city.name }}</a>
+			{% endfor %}
+		</div>
+	
+	</div>
 	
 </div>
 

@@ -93,10 +93,15 @@ a:hover, a:active {
 }
 
 #main {
-  background-color: #fff;
-  padding: 5px 10px;
   float:left;
   width: 100%;	
+}
+
+#whitebox {
+  width: 100%;	
+  background-color: #fff;
+  border-radius: 8px;
+  float: left;
 }
 
 #header {
