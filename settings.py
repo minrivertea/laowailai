@@ -59,6 +59,7 @@ SECRET_KEY = ''
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
+    'django_mobile.loader.Loader',
     'django.template.loaders.filesystem.load_template_source',
     'django.template.loaders.app_directories.load_template_source',
 #     'django.template.loaders.eggs.load_template_source',
@@ -66,12 +67,12 @@ TEMPLATE_LOADERS = (
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
-#    'list.middleware.MobileMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.csrf.CsrfMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
-    
+    'django_mobile.middleware.MobileDetectionMiddleware',
+    'django_mobile.middleware.SetFlavourMiddleware',
 )
 
 ROOT_URLCONF = 'laowailai.urls'
@@ -96,6 +97,7 @@ INSTALLED_APPS = (
     'south',
     'notification',
     'blog',
+    'django_mobile',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -105,6 +107,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'laowailai.list.context_processors.get_laowai',
     'laowailai.list.context_processors.get_stats',
     'laowailai.list.context_processors.get_latest_users',
+    'django_mobile.context_processors.flavour',
 )
 
 
