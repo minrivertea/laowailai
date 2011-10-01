@@ -110,6 +110,7 @@ h2 {
   background-color: #fff;
   border-radius: 8px;
   float: left;
+  margin: 0 0 10px 0;
 }
 
 #header {
@@ -117,7 +118,7 @@ h2 {
   height: 40px;
   background-color: #bdd7e1;
   float: left;
-  margin: 0 0 20px 0;
+  margin: 0 0 10px 0;
   padding: 10px 0 10px 0;
   position: relative;
 }
