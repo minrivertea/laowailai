@@ -33,7 +33,7 @@ a.hidden {
 	<div class="whitebox">
 		<div id="choices">
 			{% for city in all_cities %}
- 			<a {% if forloop.counter < 2 %}{% else %}class="hidden" {% endif %}href="{% url news_feed city.slug %}">
+ 			<a {% if forloop.counter < 3 %}{% else %}class="hidden" {% endif %}href="{% url news_feed city.slug %}">
  				{{ city.name }} ({{ city.chinese_name }})
  				<span class="arrow"><img src="/images/mobile/rarrow.png"></span>
  			</a>
