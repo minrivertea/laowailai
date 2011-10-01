@@ -117,15 +117,12 @@ h2 {
     color: #2d7886;	
 }
 
-#container {
-  width: 90%;
-  margin: 0 0 0 10px;
-  padding: 5px;	
-}
-
 #main {
   float:left;
-  width: 100%;	
+  width: 90%;
+  position: absolute;
+  margin-left: 50%;
+  left: -25%;	
 }
 
 .whitebox {
