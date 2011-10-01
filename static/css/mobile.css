@@ -50,6 +50,11 @@ a:hover, a:active {
   padding: 5px;	
 }
 
+#logo {
+  width: 100%;
+  text-align: center;	
+}
+
 #left {
   width: 100%;
   background-color: #fff;	
