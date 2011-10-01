@@ -39,16 +39,18 @@ a:hover, a:active {
   color: #f67b7b;
 }
 
+
+
 .button {
 	background-color: #f1f1f1;
     /* Firefox 3.6+ */ 
-    background: -moz-linear-gradient(100% 100% 90deg, #327e8c, #82becc); 
+    background: -moz-linear-gradient(100% 100% 90deg, #e6e6e6, #f1f1f1); 
     /* Safari 4-5, Chrome 1-9 */ /* -webkit-gradient(<type>, <point> [, <radius>]?, <point> [, <radius>]? [, <stop>]*) */ 
-    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#82becc), to(#327e8c)); 
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f1f1f1), to(#e6e6e6)); 
     /* Safari 5.1+, Chrome 10+ */ 
-    background: -webkit-linear-gradient(#327e8c, #82becc); 
+    background: -webkit-linear-gradient(#e6e6e6, #f1f1f1); 
     /* Opera 11.10+ */ 
-    background: -o-linear-gradient(#327e8c, #82becc);   
+    background: -o-linear-gradient(#e6e6e6, #f1f1f1);   
     
     border-bottom: 1px solid #fff;
     box-shadow: 0 1px 2px #999, 0 1px 0px #f6f6f6;
@@ -91,6 +93,30 @@ h2 {
 
 /* main divs */
 
+#header {
+	background-color: #f1f1f1;
+    /* Firefox 3.6+ */ 
+    background: -moz-linear-gradient(100% 100% 90deg, #327e8c, #82becc); 
+    /* Safari 4-5, Chrome 1-9 */ /* -webkit-gradient(<type>, <point> [, <radius>]?, <point> [, <radius>]? [, <stop>]*) */ 
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#82becc), to(#327e8c)); 
+    /* Safari 5.1+, Chrome 10+ */ 
+    background: -webkit-linear-gradient(#327e8c, #82becc); 
+    /* Opera 11.10+ */ 
+    background: -o-linear-gradient(#327e8c, #82becc);   
+    
+    border-bottom: 1px solid #fff;
+    box-shadow: 0 1px 2px #999, 0 1px 0px #f6f6f6;
+    border-radius: 4px;
+
+    font-size: 12px;
+    font-weight: bold;
+    padding: 10px 15px;
+    text-shadow: 0 1px 1px #fff;
+    text-align: center;
+    cursor: pointer;
+    color: #2d7886;	
+}
+
 #container {
   width: 90%;
   margin: 0 0 0 10px;
@@ -113,14 +139,15 @@ h2 {
   width: 100%;
   float: left;
   display: block;
-  margin: 0 0 20px 0;	
+  margin: 0 0 20px 0;
+  position: relative;	
 }
 
 #logo {
   width: 163px;
-  float:left;
-  text-align: center;
-  margin: 0 10px 0 0;	
+  position: absolute;
+  margin-left: 50%;
+  left: -25%;	
 }
 
 #login {
