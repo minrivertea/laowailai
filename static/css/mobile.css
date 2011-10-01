@@ -95,7 +95,8 @@ a:hover, a:active {
 #header {
   width: 100%;
   float: left;
-  display: block;	
+  display: block;
+  margin: 0 0 20px 0;	
 }
 
 #logo {
