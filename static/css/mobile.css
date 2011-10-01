@@ -143,3 +143,19 @@ h2 {
   width: 100%;
   background-color: #fff;	
 }
+
+
+#choices a {
+  float: left;
+  width: 87%;
+  padding: 5% 5% 5% 8%;
+  font-size:1.2em;
+  font-weight: bold;
+  border-bottom: 1px solid #dfecf1;
+  position: relative;	
+}
+
+#choices a span.arrow {
+  position: absolute;
+  right: 20px;	
+}

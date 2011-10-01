@@ -44,20 +44,7 @@ $("input.search").blur(function() {
 
 {% block extracss %}
 <style type="text/css">
-#cities a {
-  float: left;
-  width: 87%;
-  padding: 5% 5% 5% 8%;
-  font-size:1.2em;
-  font-weight: bold;
-  border-bottom: 1px solid #dfecf1;
-  position: relative;	
-}
 
-#cities a span.arrow {
-  position: absolute;
-  right: 20px;	
-}
 
 </style>
 {% endblock %}
@@ -69,14 +56,20 @@ $("input.search").blur(function() {
 	<h2>Choose your city in China</h2>
 	
 	<div class="whitebox">
-
-		<div id="cities">
+		<div id="choices">
 			{% for city in all_cities %}
-				<a class="city" href="{% url news_feed city.slug %}">{{ city.name }} ({{ city.chinese_name }})<span class="arrow"><img src="/images/mobile/rarrow.png"></span></a>
+ href="{% url news_feed city.slug %}">{{ city.name }} ({{ city.chinese_name }})<span class="arrow"><img src="/images/mobile/rarrow.png"></span></a>
 			{% endfor %}
 		</div>
+	</div>
 	
-	
+	<h2>Or do something else...</h2>
+	<div class="whitebox">
+		<div id="choices">
+			<a href="">Search for a place<span class="arrow"><img src="/images/mobile/rarrow.png"></span></a>
+			<a href="">Add a place<span class="arrow"><img src="/images/mobile/rarrow.png"></span></a>
+			<a href="">About us<span class="arrow"><img src="/images/mobile/rarrow.png"></span></a>
+		</div>
 	</div>
 	
 </div>
