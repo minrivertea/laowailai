@@ -39,6 +39,49 @@ a:hover, a:active {
   color: #f67b7b;
 }
 
+.button {
+
+	background-color: #f1f1f1;
+    /* Firefox 3.6+ */ 
+    background: -moz-linear-gradient(100% 100% 90deg, #e6e6e6, #f1f1f1); 
+    
+    /* Safari 4-5, Chrome 1-9 */ /* -webkit-gradient(<type>, <point> [, <radius>]?, <point> [, <radius>]? [, <stop>]*) */ 
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f1f1f1), to(#e6e6e6)); 
+    
+    /* Safari 5.1+, Chrome 10+ */ 
+    background: -webkit-linear-gradient(#e6e6e6, #f1f1f1); 
+    
+    /* Opera 11.10+ */ 
+    background: -o-linear-gradient(#e6e6e6, #f1f1f1);   
+    
+    border: 1px solid #fff;
+    box-shadow: 0 1px 2px #999, 0 1px 0px #f6f6f6;
+    border-radius: 4px;
+
+    font-size: 12px;
+    font-weight: bold;
+    padding: 10px 15px;
+    text-shadow: 0 1px 1px #fff;
+    text-align: center;
+    cursor: pointer;
+    color: #2d7886;	
+}
+
+.button:hover {
+  color: #f67b7b;
+  /* Firefox 3.6+ */ 
+  background: -moz-linear-gradient(100% 100% 90deg, #f1f1f1, #e6e6e6); 
+    
+  /* Safari 4-5, Chrome 1-9 */ /* -webkit-gradient(<type>, <point> [, <radius>]?, <point> [, <radius>]? [, <stop>]*) */ 
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#e6e6e6), to(#f1f1f1)); 
+    
+  /* Safari 5.1+, Chrome 10+ */ 
+  background: -webkit-linear-gradient(#f1f1f1, #e6e6e6); 
+    
+  /* Opera 11.10+ */ 
+  background: -o-linear-gradient(#f1f1f1, #e6e6e6);  
+}
+
 /* end links */
 
 /* main divs */
@@ -50,10 +93,17 @@ a:hover, a:active {
 }
 
 #logo {
-  width: 100%;
+  width: 163px;
+  float:left;
   text-align: center;
-  margin-bottom: 20px;
-  margin-left:20px;	
+  margin-bottom: 20px;	
+}
+
+#login {
+  float: left;
+  width: 100px;
+  padding: 10px 15px;
+  font-weight: bold;	
 }
 
 #left {

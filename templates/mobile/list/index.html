@@ -45,11 +45,6 @@ $("input.search").blur(function() {
 {% block extracss %}
 <style type="text/css">
 
-div#top h1 {
-  color: #333;
-  font-size: 40px;	
-}
-
 #explanation {
   padding: 0px 0px;
   float: right;
@@ -149,7 +144,7 @@ div#cities a.city {
 
 
 	<div id="top">
-		<h1>See China, the local way</h1>
+		<h1>See China, the local way - <a href="{% url auth_login %}">login</a></h1>
 	</div>
 		
 	<div id="explanation">		
