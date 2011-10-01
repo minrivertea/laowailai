@@ -1,0 +1,1222 @@
+html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}
+
+
+caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:text-top;}sub{vertical-align:text-bottom;}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}input,textarea,select{*font-size:100%;}legend{color:#000;}del,ins{text-decoration:none;}
+
+
+html {
+  border: none;
+  margin: none;
+  padding: none;
+  background-color: #dfecf1;	
+}
+
+body {
+  font-family: Arial, sans-serif;	
+  background-color: #d4e8f0;
+  margin: 0;
+  padding: 0;
+}
+
+/* links */
+
+a img {
+  border: none;	
+}
+
+a img:hover {
+  opacity: 0.8;	
+}
+
+a {
+  text-decoration: none;	
+}
+
+a:link, a:visited {
+  color: #2d7886;
+}
+
+a:hover, a:active {
+  color: #f67b7b;
+}
+
+.button {
+
+	background-color: #f1f1f1;
+    /* Firefox 3.6+ */ 
+    background: -moz-linear-gradient(100% 100% 90deg, #e6e6e6, #f1f1f1); 
+    
+    /* Safari 4-5, Chrome 1-9 */ /* -webkit-gradient(<type>, <point> [, <radius>]?, <point> [, <radius>]? [, <stop>]*) */ 
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f1f1f1), to(#e6e6e6)); 
+    
+    /* Safari 5.1+, Chrome 10+ */ 
+    background: -webkit-linear-gradient(#e6e6e6, #f1f1f1); 
+    
+    /* Opera 11.10+ */ 
+    background: -o-linear-gradient(#e6e6e6, #f1f1f1);   
+    
+    border: 1px solid #fff;
+    box-shadow: 0 1px 2px #999, 0 1px 0px #f6f6f6;
+    border-radius: 4px;
+
+    font-size: 12px;
+    font-weight: bold;
+    padding: 10px 15px;
+    text-shadow: 0 1px 1px #fff;
+    text-align: center;
+    cursor: pointer;
+    color: #2d7886;	
+}
+
+.button:hover {
+  color: #f67b7b;
+  /* Firefox 3.6+ */ 
+  background: -moz-linear-gradient(100% 100% 90deg, #f1f1f1, #e6e6e6); 
+    
+  /* Safari 4-5, Chrome 1-9 */ /* -webkit-gradient(<type>, <point> [, <radius>]?, <point> [, <radius>]? [, <stop>]*) */ 
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#e6e6e6), to(#f1f1f1)); 
+    
+  /* Safari 5.1+, Chrome 10+ */ 
+  background: -webkit-linear-gradient(#f1f1f1, #e6e6e6); 
+    
+  /* Opera 11.10+ */ 
+  background: -o-linear-gradient(#f1f1f1, #e6e6e6);  
+}
+
+
+
+/* end links */
+
+/* main divs */
+
+#header-messages {
+    background-color: #F1F1F1;
+    border-bottom: 1px solid #FFFFFF;
+    box-shadow: 0 1px 3px #999999;
+    padding: 10px 0;
+    text-align: center;
+    width: 100%;
+}
+
+#header-messages a {
+  text-decoration: underline;	
+}
+
+#header-messages p {
+  font-weight: bold;
+  color: green;
+}
+
+#header-messages #speaker {
+  position: relative;
+  top: 6px;
+}
+
+div#container {
+  margin: 0 auto;
+  width: 100%;
+}
+
+div#banner-message {
+    background-color: #c1c1c1;
+    opacity: 0.9;
+    bottom: 0;
+    color: #333;
+    height: 35px;
+    position: fixed;
+    text-align: center;
+    width: 100%;
+    z-index: 9999;
+    box-shadow: 0 1px 2px #999;
+    border-bottom: 1px solid #d1d1d1;
+}
+
+div#banner-message p {
+  color: #333;
+  padding-top: 5px;	
+}
+
+div#banner-message a {
+  color: #000;	
+}
+
+
+div#header {
+  width: 960px;
+  float: left;
+  height: 90px;
+}
+
+div#logo {
+    float: left;
+    height: 60px;
+    margin: 10px 0 10px 30px;
+    position: relative;
+    width: 270px;
+    overflow: hidden;
+}
+
+
+div#header div#logo a span {
+  display: none;	
+}
+
+div#logo a {
+    display: block;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+}
+
+div#logo a:hover {
+  cursor: pointer;
+}
+
+div#header div#latest-signups {
+    float: left;
+    margin: 20px 0 0 15px;
+    text-align: right;
+    width: 295px;
+}
+
+div#header div#latest-signups img {
+  margin: 0 10px 7px 0;	
+  border: 2px solid white;
+}
+
+div#header span#changecity {
+ color: #2D7886;
+}
+
+div#header span#changecity:hover {
+  color: #F67B7B;
+  cursor: pointer;	
+}
+
+
+
+div#header div#admin {
+    background-color: #FFFFFF;
+    border-radius: 10px 10px 10px 10px;
+    float: left;
+    margin-top: 20px;
+    padding: 20px;
+    text-align: right;
+    width: 245px;
+}
+
+div#header div#admin h4 {
+  font-weight: bold;
+  color: #333;	
+}
+
+div#header div.header-block {
+  border-bottom: 1px solid #A1CDD2;
+  margin-top: 20px;	
+  padding: 0 0 10px 0px;
+  margin-left: 10px;
+}
+
+div#header div.header-block#about-fuzhou {
+  display:none;	
+}
+
+div#header p {
+  color: #333;	
+}
+
+div#header div#nav {
+    float: right;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 0 10px 0 0;
+    padding: 10px 0 10px 20px;
+}
+
+
+div#site-introduction {
+    color: #14565E;
+    float: left;
+    font-family: Georgia,serif;
+    font-size: 1.1em;
+    letter-spacing: -0.5px;
+    line-height: 1.6em;
+    margin: 0 20px 0 10px;
+    text-align: right;
+    display: none;
+}
+
+div#cities {
+  margin-bottom: 20px;
+  float: left;	
+}
+
+div#cities a {
+    float: left;
+    margin: 0 10px 10px 0;
+}
+
+div#cities h3 {
+  margin-bottom: 15px;	
+}
+
+div#navigation {
+    float: right;
+    margin: 22px 10px 0 0;
+    width: 330px;
+}
+
+div#navigation a {
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    color: #FFFFFF;
+    float: right;
+    font-size: 11px;
+    margin-right: 5px;
+    padding: 5px 10px;
+}
+
+div#navigation a.suggestion {
+    background-color: #408a34;
+}
+
+div#navigation a.events {
+    background-color: #e651ac;
+}
+
+div#navigation a.cities {
+    background-color: #4068b2;
+}
+
+div#navigation a.places {
+    background-color: #FF8400;
+}
+
+div#navigation a.people {
+  background-color: #9b1515;	
+}
+
+div#navigation a.questions {
+  background-color: #166718;	
+}
+
+div#navigation a.news {
+  background-color: #3a74a0;	
+}
+
+div#navigation a.selected {
+    color: #333333;
+    font-size: 13px;
+    font-weight: bold;
+    margin-top: -10px;
+    padding: 9px 15px;
+    background-color: #fff;
+}
+
+div#navigation span.current-city {
+  color: #333;
+  font-size: 11px;
+  font-weight: bold;
+  float: left;
+  margin-right: 5px;
+  padding: 5px 10px;	
+}
+
+div#navigation a.current-city {
+  float: left;
+}
+
+
+div#navigation a.suggestion:hover {
+  background-color: #76b86c;	
+  cursor: pointer;
+}
+
+div#navigation a.events:hover {
+  background-color: #eb91c8;	
+  cursor: pointer;
+}
+
+div#navigation a.cities:hover {
+  background-color: #6c90d1;	
+  cursor: pointer;
+}
+
+div#navigation a.places:hover {
+  background-color: #ffaa4e;	
+  cursor: pointer;
+}
+
+div#navigation a.people:hover {
+  background-color: #bb4343;	
+  cursor: pointer;
+}
+
+div#navigation a.questions:hover {
+  background-color: #318433;
+  cursor: pointer;	
+}
+
+div#navigation a.news:hover {
+  background-color: #6697bc;	
+  cursor: pointer;
+}
+
+div#navigation a.selected:hover {
+  color: #F67B7B;
+  background-color: #fff;	
+}
+
+#citychanger {
+  float: left;
+  width: auto;	
+  margin: 12px 0 0 10px;
+}
+
+#currentcity {
+    font-size: 20px;
+    font-weight: bold;
+    text-shadow: 0 1px 1px #FFFFFF, 0 -1px 1px #FFFFFF;
+    
+}
+
+#changecity a {
+	font-size: 11px;
+	background-color: #fff;
+	padding: 3px 5px;
+	border-radius: 4px;
+	font-weight: bold;
+}
+
+#city-chooser {
+    position: relative;
+    float: left;
+    margin: 19px 0 6px 50px;
+}
+
+#city-chooser a#home {
+	background-color: ;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 8px 15px;
+    position: relative;
+    z-index: 999;
+    border: 1px solid transparent;
+    color: #000;
+}
+
+#city-chooser:hover {
+  cursor: pointer;	
+}
+
+#city-chooser:hover a#home {
+  border: 1px solid #c1c1c1;
+  border-width: 1px 1px 0 1px;
+  padding-bottom: 14px;
+  background-color: #f1f1f1;	
+}
+
+ul.city-chooser {
+  display: none ;
+  position: absolute;
+  left: 0px;
+  top: 31px;
+  width: 120px;
+  font-weight: normal;
+  z-index: 998;
+  background-color: #f1f1f1;
+  padding: 10px 15px;
+  list-style-type: none;
+  border-radius: 0 7px 7px 7px;
+  border: 1px solid #c1c1c1;
+  font-size: 11px;
+}
+
+ul.city-chooser li.helper {
+  color: #999;
+  font-style: italic;	
+}
+
+ul.city-chooser li {
+  margin-bottom: 5px;	
+}
+
+#city-chooser:hover ul.city-chooser {
+  display: block;	
+}
+
+
+#home {
+    background-color: #f1f1f1;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 15px 0 0 50px;
+    padding: 8px 15px;	
+}
+
+#home.selected, #about.selected, #login.selected, #profile.selected {
+    background-color: #FFFFFF;
+    font-size: 15px;
+    margin-top: 7px;
+    padding: 10px 17px;
+}
+
+#about {
+    background-color: #f1f1f1;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 15px 0 0 10px;
+    padding: 8px 15px;  	
+}
+
+#login {
+    background-color: #f1f1f1;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 15px 0 0 10px;
+    padding: 8px 15px;	
+}
+
+#profile {
+    background-color: #f1f1f1;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 15px 0 0 50px;
+    padding: 8px 15px;
+}
+
+#profile:hover {
+  background-color: #fff;	
+}
+
+#profile a.notifications {
+    background-color: #C1C1C1;
+    border-radius: 3px 3px 3px 3px;
+    margin-left: 3px;
+    padding: 2px 6px;
+    color: #666;
+    font-weight: bold;
+    font-size: 11px;
+    text-align: center;
+    position: relative;
+}
+
+span.site {
+  color: #fea201;	
+}
+
+#profile a.notifications.active {
+  background-color: #cc1f1f;
+  color: #fff;	
+}
+
+#profile a.notifications:hover {
+  background-color: #ff4f7d;
+  color:#fff;
+}
+
+
+div#message {
+    -moz-border-radius: 10px 10px 10px 10px;
+    background-color: #FDF5D2;
+    float: left;
+    margin: 0 0 20px 40px;
+    padding: 10px 30px;
+    width: 540px;
+}
+
+div#message p {
+  color: #214569;	
+}
+
+
+#rightbar {
+  width: 260px;
+  float: right;	
+}
+
+#rightbar .box {
+  background-color: #f1f1f1;
+  padding: 10px 15px;
+  margin: 0 0 20px 0;	
+}
+
+
+div#left {
+    border-radius: 10px 10px 10px 10px;
+    background-color: #FFFFFF;
+    float: left;
+    padding: 20px 30px 50px;
+    width: 900px;
+}
+
+div#left img.profile-photo-large {
+    float: left;
+    margin: 0px 20px 10px 0;
+}
+
+input {
+  padding: 10px;
+  width: 540px;
+  border: 1px solid #e1e1e1;
+  border-radius: 5px;
+}
+
+div#left textarea {
+    border: 1px solid #E1E1E1;
+    border-radius: 5px 5px 5px 5px;
+    color: #333333;
+    font-family: Arial,serif;
+    font-size: 1em;
+    line-height: 1.6em;
+    padding: 10px;
+    width: 540px;
+    margin-bottom: 20px;
+}
+
+
+div#latest {
+  background-color: #fff;
+  border: 5px solid #a1cdd2;
+  float: right;
+  width: 540px;
+  padding: 30px 30px;
+  margin: 20px 10px 0 0px;
+}
+
+div#footer {
+    font-size: 12px;
+    height: 50px;
+    margin: 20px auto 100px;
+    padding: 20px;
+    width: 960px;
+}
+
+div#footer div.image-top {
+  height: 5px;	
+  margin-bottom: 20px;
+}
+
+div#footer ul {
+  width: 850px;
+  float: left;
+  margin-left: 30px;
+  padding-left: 0;	
+}
+
+div#footer ul, div#footer li {
+  list-style-type: none;
+  margin-bottom: 10px;
+}
+
+/* home divs */
+div#signup {	
+}
+
+div#signup h3 {
+  margin-bottom: 10px;
+  color: #666;	
+}
+
+div#signup p {
+    color: #333333;
+    float: left;
+    font-family: Georgia,serif;
+    font-size: 0.7em;
+    margin: 15px 15px 10px 5px;
+    width: 200px;
+}
+
+div#signup input {
+  font-family: Georgia, serif;
+  font-size: 1em;
+  color: #999;
+  padding: 8px;	
+  width: 280px;
+  border: none;
+  margin-bottom: 0;
+}
+
+div#signup input.submit {
+    background-color: #C24046;
+    border: medium none;
+    color: white;
+    height: 30px;
+    margin: 15px 0;
+    padding: 3px;
+    width: 70px;
+}
+
+div#signup input.submit:hover {
+  cursor: pointer;
+  background-color: pink;	
+  color: #C24046;
+}
+
+a.about-link {
+    font-family: Georgia,serif;
+    margin: 20px 0 0 10px;
+}
+
+a.about-link:link, a.about-link:visited {
+  color: #096233;	
+}
+
+a.about-link:hover {
+  color: #1c874e;	
+}
+
+div#account {
+    border-bottom: 1px solid #92CCD3;
+    border-top: 1px solid #92CCD3;
+    float: right;
+    margin: 20px 0 0;
+    padding: 20px 0;
+}
+
+div#account p {
+    line-height: 1em;
+    margin-bottom: -10px;
+}
+
+div#account div.photo {
+    float: right;
+    margin-left: 15px;
+    width: 70px;
+}
+
+div#account div.photo img.avatar {
+  border: 5px solid white;
+}
+
+div#account div.info {
+    float: left;
+    margin-top: -5px;
+    text-align: right;
+    width: 190px;
+}
+
+div#account div.info p {
+  margin: 0 0 5px;	
+}
+
+div#account div.info p.name {
+    font-family: "Lucida Grande",sans-serif;
+    font-weight: bold;
+    margin: 5px 0 5px 0;
+}
+
+div.bio {
+  float: left;
+  width: 400px;	
+}
+
+p.bio {
+    color: #333333;
+    font-family: Georgia,serif;
+    margin-top: -10px;
+    min-height: 70px;
+    padding-bottom: 10px;
+}
+
+/* end home divs */
+
+
+
+/* typography */
+
+h1 {
+	font-weight: bold;
+	padding-bottom: 10px;
+	margin: 0 0 0px 0;
+}
+
+
+h2 {
+    color: #C24046;
+    font-size: 25px;
+    margin-bottom: 15px;
+    margin-top: 0;
+}
+
+h3 {
+  color: #666;
+  font-weight: bold;
+}  
+
+h4 {
+  color: #777;
+  font-weight: normal;
+}
+
+
+p {
+  font-size: 0.9em;	
+  line-height: 1.5em;
+  color: #666;
+}
+
+span.small {
+  font-size: 0.8em;
+}  
+
+p.first {
+  font-family: Georgia, serif;
+  font-size: 1.2em;	
+}
+
+ul.errorlist {
+  list-style-type: square;
+  margin-left: 30px;
+  margin-bottom: 30px;	
+}
+
+.error {
+  color: red;	
+}
+
+
+
+/* social */
+
+img.comment {
+  position: relative;	
+}
+
+span.like-count {
+  margin-top: -10px;	
+}
+
+span.account {
+  font-size: 14px;
+  font-weight: bold;
+  font-family: Arial, sans-serif;	
+  margin-top: 0;
+}
+
+
+
+
+/* form buttons and fields */
+
+
+div#left input.submit, div#add-form input.submit-button, div#comment-form input.submit-post {
+    float: right;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 27px;
+    margin-right: 10px;
+    min-width: 54px;
+    padding: 5px 10px;
+    width: 100px;
+
+}
+
+div#left input.submit:active, div#add-form input.submit-button:active {
+  cursor: pointer;	
+}
+
+label {
+    color: #666666;
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    width: 500px;
+    margin-bottom: 5px;
+}
+
+label span {
+  font-weight: normal;	
+}
+
+input {
+  margin-bottom: 20px;
+  font-size: 1em;
+}
+
+/* flatpages content styles */
+
+div#flatpage-content {
+  line-height: 1.6em;
+  color: #666;	
+}
+
+div#flatpage-content p {
+  margin: 5px 0 5px 0;
+  line-height: 1.8em;	
+  font-family: Georgia, serif;
+}
+
+div#flatpage-content h4 {
+  font-size: 0.9em;
+  color: black;
+  margin-bottom: 0;	
+}
+
+/* comments styles */
+
+div#feed div.comments {
+    font-size: 13px;
+    margin-top: 10px;
+    width: 380px;
+}
+
+div.comments {
+    float: left;
+    margin: 0;
+    width: 500px;
+	font-size: 14px;
+}
+
+div#feed span.show-comments {
+  color: #2D7886;
+}
+
+div#feed span.show-comments:hover {
+  color: #F67B7B;	
+  cursor: pointer;
+}
+
+img.comment-icon {
+  position: relative;
+  top: 4px;	
+  margin-right: 8px;
+}
+
+div#feed div.a-comment {
+  width: 380px;	
+  border-bottom: 1px solid #fff;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+
+div.a-comment {
+    background-color: ;
+    color: #333;
+    margin: 0 0 20px;
+    border-bottom: 1px solid #e1e1e1;
+    float: left;
+    width: 500px;
+    padding-bottom: 20px;
+}
+
+div.a-comment.last {
+  margin-bottom: 20px;	
+}
+
+div.comment-name h4 {
+  color: black;
+  margin: 0 0 5px 0;	
+}
+
+div.comment-name a:link h4, div.comment-name a:visited h4 {
+  color: #C24046; 	
+}
+
+div.comment-name {
+  font-weight: bold;	
+  width: 80px;
+  float:left;
+  }
+
+div#feed div.comment-name {
+  width: 50px;	
+}
+
+div#feed div.comment-name img {
+  border: 4px solid #fff;	
+}
+
+div.comment-name span {
+  font-weight: normal;
+  font-size: 12px;	
+  color: #999;
+}
+
+div#feed div.comment-content {
+  float: left;	
+  line-height: 1.8em;
+  width: 330px;
+}
+
+div.comment-content {
+  width: 100%;
+  float: left;
+  width: 420px;	
+}
+
+div.comment-content p.submit-date {
+  font-size: 11px;
+  color: #000;	
+}
+
+div.comment-content p {
+  margin: 0;	
+}
+
+div#feed p.register-reminder {
+    float: right;
+    position: relative;
+    top: 5px;
+    height: 30px;
+}
+
+div.close {
+    border-top: 1px solid #E1E1E1;
+    float: right;
+    height: 20px;
+    margin-bottom: -5px;
+    margin-top: 10px;
+    padding-top: 5px;
+}
+
+div#comment-form {
+  float: left;
+  width: 480px;
+  margin-top: 20px;
+}
+
+div#left div#comment-form textarea {
+    border: 1px solid #E1E1E1;
+    border-radius: 5px 5px 5px 5px;
+    color: #666666;
+    font-family: Helvetica,serif;
+    line-height: 1.6em;
+    padding: 10px;
+    width: 460px;
+}
+
+div.comment-form h4 {
+  margin: 0;	
+}
+
+
+div.suggestion {
+    border-bottom: 1px solid #E1E1E1;
+    float: left;
+    margin: 30px 0 10px 10px;
+    padding-bottom: 30px;
+}
+
+div.suggestion-vote {
+    -moz-border-radius: 10px 10px 10px 10px;
+    background-color: #E1E1E1;
+    float: left;
+    margin-right: 20px;
+    padding: 10px;
+    text-align: center;
+    width: 50px;
+}
+
+div.suggestion-vote span.vote-count {
+  font-size: 2.8em;
+  font-weight: bold;	
+}
+
+div.suggestion-vote a {
+  font-size: 0.8em;	
+}
+
+div.suggestion-vote img.up-arrow {
+    float: right;
+    left: -7px;
+    position: relative;
+    top: 8px;
+}
+
+div.suggestion-content {
+  float: left;
+  width: 440px;	
+}
+
+div.suggestion-content p {
+  margin-bottom: 0;	
+}
+
+div#left div.suggestion-content h3 {
+  color: #C24046;
+  margin-bottom: 0;
+  border: none;
+  padding-bottom: 0;	
+}
+
+div.suggestion-content p.meta {
+  font-size: 0.8em;
+  color: #333;	
+  margin-top: 0;
+}
+
+div.suggestion div.comments {
+    -moz-border-radius: 10px 10px 10px 10px;
+    background-color: #F1F1F1;
+    float: left;
+    font-size: 0.8em;
+    margin: 25px 0 0 0px;
+    padding: 15px;
+    width: 410px;
+}	
+
+div#add-form input.title {
+  width: 525px;
+  color: #666666;
+  font-family: Georgia,serif;
+  font-size: 1em;
+  line-height: 1.4em;	
+}
+
+div#top {
+  float: left;
+  width: 900px;	
+  border-bottom: 3px dotted #e1e1e1;
+  margin-bottom: 20px;
+}
+
+div#top h1 {
+  float:left;
+  font-size: 32px;	
+  letter-spacing: -1px;
+}
+
+div#top .signup {
+  float: right;
+  font-size: 11px;
+  position: relative;
+  top: 18px;
+}
+
+
+div.login {
+  float: left;
+  width: 260px;	
+  font-weight: normal;
+}
+
+div.login p {
+  margin: 5px 5px 0 0;	
+}
+
+div.signup-button {
+  margin: 10px 0 0 0;	
+  float: right;	
+  width: 215px;
+}
+
+div.signup-button p {
+  font-weight: normal;
+  font-size: 11px;
+  float: left;
+  width: 100px;
+  color: #666;
+
+}
+
+div#nav .signup {
+  float: right;
+  margin: 0px 0 0;
+  font-size: 16px;
+  width: 200px;	
+}
+
+span.bold {
+  font-weight: bold;	
+}
+
+span.black {
+  color: #000;	
+}
+
+p.description {
+  font-family: Georgia, serif;	
+  padding-bottom: 20px;
+  border-bottom: 3px dotted #e1e1e1;
+  float: left;
+  width: 560px;
+  margin: 0px 0 10px 0;
+  font-size: 13px;
+}
+
+div#left div#search {
+  display: block;
+  float: left;
+  width: 450px;
+  margin: -3px 0 20px 0px;
+  padding-bottom: 10px;	
+}
+
+div#left div#search label {
+  display: none;	
+}
+
+div#left div#search input {
+  width: 320px;	
+  float: left;
+  margin: 0 10px 0 0;
+  padding: 5px;
+  height: 21px;
+}
+
+div#left div#search input.search {
+    float: left;
+    height: 42px;
+    margin: 0 0 10px;
+    width: 72px;
+}
+
+p.added-by-metadata {
+    float: left;
+    font-size: 11px;
+    margin: -10px 0 10px;
+    width: 560px;
+    font-weight: bold;
+}
+
+div#otherplaces {
+    background-color: #14565E;
+    border-color: #D1D1D1;
+    border-radius: 0 0 5px 5px;
+    border-style: solid;
+    border-width: 0 1px 1px;
+    box-shadow: 0 10px 9px #E1E1E1;
+    float: left;
+    font-size: 11px;
+    margin: 19px 0 0 -1px;
+    position: absolute;
+    text-align: left;
+    width: 400px;
+}
+
+div#otherplaces ul {
+  list-style-type: square;
+  color: #fff;	
+}
+
+div#otherplaces a {
+  color: #fff;	
+}
+
+div#loading {
+    background-color: #F1F1F1;
+    border: 1px solid #E9E9E9;
+    color: #999999;
+    float: left;
+    font-size: 10px;
+    margin-bottom: 40px;
+    padding: 15px 0;
+    text-align: center;
+    width: 100%;
+    display: none;
+}

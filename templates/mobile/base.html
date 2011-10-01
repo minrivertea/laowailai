@@ -14,7 +14,7 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 	{% block canonical %}{% endblock %}
     <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
-
+    <link rel="stylesheet" href="/css/mobile.css" />
     
     <title>{% block title %}{% block pagetitle %}{% endblock %} - {{ sitename|lower }}{% endblock %}</title>
     <!--[if lte IE 6]>
@@ -57,9 +57,6 @@
 
 <body>
 
-<!--[if lte IE 6]>
-<div id="iemessage"><p>This site won't work in IE6 - it's a 10 year old browser, and you should replace it with something better like <a href="http://www.mozilla.com/">Firefox</a> or <a href="http://www.google.com/chrome/">Chrome</a></div>
-<![endif]-->
 
 {% if messages %}
 <div id="header-messages">
