@@ -135,13 +135,8 @@
 
 {% if messages %}
 <script type="text/javascript">
-function closeMessages() {
-	$('#header-messages').slideUp(300)
-}
 
-window.setTimeout(closeMessages, 8000, true);
-
-setTimeout(function () {
+window.setTimeout(function () {
   window.scrollTo(0, 1);
 }, 1000);
 </script>
