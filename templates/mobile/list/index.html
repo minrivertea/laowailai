@@ -1,0 +1,276 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block metadescription %}The best place to share news and events for foreigners in Fuzhou, China.{% endblock %}
+{% block pagetitle %}Home{% endblock %}
+
+{% block extrajs %}
+<script type="text/javascript">
+
+function openMap() {
+  $('#overlay').fadeOut('20');
+  $('.arrow').toggle(); 
+  $("#map").animate({
+    height: "500px",
+    opacity: 1,
+  }, 500, function() {
+  
+  $('#map_area').unbind('click');
+  });
+}
+
+$('#expand').click(openMap);
+$('#overlay').click(openMap);
+
+
+$("input.search").focus(function() {
+    if( $(this).val() == "What do you want to do?" ) {
+        $(this).val("");
+        $(this).css('color', '#333');
+    }
+
+});
+
+$("input.search").blur(function() {
+    if( $(this).val() == "" ) {
+        $(this).val("What do you want to do?");
+        $(this).css('color', '#999');
+    }
+});
+
+</script>
+{% endblock %}
+
+
+{% block extracss %}
+<style type="text/css">
+div#introduction {
+  height: 300px;
+  float: left;	
+}
+
+div#top h1 {
+  color: #333;
+  font-size: 40px;	
+}
+
+#explanation {
+  padding: 0px 0px;
+  float: right;
+  width: 320px;
+  margin: 0 0 0 20px;	
+  font-size: 15px;
+  font-family: Georgia, serif;
+  font-style: italic;
+}
+
+div#left #explanation div#search {
+  display: none;	
+}
+
+#explanation input.search {
+  width: 220px;
+  margin: 10px 0 5px 0;	
+  float: left;
+  border-radius: 5px 0px 0px 5px;
+  color:#999;
+}
+
+#explanation input.go {
+    border-radius: 0 5px 5px 0;
+    border-width: 1px 1px 0 0;
+    float: left;
+    font-size: 13px;
+    margin: 10px 0 5px;
+    padding: 9px;
+    position: relative;
+    top: 1px;
+    width: 50px;
+    font-family: Helvetica,sans-serif;
+}
+
+
+#explanation a.help {
+  font-size: 13px;
+  float: left;
+  margin-top:10px;
+  margin-right: 20px;	
+}
+
+
+p.description {
+  margin-bottom: 30px;	
+}
+
+div#cities {
+    background-color: #F6F6F6;
+    border: 3px solid #FFFFFF;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 1px 3px #C1C1C1;
+    margin: 0px 0 20px;
+    padding: 20px;
+    width: 500px;
+}
+
+div#cities h2, #bigsearch h2 {
+  font-size: 16px;
+  letter-spacing: -1px;
+  font-weight: bold;
+  color: #000;	
+}
+
+div#cities h3 {
+  float: left;
+  margin-right: 10px;
+  position: relative;
+  top: 2px;	
+}
+
+div#cities a.vote {
+  float: right;
+  font-size: 11px;	
+}
+
+div#cities a.city {
+    background-color: #E2F1F3;
+    border: 1px solid #FFFFFF;
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: 0 1px 3px #999999;
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 0 10px 10px 0;
+    padding: 5px 8px;
+}
+
+#map {
+  background-color: fuschia;
+  height: 80px;
+  border: 10px solid #f1f1f1;
+  float: left;
+  width: 880px;	
+  margin: 0px 0 30px 0;
+  position: relative;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+#map #overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 880px;
+  height: 80px;
+  background-color: #fff;
+  opacity: 0.5;
+  float: left;
+  display: block;
+  z-index: 100;	
+  text-align: center;
+}
+
+#map #overlay span {
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;	
+  float: left;
+  font-weight: bold;
+  color: #999;
+}
+
+#map #expand {
+  position: absolute;
+  bottom:0;
+  right: 0;	
+  font-size: 40px;
+  font-weight: bold;
+  background-color: #f1f1f1;
+  color: #2D7886;
+  padding: 0 8px 0 14px;
+  text-shadow: 0 2px 2px #fff;
+  border-radius: 10px 0px 0px 0px;
+  z-index: 101;
+}
+
+#map #expand:hover {
+  cursor: pointer;
+  color: #F67B7B;	
+}
+
+#map .arrow {
+  position: absolute;
+  z-index: 100;
+  top: 307px;
+  left: 258px;	
+  display: none;
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+{% if request.user.is_authenticated %}
+	<div id="top">
+		<h1>Set your city in China</h1>
+	</div>
+	
+	<p class="description"><em>You need to choose a city as your 'home' city in China. Click on one of the cities below, and remember you can always browse other cities.</em></p>
+	
+	<div id="cities">
+		
+		{% for city in laowai.cities.all %}
+		<a href="{% url mark_city city.id %}">{{ city.name }}</a>
+		{% endfor %}
+	</div>
+	
+
+	<div id="feed">
+		{% include "list/snippets/feed.html" %}
+	</div>
+
+{% else %}	
+
+	<div id="top">
+		<h1>See China, the local way</h1>
+	</div>
+		
+	<div id="explanation">
+		<p><span class="site">{{ sitename }}</span> is for foreigners living, working and travelling in China. Find things to do, eat and see, activities, friends and culture in your city.		
+		<div id="search">
+			<br/>
+			<input type="text" class="search" value="What do you want to do?"/>
+			<input type="submit" value="Go!" class="go button"/>
+			<br/>
+		</div>
+		
+		<a class="help" href="/user-guide/">How does it work?</a>
+		</p>
+	</div>
+
+	<div id="cities">
+		<a class="vote" href="/cant-find-my-city/">Can't see your city?</a>
+		<h2>Choose your city in China</h2>
+		{% for city in all_cities %}
+			<a class="city" href="{% url news_feed city.slug %}">{{ city.name }}</a>
+		{% endfor %}
+	</div>
+	
+	
+
+
+
+	
+
+
+
+
+		
+
+
+{% endif %}
+
+
+
+{% endblock %}
+
