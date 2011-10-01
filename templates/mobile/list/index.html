@@ -56,7 +56,6 @@ $("input.search").blur(function() {
 	
 
 	<div id="cities">
-		<a class="vote" href="/cant-find-my-city/">Can't see your city?</a>
 		<h2>Choose your city in China</h2>
 		{% for city in all_cities %}
 			<a class="city" href="{% url news_feed city.slug %}">{{ city.name }}</a>
