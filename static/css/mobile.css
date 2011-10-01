@@ -151,9 +151,9 @@ h2 {
 }
 
 #login {
-  float: left;
-  width: 80px;
-  padding: 10px 15px;
+  float: right;
+  width: 50px;
+  padding: 5px 10px;
   font-weight: bold;	
 }
 
