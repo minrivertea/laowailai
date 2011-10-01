@@ -31,11 +31,11 @@ a {
   text-decoration: none;	
 }
 
-a:link, a:visited {
+a:link, a:visited, a:hover {
   color: #2d7886;
 }
 
-a:hover, a:active {
+a:active {
   color: #f67b7b;
 }
 
