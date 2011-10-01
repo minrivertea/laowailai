@@ -40,19 +40,15 @@ a:hover, a:active {
 }
 
 .button {
-
 	background-color: #f1f1f1;
     /* Firefox 3.6+ */ 
-    background: -moz-linear-gradient(100% 100% 90deg, #e6e6e6, #f1f1f1); 
-    
+    background: -moz-linear-gradient(100% 100% 90deg, #327e8c, #82becc); 
     /* Safari 4-5, Chrome 1-9 */ /* -webkit-gradient(<type>, <point> [, <radius>]?, <point> [, <radius>]? [, <stop>]*) */ 
-    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f1f1f1), to(#e6e6e6)); 
-    
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#82becc), to(#327e8c)); 
     /* Safari 5.1+, Chrome 10+ */ 
-    background: -webkit-linear-gradient(#e6e6e6, #f1f1f1); 
-    
+    background: -webkit-linear-gradient(#327e8c, #82becc); 
     /* Opera 11.10+ */ 
-    background: -o-linear-gradient(#e6e6e6, #f1f1f1);   
+    background: -o-linear-gradient(#327e8c, #82becc);   
     
     border: 1px solid #fff;
     box-shadow: 0 1px 2px #999, 0 1px 0px #f6f6f6;
