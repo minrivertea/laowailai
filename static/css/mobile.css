@@ -95,7 +95,8 @@ a:hover, a:active {
 #main {
   background-color: #fff;
   padding: 5px 10px;
-  float:left;	
+  float:left;
+  width: 100%;	
 }
 
 #header {
