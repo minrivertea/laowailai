@@ -84,6 +84,15 @@ a:hover, a:active {
 
 /* end links */
 
+/* TITLES */
+h2 {
+  font-weight: bold;
+  margin-bottom: 10px;	
+}
+
+
+/* END TITLES */
+
 /* main divs */
 
 #container {
