@@ -85,7 +85,8 @@ a:hover, a:active {
 /* TITLES */
 h2 {
   font-weight: bold;
-  margin-bottom: 10px;	
+  margin: 0 0 10px 15px;
+  color: 555;
 }
 
 
@@ -141,11 +142,4 @@ h2 {
 #left {
   width: 100%;
   background-color: #fff;	
-}
-
-a.nav {
-  background-color: #fff;
-  padding: 8px 15px;
-  border-radius: 7px;
-  margin-bottom: 20px;	
 }
