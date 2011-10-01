@@ -50,7 +50,7 @@ a:hover, a:active {
     /* Opera 11.10+ */ 
     background: -o-linear-gradient(#327e8c, #82becc);   
     
-    border: 1px solid #fff;
+    border-bottom: 1px solid #fff;
     box-shadow: 0 1px 2px #999, 0 1px 0px #f6f6f6;
     border-radius: 4px;
 
