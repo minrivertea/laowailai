@@ -87,6 +87,7 @@ h2 {
   font-weight: bold;
   margin: 0 0 10px 8%;
   color: #555;
+  letter-spacing: -0.5px;
 }
 
 
@@ -118,7 +119,7 @@ h2 {
   height: 40px;
   background-color: #bdd7e1;
   float: left;
-  margin: 0 0 10px 0;
+  margin: 0 0 20px 0;
   padding: 10px 0 10px 0;
   position: relative;
 }
