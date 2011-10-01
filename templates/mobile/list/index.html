@@ -50,9 +50,14 @@ $("input.search").blur(function() {
   padding: 10px 10px 10px 15px;
   font-size:1.2em;
   font-weight: bold;
-  border-bottom: 1px solid #dfecf1;	
+  border-bottom: 1px solid #dfecf1;
+  position: relative;	
 }
 
+#cities a span.arrow {
+  position: absolute;
+  right: 10px;	
+}
 
 </style>
 {% endblock %}
@@ -66,9 +71,8 @@ $("input.search").blur(function() {
 	<div class="whitebox">
 
 		<div id="cities">
-			
 			{% for city in all_cities %}
-				<a class="city" href="{% url news_feed city.slug %}">{{ city.name }}</a>
+				<a class="city" href="{% url news_feed city.slug %}">{{ city.name }} ({{ city.chinese_name }})<span class="arrow">img src="/images/mobile/rarrow.png"></span></a>
 			{% endfor %}
 		</div>
 	
