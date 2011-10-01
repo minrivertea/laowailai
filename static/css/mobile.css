@@ -132,6 +132,14 @@ h2 {
   top: 15px;	
 }
 
+#home {
+  position: absolute;
+  left: 15px;
+  top: 18px;
+  padding: 5px 8px;
+  font-weight: bold;	
+}
+
 #login {
   position: absolute;
   right: 15px;
