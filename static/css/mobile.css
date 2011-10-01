@@ -93,12 +93,6 @@ h2 {
 
 /* main divs */
 
-#header {
-	background-color: #bdd7e1;
-	height: 40px;
-	width: 100%;
-}
-
 #container {
   float: left;
   width: 100%;
@@ -125,8 +119,8 @@ h2 {
   height: 40px;
   background-color: #bdd7e1;
   float: left;
-  display: block;
   margin: 0 0 20px 0;
+  padding: 10px 0 10px 0;
   position: relative;
 }
 
