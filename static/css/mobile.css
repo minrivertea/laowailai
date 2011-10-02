@@ -172,10 +172,6 @@ h2 {
   border-right: 1px solid #fff;
 }
 
-#navigation a:last-child {
-  width: 34%;	
-}
-
 #left {
   width: 100%;
   background-color: #fff;	
