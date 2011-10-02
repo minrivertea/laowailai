@@ -281,10 +281,10 @@ div#filters li.buy a {
 	</div>
 	
 	<div id="choices">
-		<a href="">View on a map<img src="/images/mobile/rarrow.png"></a>
+		<a href="">View on a map<span class="arrow"><img src="/images/mobile/rarrow.png"></span></a>
 		{% with place as object %}
 		{% get_comment_count for object as comment_count %}
-		<a href="">View comments ({{ comment_count }})<img src="/images/mobile/rarrow.png"></a>
+		<a href="">View comments ({{ comment_count }})<span class="arrow"><img src="/images/mobile/rarrow.png"></span></a>
 		{% endwith %}
 	
 	</div>
