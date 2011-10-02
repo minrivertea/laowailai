@@ -179,7 +179,11 @@ h2 {
 }
 
 #navigation a.selected {
-  background-color: #8ac7cc;	
+  background-color: #8ac7cc;
+  border-top: 1px solid #3e8393;
+  border-right: 1px solid #8cc0cc;
+  border-bottom: 1px solid #8cc0cc;
+  border-left: 1px solid #3e8393;  	
 }
 
 #left {
