@@ -149,6 +149,19 @@ h2 {
   font-weight: bold;	
 }
 
+#navigation {
+  width: 100%;
+  position: relative;	
+}
+
+#navigation a {
+  width: 33%;
+  background-color: #59a1b2;
+  text-align: center;
+  padding: 5px 0 5px;
+  border-right: 1px solid #fff	
+}
+
 #left {
   width: 100%;
   background-color: #fff;	
