@@ -279,6 +279,13 @@ div#filters li.buy a {
 		</div>
 
 	</div>
+	
+	<div id="choices">
+		<a href="">View on a map<img src="/images/mobile/rarrow.png"></a>
+		{% get_comment_count for object as comment_count %}
+		<a href="">View comments ({{ comment_count }})<img src="/images/mobile/rarrow.png"></a>
+	
+	</div>
 
 	
 </div>
