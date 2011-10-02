@@ -156,6 +156,7 @@ h2 {
 
 #navigation a {
   width: 33%;
+  float: left;
   background-color: #59a1b2;
   text-align: center;
   padding: 5px 0 5px;
