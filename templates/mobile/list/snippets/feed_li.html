@@ -4,10 +4,6 @@
 
 <li id="object_{{ object.id }}" class="{% if forloop.first and forloop.last %}first only{% else %}{% if forloop.first %}first{% else %}{% if forloop.last %}last{% endif %}{% endif %}{% endif %}">	
 
-	{% ifequal request.user.get_profile object.owner %}
-	<a class="delete" title="Delete your post" href="{% url delete_a_post city.slug object.id %}">X</a>
-	{% endifequal %}
-
 	<a href="#" id="object_{{ object.id }}"></a>
 		<div class="avatar">
 		   	<a title="{{ object.owner }}" href="{% url laowai object.owner.id %}">
