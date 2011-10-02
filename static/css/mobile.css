@@ -161,8 +161,11 @@ h2 {
   background-color: #59a1b2;
   text-align: center;
   padding: 5px 0 5px;
-  border-right: 1px solid #fff;
   color: #fff;	
+}
+
+#navigation a:not(:last-child) {
+  border-right: 1px solid #fff;
 }
 
 #left {
