@@ -253,33 +253,32 @@ div#filters li.buy a {
 		<p class="description">{{ place.description }}</p>
 		<p><strong>Location - <a href="">view on map</a></strong><br/> {{ place.location }}</p>
 	
-	</div>
 	
-	<div id="infobar">
-		<div class="ratings">
-		{% if rated %}
-		<p>You've rated this (avg. {{ place.get_average_rating }}/5)</p>
-		<ul class="star-rating">
-			<li class="current-rating" style="width:{{ current_rating }}px;"> Currently 3.5/5 Stars.</li>
-		</ul>
-		{% else %}
-		
-		<p>{{ place.rating_count }} rating{{ place.rating_count|pluralize }} (avg. {{ place.get_average_rating }}/5)</p>
-		<ul class="star-rating">
-			<li class="current-rating" style="width:{{ current_rating }}px;"> Currently 3.5/5 Stars.</li>
-			{% if request.user.is_authenticated %}
-			<li><a href="{% url add_rating city.slug place.slug %}?rating=1" title="1 star out of 5" class="one-star">1</a></li>
-			<li><a href="{% url add_rating city.slug place.slug %}?rating=2" title="2 stars out of 5" class="two-stars">2</a></li>
-			<li><a href="{% url add_rating city.slug place.slug %}?rating=3" title="3 stars out of 5" class="three-stars">3</a></li>
-			<li><a href="{% url add_rating city.slug place.slug %}?rating=4" title="4 stars out of 5" class="four-stars">4</a></li>
-			<li><a href="{% url add_rating city.slug place.slug %}?rating=5" title="5 stars out of 5" class="five-stars">5</a></li>
+		<div id="infobar">
+			<div class="ratings">
+			{% if rated %}
+			<p>You've rated this (avg. {{ place.get_average_rating }}/5)</p>
+			<ul class="star-rating">
+				<li class="current-rating" style="width:{{ current_rating }}px;"> Currently 3.5/5 Stars.</li>
+			</ul>
+			{% else %}
+			
+			<p>{{ place.rating_count }} rating{{ place.rating_count|pluralize }} (avg. {{ place.get_average_rating }}/5)</p>
+			<ul class="star-rating">
+				<li class="current-rating" style="width:{{ current_rating }}px;"> Currently 3.5/5 Stars.</li>
+				{% if request.user.is_authenticated %}
+				<li><a href="{% url add_rating city.slug place.slug %}?rating=1" title="1 star out of 5" class="one-star">1</a></li>
+				<li><a href="{% url add_rating city.slug place.slug %}?rating=2" title="2 stars out of 5" class="two-stars">2</a></li>
+				<li><a href="{% url add_rating city.slug place.slug %}?rating=3" title="3 stars out of 5" class="three-stars">3</a></li>
+				<li><a href="{% url add_rating city.slug place.slug %}?rating=4" title="4 stars out of 5" class="four-stars">4</a></li>
+				<li><a href="{% url add_rating city.slug place.slug %}?rating=5" title="5 stars out of 5" class="five-stars">5</a></li>
+				{% endif %}
+			</ul>
+			
 			{% endif %}
-		</ul>
-		
-		{% endif %}
-	</div>
+		</div>
 
-</div>
+	</div>
 
 	
 </div>
