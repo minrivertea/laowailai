@@ -164,12 +164,18 @@ h2 {
   color: #fff;
   font-size: 12px;
   font-weight: bold;
-  border: 1px solid #2a7081;
-  border-width: 1px 0px 0px 1px;	
+  border-top: 1px solid #8cc0cc;
+  border-right: 1px solid #3e8393;
+  border-bottom: 1px solid #3e8393;
+  border-left: 1px solid #8cc0cc;	
 }
 
-#navigation a:not(:last-child) {
-  border-right: 1px solid #fff;
+#navigation a:last-child {
+  border-right: none;
+}
+
+#navigation a:first-child {
+  border-left: none;	
 }
 
 #left {
