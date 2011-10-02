@@ -25,12 +25,6 @@
 				{% if object.location %}
 				    just added a new place in {{ object.city }} - 
 					<a href="{% url place object.city.slug object.id %}"><span class="placename">{{ object.name }}</span></a>
-					<br/>
-					<span id="placeinfo">
-						<img src="/images/fake_map_small.png" style="float: left; margin-right: 10px;"/>
-						<em>{{ object.description|truncatewords:20 }}</em><br/>
-						{{ object.location }}
-					</span>
 				{% else %}
 					{% if object.image %}
 						just added a new photo<br/>
