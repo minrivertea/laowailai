@@ -501,7 +501,7 @@ div#feed div.comment-content {
 	<div class="whitebox">
 	
 		<p class="description">{{ place.description }}</p>
-		<p><strong>Location</strong><br/> {{ place.location }}</p>
+		<p><strong>Location - <a href="">view on map</a></strong><br/> {{ place.location }}</p>
 	
 		<div id="verify">
 			{% if request.user.is_authenticated %}
