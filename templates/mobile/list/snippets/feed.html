@@ -1,0 +1,17 @@
+
+{% load comments %}
+{% load thumbnail %}
+
+
+<ul>
+	{% for object in objects.object_list %}		
+		{% include "list/snippets/feed_li.html" %}
+	{% endfor %}
+</ul>
+
+{% if objects.has_next %}
+<div id="pagination">
+            <span id="load-more">Load more news</span>
+</div>
+<div id="loading"><img src="/images/spinner.gif"/><br/>loading results...</div>
+{% endif %}

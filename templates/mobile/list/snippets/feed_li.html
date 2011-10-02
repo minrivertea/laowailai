@@ -1,0 +1,73 @@
+{% load comments %}
+{% load thumbnail %}
+
+
+<li id="object_{{ object.id }}" class="{% if forloop.first and forloop.last %}first only{% else %}{% if forloop.first %}first{% else %}{% if forloop.last %}last{% endif %}{% endif %}{% endif %}">	
+
+	{% ifequal request.user.get_profile object.owner %}
+	<a class="delete" title="Delete your post" href="{% url delete_a_post city.slug object.id %}">X</a>
+	{% endifequal %}
+
+	<a href="#" id="object_{{ object.id }}"></a>
+		<div class="avatar">
+		   	<a title="{{ object.owner }}" href="{% url laowai object.owner.id %}">
+		   	{% if object.owner.photo %}
+		   		{% thumbnail object.owner.photo "30x30" crop="center" as im %}
+	    			<img class="avatar" title="{{ object.owner.name }}" alt="a picture of {{ object.owner.name }}" src="{{ im.url }}">
+	    		{% endthumbnail %}
+	    	{% else %}
+			   	<img class="avatar" title="{{ object.owner }}" alt="" src="/images/avatar_30.jpg">
+			{% endif %}
+			</a>	
+		</div>
+		    
+		<div class="post">
+			<p class="content">
+				<span class="author">
+					<a title="View {{ object.owner }}'s profile" href="{% url laowai object.owner.id %}">{{ object.owner }}</a>
+				</span> 
+				{% if object.location %}
+				    just added a new place in {{ object.city }} - 
+					<a href="{% url place object.city.slug object.id %}"><span class="placename">{{ object.name }}</span></a>
+					<br/>
+					<span id="placeinfo">
+						<img src="/images/fake_map_small.png" style="float: left; margin-right: 10px;"/>
+						<em>{{ object.description|truncatewords:20 }}</em><br/>
+						{{ object.location }}
+					</span>
+				{% else %}
+					{% if object.image %}
+						just added a new photo<br/>
+						
+						{% thumbnail object.image "x600" crop="center" as im_large %}
+							<a class="image" href="{{ im_large.url }}">
+								{% thumbnail object.image "x150" crop="center" as im %}
+									<img alt="" title="" src="{{ im.url }}"/>
+								{% endthumbnail %}
+							</a>
+						{% endthumbnail %}
+						
+					{% else %} 
+						{{ object.content|urlize }}
+						{% if object.get_related_photo %}
+							<div class="related_photo">
+
+						{% thumbnail object.get_related_photo.image "x600" crop="center" as im_large %}
+							<a class="image" href="{{ im_large.url }}">
+								{% thumbnail object.get_related_photo.image "x150" crop="center" as im %}
+									<img alt="" title="" src="{{ im.url }}"/>
+								{% endthumbnail %}
+							</a>
+						{% endthumbnail %}
+
+							</div>
+						{% endif %}
+					{% endif %}
+				{% endif %}
+			</p>
+			<div class="meta"> 	
+					{% include "list/snippets/social.html" %}
+			</div>
+		</div>
+		
+</li>
