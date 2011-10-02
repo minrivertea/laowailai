@@ -1,0 +1,228 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+{% load comments %}
+
+{% block metadescription %}News, events and places to go for foreigners living or travelling in {{ city.name }}.{% endblock %}
+{% block pagetitle %}News from {{ city }}{% endblock %}
+
+{% block extrajs %}
+
+<script type="text/javascript" charset="utf-8">  
+
+function bindPostCommentHandler(idx) {   
+	var thisObject = $('#comment-form-' + idx + ' form'); 
+    thisObject.submit(function() {
+    	if ($('textarea#id_comment_' + idx).val() == '') {
+    		$(this).append('<p class="warning" style="color:red; display:block; float:right;position:relative;top:5px; right: 10px;"><em>You must type something!</em></p>');
+    	}
+    	else {
+        	$.ajax({  
+        	    type: "POST",  
+        	    data: $('#comment-form-' + idx + ' form').serialize(),  
+        	    url: "/comments/post/",  
+        	    cache: false,  
+        	    dataType: "html",  
+        	    success: function(data, textStatus) {
+        	        $('#comments_full_' + idx + ' .comments-list').append(data);
+        	        $('#comment-form-' + idx + ' textarea').val('');
+        	        $('#comment-form-' + idx + ' .warning').attr('style', 'display:none');
+        	    },  
+        	    error: function (XMLHttpRequest, textStatus, errorThrown) {  
+        	        thisObject.replaceWith('Your comment could not be posted.');  
+        	    }  
+        	}); 
+        	
+        	$().ajaxStart(function(){
+   				$('.submit').css('opacity', '0.4');
+ 			});
+ 			$().ajaxStop(function(){
+   				$('.submit').css('opacity', '1');
+ 			});
+    	}
+        return false;
+    });  
+} 
+
+
+function showComments(id) {
+  	bindPostCommentHandler(id);
+    $("div#comments_full_" + id).toggle();
+    $("span.show_comments" + id).removeAttr("onclick");	
+}
+
+
+function nextPage(page) {
+$.getJSON("/{{ city.slug }}/", {xhr: "true", page: page},
+  function(data) {
+  	$(data).appendTo('#feed ul');
+  	pageNum++; 
+  });
+}
+
+var pageNum = {{ objects.next_page_number }}
+$("#pagination").click(function () { 
+	nextPage(pageNum); 
+});
+
+$("textarea").focus(function() {
+    if( $(this).text() == "Write something on the wall...") {
+        $(this).text("");
+    }
+});
+
+$("#loading").ajaxStart(function(){
+   $('#pagination').hide();
+   $(this).show();
+ });
+
+$("#loading").ajaxStop(function(){
+   $(this).hide();
+   $('#pagination').show();
+   $("a.image").fancybox();
+ });
+ 
+ 
+$("#id_content").focus(function() {
+	$(this).animate({"height": "85px",}, "fast" );
+	$("#button-block").slideDown("fast");
+  return false;
+});
+
+$("#cancel").click(function() {
+	  $(this).animate({"height": "20px",}, "fast" );
+	  $("#button-block").slideUp("fast");
+	  $("#button-block").css('display', 'none');
+    return false;
+});
+
+$('#image-question').click(function() {
+	$(this).toggle();
+	$("#button-block").slideDown("fast");
+	$('#image-field').toggle();
+});
+  
+      
+$(document).ready(function() { 
+	$("a.image").fancybox();
+	$('a.add-blog').fancybox({'autoDimensions': false, 'width': 600, 'height': 600, 'padding': 30,});
+});  
+
+</script>  
+
+<script type="application/javascript" src="/js/lightbox/jquery.fancybox-1.3.4.pack.js"></script>
+{% endblock %}
+
+
+{% block extracss %}
+
+
+<link rel="stylesheet" href="/css/fancybox/jquery.fancybox-1.3.4.css" />
+<link rel="stylesheet" href="/css/feed.css" />
+
+<style type="text/css">
+div#introduction {
+  height: 300px;
+  float: left;	
+}
+
+div#top {
+  	
+}
+
+#explanation {
+  font-family: Georgia, serif;
+  font-size: 16px;
+  font-style: italic;
+  margin: 0 0 20px 0;	
+}
+
+#people {
+  float: left;
+  margin-bottom: 30px;	
+  padding-bottom: 0px;
+}
+
+#people img {
+  float: left;
+  margin-right: 5px;	
+}
+
+#people span, #photos span, #blogs span {
+    color: #C1C1C1;
+    display: block;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+#photos {
+  float: left;	
+  margin-bottom: 20px;
+}
+
+#blogs {
+  float: left;
+}
+
+#blogs ul {
+  list-style-type: none;
+  font-size: 15px;
+  line-height: 1em;	
+}
+
+#blogs ul p {
+  line-height: 1.2em;	
+}
+
+#blogs ul span.url {
+  font-size: 11px;	
+  text-transform: none;
+  font-weight: normal;
+  letter-spacing: 0;
+  color: #666;
+}
+
+#blogs p.none {
+  font-size: 12px;
+  font-style: italic;
+  margin-bottom: 5px;	
+}
+
+.button.add-blog {
+  padding: 2px 4px;
+  font-size: 11px;	
+}
+
+#blogs #add-blog-form {
+  display: none;
+  width: 200px;	
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div id="main">
+	<h2>News from {{ city }} ({{ city.chinese_name }})</h2>
+
+	<div class="whitebox">
+	
+	 	<div id="feed">
+			{% if request.user.is_authenticated %}
+				{% if request.user.get_profile.city %}
+					<div id="add-form">
+						{% include "list/snippets/add-form.html" %}
+					</div>
+				{% endif %}
+			{% endif %}
+			
+			{% include "list/snippets/feed.html" %}
+		</div>
+	</div>
+</div>
+
+
+
+
+{% endblock %}
