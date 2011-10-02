@@ -151,7 +151,8 @@ h2 {
 
 #navigation {
   width: 100%;
-  position: relative;	
+  position: relative;
+  top:-20px;	
 }
 
 #navigation a {
