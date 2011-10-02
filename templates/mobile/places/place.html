@@ -12,9 +12,10 @@
 
 {% block extrajs %}
 
-<script type="text/javascript">
+<script>
 
 $('a#map').click( function() {
+	geo_position_js.init();
 	geo_position_js.showMap({{ place.latitude }},{{ place.longitude }});
 });
    
