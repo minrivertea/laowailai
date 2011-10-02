@@ -202,7 +202,7 @@ h2 {
   position: relative;	
 }
 
-#choices a span.arrow {
+#choices a span.arrow, #feed li span.arrow {
   position: absolute;
   right: 20px;	
 }
