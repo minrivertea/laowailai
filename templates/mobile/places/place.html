@@ -12,8 +12,11 @@
 
 $(document).ready( function() {
 	$('a#map').click(function() {
-		geo_position_js.init();
-		geo_position_js.showMap({{ place.latitude }},{{ place.longitude }});
+		if(geo_position_js.init()){
+		  geo_position_js.showMap(
+		      {{ place.latitude }},{{ place.longitude }}
+		  );
+		}
 	});
 });   
 </script> 
