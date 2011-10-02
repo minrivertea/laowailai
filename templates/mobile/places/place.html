@@ -1,0 +1,707 @@
+{% extends "base.html" %}
+{% load comments %}
+{% load thumbnail %}
+
+{% block metadescription %}{{ place.description|safe }}{% endblock %}
+{% block pagetitle %}{{ place.name }} - {{ place.city }}{% endblock %}
+
+{% block canonical %}
+<link rel="canonical" href="{{ place.canonical_url }}" />
+{% endblock %}
+
+{% block mapscripts %}
+	{% if place.has_map %}
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.1&services=true"></script>
+	{% endif %}
+{% endblock %} 
+
+{% block extrajs %}
+
+
+
+<script type="text/javascript">
+
+
+{% if place.has_map %}
+
+var map = new BMap.Map("map_area");
+var point = new BMap.Point({{ place.longitude }}, {{ place.latitude }});  
+map.centerAndZoom(point, 15);  
+var marker = new BMap.Marker(point);  
+map.addOverlay(marker);
+
+
+function openMap(){
+  $("#expand").css('display', 'none'); 
+  $("#map_area").animate({
+    height: "300px",
+    opacity: 1,
+    fontSize: "3em",
+  }, 500, function() {
+  $("#close_map").attr("style", "display:block;");
+  $('#map_area').unbind('click');
+  map.centerAndZoom(new BMap.Point(marker.point.lng, marker.point.lat), 15); 
+  map.addControl(new BMap.NavigationControl());	
+  });
+}
+
+$("#map_area").click(openMap);
+$("#expand").click(openMap);
+
+
+
+$("#close_map").click(function(){
+  $("#map_area").animate({
+    height: "80px",
+    opacity: 1,
+    fontSize: "3em",
+  }, 500, function() {
+  $("#close_map").attr("style", "display:none;");
+  $('#expand').css('display', 'block');
+  map.centerAndZoom(new BMap.Point(marker.point.lng, marker.point.lat), 15);  
+  $("#map_area").click(function openMap(){ 
+  $("#map_area").animate({
+    height: "300px",
+    opacity: 1,
+    fontSize: "3em",
+  }, 500, function() {
+  $("#close_map").attr("style", "display:block;");
+  $('#expand').css('display', 'block');
+  $('#map_area').unbind('click');
+  map.centerAndZoom(new BMap.Point(marker.point.lng, marker.point.lat), 15); 
+  map.addControl(new BMap.NavigationControl());	
+  });
+});	
+  });
+});
+
+{% endif %}
+
+function bindPostCommentHandler() {    
+    $('#comment-form form').submit(function() {
+    	if ($('#comment-form form textarea').val() == '') {
+    		$('#comment-form form').prepend('<p class="warning" style="color:red; display:block;"><em>You must type something</em></p>');
+    	}
+    	else {
+        $.ajax({  
+            type: "POST",  
+            data: $('#comment-form form').serialize(),  
+            url: "{% comment_form_target %}",  
+            cache: false,  
+            dataType: "html",  
+            success: function(data, textStatus) {
+                $('.comments').append(data);
+                $('#comment-form textarea').val('');
+                $('#comment-form .warning').attr('style', 'display:none');
+            },  
+            error: function (XMLHttpRequest, textStatus, errorThrown) {  
+                $('#comment-form form').replaceWith('Your comment could not be posted.');  
+            }  
+        }); 
+    	}
+        return false;
+    });  
+}  
+
+
+function verifyPlace() {
+    $.getJSON("{% url verify_place place.city.slug place.id %}", {xhr: "true"},
+      function(data) {
+      if (data.success == true) {
+          $('#verify a.button').replaceWith('<span class="button already-verified">Verified by you!</span>');
+          $('#verify #num').replaceWith(data.num);
+      }
+      else {
+      	
+      }
+  	});
+}
+      
+$(document).ready(function() { 
+    bindPostCommentHandler(); 
+    $('#verify a.button').attr('href', '#');
+    $('#verify a.button').click(verifyPlace);
+	$("#photos a.image").fancybox();
+    $('#social-proof').fancybox({
+    	'autoDimensions':false,
+    	'width':600,
+    	'padding': 30,
+    });
+});  
+
+
+   
+ 
+</script> 
+
+
+ 
+
+<script type="application/javascript" src="/js/lightbox/jquery.fancybox-1.3.4.pack.js"></script>
+{% endblock %}
+
+
+
+
+{% block extracss %}
+<link rel="stylesheet" href="/css/fancybox/jquery.fancybox-1.3.4.css" />
+<link rel="stylesheet" href="/css/print.css" type="text/css" media="print" />
+<link rel="stylesheet" href="/css/feed.css" type="text/css"/>
+<style type="text/css">
+
+h2 {
+  width: 600px;	
+}
+
+.add-place {
+  float: right;
+  width: 142px;	
+}
+
+#rightbar .search h4 {
+  font-size: 13px;
+  font-weight: bold;
+  color: #333;	
+}
+
+#rightbar #nearest {
+	background-color: #ecf3f6;
+	border-radius: 5px;
+}
+
+#rightbar #nearest h3 {
+  color: #C24046;
+  font-size: 13px;	
+}
+
+#rightbar #nearest ul {
+    font-size: 13px;
+    list-style-type: square;
+    margin: 10px 0 0 20px;
+    font-weight: bold;
+}
+
+#rightbar #nearest ul li span {
+  color: #666;	
+  font-size: 11px;
+  font-weight: normal;
+}
+
+#rightbar input.small-search {
+  width: 240px;
+  padding: 3px 5px;	
+}
+
+div#infobar {
+  height: 50px;
+  float: left;
+  width: 560px;	
+  border-bottom: 3px dotted #e1e1e1;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+div#infobar div {
+  float: left;
+  margin-right: 20px;	
+}
+
+div#infobar div p {
+  font-size: 11px;
+  margin: 0;	
+}
+
+#verify {
+    display: block;
+    float: left;
+    height: 50px;
+    width: 560px;
+}
+
+#verify a.button {
+  padding: 5px 8px;
+  font-size: 11px;
+  float: left;	
+}
+
+#verify a.help {
+  font-size: 10px;
+  float: left;	
+}
+
+#verify #social-proof-full {
+  display: none;	
+}
+
+#social-proof-full h3 {
+    color: #C24046;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+#verify p {
+    color: #999999;
+    float: left;
+    font-size: 11px;
+    margin-left: 10px;
+    line-height: 1.2em;
+}
+
+#verify span.unverified {
+  	padding: 5px 8px;
+  	color: #C24046;
+  	float: left;
+}
+
+#verify span.verified {
+  	padding: 5px 8px;
+  	color: green;
+  	float: left;
+}
+
+#verify span.already-verified {
+  	padding: 5px 8px;
+  	color: green;
+  	float: left;	
+}
+
+div#place {
+  float: left;
+  width: 560px;
+  margin-bottom: 0px;
+  padding-bottom: 20px;
+}
+
+#map {
+  position: relative;
+  float: left;	
+}
+
+#map_area {
+  border: 10px solid #e1e1e1;
+  border-radius: 5px;	
+  float: left;
+  position: relative;
+  z-index: 0;
+}
+
+#expand {
+    background-color: #E1E1E1;
+    border-radius: 10px 0 0 0;
+    bottom: 0;
+    color: #2D7886;
+    display: block;
+    font-size: 29px;
+    font-weight: bold;
+    padding: 0px 10px 4px 8px;
+    position: absolute;
+    right: 0;
+    z-index: 101;
+}
+
+#expand:hover {
+  cursor: pointer;
+  color: #F67B7B;	
+}
+
+#overlay {
+  position: absolute;
+  width: 560px;
+  height: 80px;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  opacity: 0.8;	
+  z-index: 1;
+}
+
+p.description {
+  font-family: Georgia, sans-serif;	
+  margin: 0;
+  border-bottom: none;
+  width: 100%;
+}
+
+span#close_map {
+    background-color: #F1F1F1;
+    border-radius: 0 0 5px 5px;
+    float: right;
+    font-size: 11px;
+    padding: 3px 10px 5px;
+    color: #2D7886;
+    font-weight: bold;
+}
+
+span#close_map:hover {
+  color: #F67B7B;
+  cursor: pointer;	
+}
+
+div.ratings {
+  float: ;	
+}
+
+div.ratings p {
+  font-size: 10px;
+  margin: 0;
+  text-align: ;	
+}
+
+	/*             styles for the star rater                */	
+	.star-rating{
+		list-style:none;
+		margin: 0px;
+		padding:0px;
+		width: 125px;
+		height: 25px;
+		position: relative;
+		overflow:hidden;
+		background: url("/images/alt_star2.png") top left repeat-x;		
+	}
+	.star-rating li{
+		padding:0px;
+		margin:0px;
+		width:25px;
+		height:25px;
+		/*\*/
+		float: left;
+		/* */
+	}
+	.star-rating li a{
+		display:block;
+		width:25px;
+		height: 25px;
+		line-height:25px;		
+		text-decoration: none;
+		text-indent: -9000px;
+		z-index: 20;
+		position: absolute;
+		padding: 0px;
+		overflow:hidden;
+	}
+	.star-rating li a:hover{
+		background: url("/images/alt_star2.png") left bottom;
+		z-index: 2;
+		left: 0px;
+		border:none;
+	}
+	.star-rating a.one-star{
+		left: 0px;
+	}
+	.star-rating a.one-star:hover{
+		width:25px;
+	}
+	.star-rating a.two-stars{
+		left:25px;
+	}
+	.star-rating a.two-stars:hover{
+		width: 50px;
+	}
+	.star-rating a.three-stars{
+		left: 50px;
+	}
+	.star-rating a.three-stars:hover{
+		width: 75px;
+	}
+	.star-rating a.four-stars{
+		left: 75px;
+	}	
+	.star-rating a.four-stars:hover{
+		width: 100px;
+	}
+	.star-rating a.five-stars{
+		left: 100px;
+	}
+	.star-rating a.five-stars:hover{
+		width: 125px;
+	}
+	.star-rating li.current-rating{
+		background: url("/images/alt_star2.png") left center;
+		position: absolute;
+		height: 25px;
+		display: block;
+		text-indent: -9000px;
+		z-index: 1;
+	}
+	
+	/* remove halo effect in firefox   */
+	a:active{
+		outline: none;
+	}	
+	
+div#filters ul {
+  margin:0;
+  padding: 0;
+  list-style-type: none;
+  display: inline;	
+}
+
+div#filters li a {
+  float: left;
+  height: 32px;
+  width: 32px;
+  margin-right: 10px;	
+}
+
+div#filters li a span {
+  font-size: 11px;
+  font-weight: bold;
+  position: relative;
+  top: 35px;
+  display: block;
+  width: 100%;
+  text-align: center;
+  color: #333;	
+}	
+
+
+div#filters li.eat a {
+  background: url('/images/eat_small.png') no-repeat top left;
+}
+
+div#filters li.drink a {
+  background: url('/images/drink_small.png') no-repeat top left;
+}
+
+div#filters li.do a {
+  background: url('/images/do_small.png') no-repeat top left;
+}
+
+div#filters li.see a {
+  background: url('/images/see_small.png') no-repeat top left;
+}
+
+div#filters li.buy a {
+  background: url('/images/buy_small.png') no-repeat top left;
+}
+
+div.print {
+  display: block;
+  height: 32px;
+  width: 32px;	
+  float: left;
+  background: url('/images/print-button.png') no-repeat top left;
+}
+
+div.print span {
+  font-size: 11px;
+  font-weight: bold;
+  position: relative;
+  top: 36px;
+  text-align: center;
+  color: #fff;	
+  float: left;
+  width: 32px;
+}
+
+div.print:hover {
+  cursor: pointer;
+  background-position: center left;	
+}
+
+div.print:hover span {
+  color: #666;	
+}
+
+div.print:active {
+  cursor: pointer;
+  background-position: bottom left;	
+}
+
+div#photos {
+  float: left;
+  width: 560px;	
+  border-bottom: 3px dotted #e1e1e1;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+div#photos img {
+  float: left;
+  margin-right: 10px;
+  border-radius: 5px;	
+}
+
+div#photos a.add-one {
+  width: 560px;
+  float: left;
+  font-size: 11px;	
+  margin-top: 10px;
+}
+
+
+div#feed div.meta {
+  width: 500px;	
+}
+
+div#feed div.comments {
+  margin-top: 5px;	
+}
+
+.comments h3 {
+  margin-bottom: 10px;
+  font-size: 16px;
+  margin-top: 0;	
+}
+
+div#feed div.a-comment {
+  width: 480px;	
+}
+
+div#feed div.comment-content {
+  width: 430px;	
+}
+
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div id="main">
+
+	<h2>{{ place.name }} ({{ place.chinese_name }})</h2>
+
+	<div class="whitebox">
+	
+		<p class="description">{{ place.description }}</p>
+	
+		<div id="verify">
+			{% if request.user.is_authenticated %}
+				{% if request.user.get_profile in place.verified_by.all %}
+					<span class="button already-verified">Verified by you!</span>
+				{% else %}
+					{% if place.verified > 2 %}
+						<span class="verified button">Verified</span>
+					{% else %}	
+						<a class="button" href="{% url verify_place place.city.slug place.id %}">Verify this place</a> 
+					{% endif %}
+				{% endif %}
+			{% else %}
+				<span class="unverified button">Not verified</span>
+			{% endif %}
+			<p>Verified by <span id="num">{{ place.verified }}</span> {{ place.verified|pluralize:"person, people" }}
+			<br/>
+			<a class="help" href="#social-proof-full" id="social-proof">What is this?</a>
+				<div id="social-proof-full">
+				<h3>Verified places</h3>
+				<p>A verified place means that it's been added by one user, and then confirmed by other users of the site. It's helpful to establish whether a place actually exists, still exists and is as the description says it is.</p>
+				</div>
+			</p>
+		</div>
+	
+	</div>
+	
+{% if place.has_map %}
+	<div id="map">
+		<div id="map_area" style="width: 560px; height: 80px; position: relative;"></div>
+		<div id="expand" style="">+</div>
+		<span id="close_map" style="display: none;z-index: 9999;">X Close map</span>
+	</div>
+{% else %}
+	{% if request.user.is_authenticated %}
+	<p><em>There's no map location for this place. <a href="{% url edit_location place.city.slug place.id %}">Add a map location &raquo;</a></em></p>
+	{% endif %}
+{% endif %}
+
+</div>
+
+
+
+<div id="infobar">
+	<div class="ratings">
+	{% if rated %}
+	<p>You've rated this (avg. {{ place.get_average_rating }}/5)</p>
+	<ul class="star-rating">
+		<li class="current-rating" style="width:{{ current_rating }}px;"> Currently 3.5/5 Stars.</li>
+	</ul>
+	{% else %}
+	
+	<p>{{ place.rating_count }} rating{{ place.rating_count|pluralize }} (avg. {{ place.get_average_rating }}/5)</p>
+	<ul class="star-rating">
+		<li class="current-rating" style="width:{{ current_rating }}px;"> Currently 3.5/5 Stars.</li>
+		{% if request.user.is_authenticated %}
+		<li><a href="{% url add_rating city.slug place.slug %}?rating=1" title="1 star out of 5" class="one-star">1</a></li>
+		<li><a href="{% url add_rating city.slug place.slug %}?rating=2" title="2 stars out of 5" class="two-stars">2</a></li>
+		<li><a href="{% url add_rating city.slug place.slug %}?rating=3" title="3 stars out of 5" class="three-stars">3</a></li>
+		<li><a href="{% url add_rating city.slug place.slug %}?rating=4" title="4 stars out of 5" class="four-stars">4</a></li>
+		<li><a href="{% url add_rating city.slug place.slug %}?rating=5" title="5 stars out of 5" class="five-stars">5</a></li>
+		{% endif %}
+	</ul>
+	
+	{% endif %}
+	</div>
+	<div>
+		<p><strong>Location</strong><br/> {{ place.location }}</p>
+	</div>
+	<div>
+		<div class="print" onClick="window.print()"><span>Print</span></div>
+	</div>
+
+
+	
+</div>
+
+
+
+<div id="photos">
+	{% if place.get_photos %}
+		{% for photo in place.get_photos %}
+			{% thumbnail photo.image "x600" crop="center" as im_large %}
+				<a class="image" href="{{ im_large.url }}">
+					{% thumbnail photo.image "80x80" crop="center" as im %}
+						<img alt="" title="" src="{{ im.url }}"/>
+					{% endthumbnail %}
+				</a>
+			{% endthumbnail %}
+		{% endfor %}
+	{% else %}
+		<p>There are no photos of this place yet!</p>
+	{% endif %}
+
+	{% if request.user.is_authenticated %}
+		<a class="add-one" href="{% url add_photo_to_place place.city.slug place.id %}">Add a photo of {{ place }} &raquo;</a>
+	{% endif %}
+</div>
+
+
+
+
+{% with place as object %}
+{% get_comment_count for object as comment_count %}
+{% get_comment_form for object as form %}
+{% get_comment_list for object as comment_list %}
+<div id="feed">
+<div class="meta">
+<a href="#" id="comments_{{ object.id }}"></a>
+	<div class="comments">
+	<h3>Comments ({{ comment_count }})</h3>
+	{% if comment_list %}
+	{% include "snippets/comment-list.html" %}
+	{% else %}
+	
+	<p><em>
+	{% if request.user.is_authenticated %}Have you been here? Tell others what you thought.
+	{% else %}
+	<br/><a href="{% url registration_register %}"><strong>Signup</strong></a> or <a href="{% url auth_login %}"><strong>login</strong></a> to add a comment</p>
+	{% endif %}
+	</em></p>
+	{% endif %}
+	</div>
+	{% if request.user.is_authenticated %}
+	<div id="comment-form">
+	{% with object.get_absolute_url as next %}
+	{% include "snippets/comment-form.html" %}
+	{% endwith %}	
+	</div>
+	{% endif %}
+</div>
+</div>
+{% endwith %}				
+	
+
+
+		
+
+
+{% endblock %}
