@@ -178,6 +178,10 @@ h2 {
   border-left: none;	
 }
 
+#navigation a.selected {
+  background-color: #8ac7cc;	
+}
+
 #left {
   width: 100%;
   background-color: #fff;	
